@@ -24,7 +24,9 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author ranranhe
+ * @author sohamdeshpande
+
+
  */
 public class EditEmployeeJPanel extends javax.swing.JPanel {
 
