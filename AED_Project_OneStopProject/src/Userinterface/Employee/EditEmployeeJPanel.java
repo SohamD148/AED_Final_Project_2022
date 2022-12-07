@@ -5,26 +5,32 @@
  */
 package UserInterface.Employee;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Employee.Employee;
-import Business.Enterprise.Delivery.ShipmentCompany;
-import Business.Enterprise.Enterprise;
-import Business.Enterprise.Restaurant.Restaurant;
-import Business.Enterprise.Mart.Mart;
-import Business.Organization.Organization;
-import Business.Role.Role;
-import Business.Role.Role.RoleType;
-import Business.Role.RoleSelection;
-import Business.UserAccount.EmployeeAccount;
-import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
-import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import Model.Business.EcoSystem;
+import Model.DB4OUtil.DB4OUtil;
+import Model.Employee.Employee;
+import Model.Enterprise.Delivery.ShipmentCompany;
+import Model.Enterprise.Enterprise;
+import Model.Enterprise.Restaurant.Restaurant;
+import Model.Enterprise.Mart.Mart;
+import Model.Organization.Organization;
+import Model.Role.Role;
+import Model.Role.Role.RoleType;
+import Model.Role.RoleSelection;
+import Model.UserAccount.EmployeeAccount;
+//import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+//import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
- * @author ranranhe
+
+ * @author risha
+
+ * @author sohamdeshpande
+
+
+
  */
 public class EditEmployeeJPanel extends javax.swing.JPanel {
 
@@ -99,19 +105,19 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
     }
 
     private void refreshPreviousList() {
-        if (en instanceof Restaurant) {
-            RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
-            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-
-        }
-        if (en instanceof ShipmentCompany) {
-            ShipmentCompanySupervisorMainJPanel p = (ShipmentCompanySupervisorMainJPanel) panel;
-            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-        }
-        if (en instanceof Mart) {
-            MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
-            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-        }
+//        if (en instanceof Restaurant) {
+//            RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
+//            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+//
+//        }
+//        if (en instanceof ShipmentCompany) {
+//            ShipmentCompanySupervisorMainJPanel p = (ShipmentCompanySupervisorMainJPanel) panel;
+//            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+//        }
+//        if (en instanceof Mart) {
+//            MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
+//            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+//        }
     }
 
     private void setFieldsEditable(boolean b) {
@@ -370,9 +376,9 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        ResetPasswordJFrame f = new ResetPasswordJFrame(this.system, this.selectedAccount);
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+//        ResetPasswordJFrame f = new ResetPasswordJFrame(this.system, this.selectedAccount);
+//        f.setLocationRelativeTo(null);
+//        f.setVisible(true);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed

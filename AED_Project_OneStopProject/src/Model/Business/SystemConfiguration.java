@@ -4,12 +4,28 @@
  */
 package Model.Business;
 
+import Model.Consumer.Consumer;
+import Model.Employee.Employee;
+import Model.Enterprise.Delivery.ShipmentCompany;
+import Model.Network.Network;
+import Model.Organization.SupervisorOrganization;
+import Model.Organization.Organization;
+import Model.Enterprise.Restaurant.Menu;
+import Model.Enterprise.Restaurant.Restaurant;
+import Model.Enterprise.Mart.Product;
+import Model.Enterprise.Mart.Mart;
+import Model.Organization.CourierOrganization;
+import Model.Role.BossRole;
+import Model.Role.DeliveryManRole;
+import Model.Role.SupervisorRole;
+import Model.Role.SystemAdminRole;
+import Model.UserAccount.UserAccount;
+
 /**
  *
- * @author risha
+ * @author sohamdeshpande
  */
-public class SystemConfiguration 
-{
+public class SystemConfiguration {
     public static EcoSystem configure() {
 
         EcoSystem system = EcoSystem.getInstance();
@@ -37,66 +53,68 @@ public class SystemConfiguration
         network2.setNetwork_id("Worchester");
 
         // BOSTON Enterprise with organiztions created
-        ShipmentCompany sc1 = network1.createDeliveryCompany("Fedex Delivery Company", "110 Allstate, Boston, MA 02125", "8838381221");
+        ShipmentCompany sc1 = network1.createDeliveryCompany("Boston Delivery Company", "110 Allstate, Boston, MA 02125", "(617) 553-5900");
         sc1.setShipcom_description("This is delivery company located at Boston.");
         sc1.setShipcom_id("Delivery");
         sc1.setPath("Images/DeliveryCompanyCut/default.png");
-        Employee b1 = sc1.getEmployeeDirectory().createEmployee("Rishabh", "Singh", "8483332321", "rsingh@gmail.com");
+        Employee b1 = sc1.getEmployeeDirectory().createEmployee("Rishabh", "Singh", "773383812", "rsingh@gmail.com");
         UserAccount user4 = sc1.getUserAccountDirectory().createEmployeeAccount("risha", "12345", new BossRole(), b1);
         // BOSTON Delivery Company Organization
         SupervisorOrganization sup1 = (SupervisorOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
         CourierOrganization cou1 = (CourierOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Courier);
-        Employee emp2 = sup1.getEmployeeDirectory().createEmployee("Brandon", "Smith", "8787893932", "brandonsm@fedex.com");
-        UserAccount user5 = sup1.getUserAccountDirectory().createEmployeeAccount("brandsm", "sup123", new SupervisorRole(), emp2);
+        Employee emp2 = sup1.getEmployeeDirectory().createEmployee("Manager", "Manager", "111", "manager@demo.com");
+        UserAccount user5 = sup1.getUserAccountDirectory().createEmployeeAccount("m", "m", new SupervisorRole(), emp2);
 
-        Employee emp3 = sup1.getEmployeeDirectory().createEmployee("Jacob", "Riley", "3993902993", "jacey@fedex.com");
-        UserAccount user6 = sup1.getUserAccountDirectory().createEmployeeAccount("jacey", "jac123", new DeliveryManRole(), emp3);
+        Employee emp3 = sup1.getEmployeeDirectory().createEmployee("Delivery", "Man", "1111", "deliveryman@demo.com");
+        UserAccount user6 = sup1.getUserAccountDirectory().createEmployeeAccount("d", "d", new DeliveryManRole(), emp3);
 
-        Employee emp4 = cou1.getEmployeeDirectory().createEmployee("Willson", "dunk", "3899992312", "willdunk@fedex.com");
-        UserAccount user7 = cou1.getUserAccountDirectory().createEmployeeAccount("will", "will456", new DeliveryManRole(), emp4);
+        Employee emp4 = cou1.getEmployeeDirectory().createEmployee("Delivery", "Man", "1111", "deliveryman1@demo.com");
+        UserAccount user7 = cou1.getUserAccountDirectory().createEmployeeAccount("dd", "dd", new DeliveryManRole(), emp4);
 
         // BOSTON Restaurant List
-        Restaurant restaurant1 = network1.createRestaurant("Chipotle", "855 Boylston St, Boston, MA 02210", "3873883323");
+        Restaurant restaurant1 = network1.createRestaurant("Row 34", "383 Congress St, Boston, MA 02210", "(617) 553-5900");
         restaurant1.setType(Restaurant.RestaurantCategory.Seafood);
-        restaurant1.setShipcom_id("Chip");
+        restaurant1.setShipcom_id("Row");
         restaurant1.setPath("Images/RestaurantCut/default.png");
-        restaurant1.setOut_description("Chipotle Mexican Grill, Inc., often known simply as Chipotle, is an American chain of fast casual restaurants specializing in bowls, tacos and Mission burritos made to order in front of the customer. Chipotle operates restaurants in the United States");
-        Menu menu1 = new Menu(restaurant1, "Burrito", 8.39);
-        Menu menu2 = new Menu(restaurant1, "Tacos", 4.59);
-        Menu menu3 = new Menu(restaurant1, "Burrito Bowl", 9.99);
+        restaurant1.setOut_description("This stylish brick-&-wood eatery serves an extensive oyster menu plus fish entrees & craft beers.");
+        Menu menu1 = new Menu(restaurant1, "Dash1", 20);
+        Menu menu2 = new Menu(restaurant1, "Dash2", 30);
+        Menu menu3 = new Menu(restaurant1, "Dash3", 27.6);
         restaurant1.addDashToMenu(menu1);
         restaurant1.addDashToMenu(menu2);
         restaurant1.addDashToMenu(menu3);
         
-        Employee emp5 = restaurant1.getEmployeeDirectory().createEmployee("Chase", "Cory", "3893899933", "chase@chipotle.com");
-        UserAccount user8 = restaurant1.getUserAccountDirectory().createEmployeeAccount("chase", "chase123", new BossRole(), emp5);
+        Employee emp5 = restaurant1.getEmployeeDirectory().createEmployee("Row34", "Boss", "12344", "boss@row34.com");
+        UserAccount user8 = restaurant1.getUserAccountDirectory().createEmployeeAccount("row34", "row34", new BossRole(), emp5);
         
         SupervisorOrganization sup2 = (SupervisorOrganization) restaurant1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
-        Employee emp6 = sup2.getEmployeeDirectory().createEmployee("Ryan", "Reynolds", "8738787383", "ryan@chipotle.com");
-        UserAccount user9 = sup2.getUserAccountDirectory().createEmployeeAccount("ryan", "ryan123", new SupervisorRole(), emp6);
+        Employee emp6 = sup2.getEmployeeDirectory().createEmployee("Manager", "Manager", "111", "manager@demo.com");
+        UserAccount user9 = sup2.getUserAccountDirectory().createEmployeeAccount("rm", "rm", new SupervisorRole(), emp6);
 
-        Restaurant restaurant2 = network1.createRestaurant("Chick-Fil-A", "674 Northern Ave, Boston, MA 02210", "6728323233");
+        Restaurant restaurant2 = network1.createRestaurant("Legal Harborside", "270 Northern Ave, Boston, MA 02210", "(617) 477-2900");
         restaurant2.setType(Restaurant.RestaurantCategory.Seafood);
-        restaurant2.setShipcom_id("chick");
+        restaurant2.setShipcom_id("legal");
         restaurant2.setPath("Images/RestaurantCut/default.png");
-        restaurant2.setOut_description("Chick-fil-A is one of the largest American fast food restaurant chains and the largest specializing in chicken sandwiches. The company is headquartered in College Park, Georgia. Chick-fil-A operates 2,873 restaurants, primarily in the United States");
-        Menu menu4 = new Menu(restaurant2, "Chicken Sandwich", 8.95);
-        Menu menu5 = new Menu(restaurant2, "Grilled Chicken Sandwich", 10);
-        Menu menu6 = new Menu(restaurant2, "Hot wings", 5.99);
+        restaurant2.setOut_description("Specializing in upmarket seafood, this contemporary chain also serves steaks & cocktails.");
+        Menu menu4 = new Menu(restaurant2, "D1", 10);
+        Menu menu5 = new Menu(restaurant2, "D2", 14);
+        Menu menu6 = new Menu(restaurant2, "D3", 11.99);
         restaurant2.addDashToMenu(menu4);
         restaurant2.addDashToMenu(menu5);
         restaurant2.addDashToMenu(menu6);
         
-        Employee emp7 = restaurant2.getEmployeeDirectory().createEmployee("Blake", "Henderson", "3899838933", "blake@chick.com");
-        UserAccount user10 = restaurant2.getUserAccountDirectory().createEmployeeAccount("blake", "blake123", new BossRole(), emp7);
+        Employee emp7 = restaurant2.getEmployeeDirectory().createEmployee("Legal", "Boss", "222", "boss@demo.com");
+        UserAccount user10 = restaurant2.getUserAccountDirectory().createEmployeeAccount("legal", "legal", new BossRole(), emp7);
         
         SupervisorOrganization sup3 = (SupervisorOrganization) restaurant2.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
-        Employee emp8 = sup3.getEmployeeDirectory().createEmployee("Sejal", "Sharma", "8388388383", "sejal@chick.com");
-        UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("sejal", "seja123", new SupervisorRole(), emp8);
+        Employee emp8 = sup3.getEmployeeDirectory().createEmployee("Manager", "Manager", "222", "manager@demo.com");
+        UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("lm", "lm", new SupervisorRole(), emp8);
 
         // Boston Mart List
+
         Mart mart1 = network1.createMart("Trader Joe", "834 Boylston St, Boston, MA 02115", "(617) 375-1010");
         mart1.setShipcom_id("tarder");
+
         mart1.setPath("Images/StoreCut/default.png");
         mart1.setType(Mart.StoreCategory.Organic);
         mart1.setOut_description("Trader Joe's is an American chain of grocery stores headquartered in Monrovia, California. The chain has over 530 stores across the United States");
@@ -149,5 +167,5 @@ public class SystemConfiguration
         UserAccount user15 = sup5.getUserAccountDirectory().createEmployeeAccount("rachel", "rachel123", new SupervisorRole(), emp12);
         return system;
     }
-    
+
 }
