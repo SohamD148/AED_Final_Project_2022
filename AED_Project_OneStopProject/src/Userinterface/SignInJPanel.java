@@ -5,9 +5,11 @@
  */
 package UserInterface;
 
-import Business.Enterprise.Enterprise;
-import Business.EcoSystem;
-
+import Model.Business.EcoSystem;
+import Model.Enterprise.Enterprise;
+import Model.Network.Network;
+import Model.Organization.Organization;
+import Model.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
