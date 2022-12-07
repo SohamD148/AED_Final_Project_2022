@@ -1,18 +1,23 @@
- /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Business.Enterprise;
+package Model.Enterprise;
 
+import Model.Employee.Employee;
+import Model.Organization.Organization;
+import Model.Organization.OrganizationDirectory;
+import Model.Role.Role;
+import Model.UserAccount.EmployeeAccount;
+import Model.UserAccount.UserAccount;
 import java.util.ArrayList;
 
 /**
  *
- * @author sohamdeshpande
+ * @author risha
  */
 public abstract class Enterprise extends Organization {
-
+    
     private OrganizationDirectory org;
     private static int entidcounter = 0;
 

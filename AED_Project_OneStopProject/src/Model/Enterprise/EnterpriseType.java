@@ -1,17 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Business.Enterprise;
+package Model.Enterprise;
 
+import Model.Enterprise.Delivery.ShipmentCompany;
+import Model.Enterprise.Restaurant.Restaurant;
+import Model.Enterprise.Mart.Mart;
 
 /**
  *
- * @author sohamdeshpande
+ * @author risha
  */
 public class EnterpriseType {
-
+    
     public static Enterprise createEnterprise(String name, String address, String phone, String description, String type) {
         if (type.equalsIgnoreCase("Restaurant")) {
             Restaurant r = new Restaurant(name, address, phone);
@@ -33,5 +35,4 @@ public class EnterpriseType {
         }
         return null;
     }
-    
 }

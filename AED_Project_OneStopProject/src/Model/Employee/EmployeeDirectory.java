@@ -10,8 +10,8 @@ import java.util.ArrayList;
  *
  * @author risha
  */
-public class EmployeeDirectory 
-{
+public class EmployeeDirectory {
+    
     private ArrayList<Employee> employeeDirectory;
 
     public EmployeeDirectory() {
@@ -21,7 +21,7 @@ public class EmployeeDirectory
     public ArrayList<Employee> getEmployeeDirectory() {
         return employeeDirectory;
     }
-    
+
     public boolean isEmployeeExist(Employee emp) {
         if (!this.employeeDirectory.isEmpty()) {
             for (Employee em : this.employeeDirectory) {
@@ -38,4 +38,5 @@ public class EmployeeDirectory
         employeeDirectory.add(employee);
         return employee;
     }
+
 }

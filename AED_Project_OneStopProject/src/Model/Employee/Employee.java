@@ -4,6 +4,8 @@
  */
 package Model.Employee;
 
+import Model.Role.Role;
+
 /**
  *
  * @author risha
@@ -17,53 +19,47 @@ public class Employee {
     private String email_id;
     private static int empidcounter = 0;
 
-    public Employee(String firstname, String lastname, String mobile_no, String email_id) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.mobile_no = mobile_no;
-        this.email_id = email_id;
-        this.empid = empidcounter;
-        this.fullname = firstname + " " + lastname;
+    public Employee(String firstName, String lastName, String phone, String email) {
+        this.firstname = firstName;
+        this.lastname = lastName;
+        this.fullname = firstName + " " + lastName;
+        this.mobile_no = phone;
+        this.email_id = email;
+        empid = empidcounter;
         empidcounter++;
     }
 
-    
-    
-    
     public int getEmpid() {
         return empid;
     }
 
-    public void setEmpid(int empid) {
-        this.empid = empid;
-    }
-
-    public String getFirstname() {
-        return firstname;
+    public void setName(String firstName, String lastName) {
+        this.firstname = firstName;
+        this.lastname = lastName;
     }
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFirstname() {
+        return this.firstname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    public String getLastname() {
+        return this.lastname;
+    }
+
     public String getFullname() {
         return fullname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
     public String getMobile_no() {
-        return mobile_no;
+        return this.mobile_no;
     }
 
     public void setMobile_no(String mobile_no) {
@@ -71,17 +67,15 @@ public class Employee {
     }
 
     public String getEmail_id() {
-        return email_id;
+        return this.email_id;
     }
 
     public void setEmail_id(String email_id) {
         this.email_id = email_id;
     }
-
-    @Override
+    
+    @Override 
     public String toString() {
-        return this.fullname; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return this.fullname;
     }
-    
-    
 }
