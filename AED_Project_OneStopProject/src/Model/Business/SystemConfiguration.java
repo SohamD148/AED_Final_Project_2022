@@ -112,9 +112,6 @@ public class SystemConfiguration {
 
         // Boston Mart List
 
-        Mart mart1 = network1.createStore("Whole Foods", "15 Westland Ave, Boston, MA 02115", "(617) 375-1010");
-        mart1.setShipcom_id("whole");
-
         Mart mart1 = network1.createMart("Trader Joe", "834 Boylston St, Boston, MA 02115", "(617) 375-1010");
         mart1.setShipcom_id("tarder");
 
