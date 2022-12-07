@@ -64,7 +64,7 @@ public class Network {
         return res;
     }
     
-    public Mart createMart(String name, String address, String phone) {
+    public Mart createStore(String name, String address, String phone) {
         Mart store = new Mart(name, address, phone);
         store.createOrganizations();
         this.enterpriseDirectory.getEnterpriseDirectory().add(store);
