@@ -111,47 +111,63 @@ public class SystemConfiguration {
         UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("lm", "lm", new SupervisorRole(), emp8);
 
         // Boston Mart List
+
         Mart mart1 = network1.createStore("Whole Foods", "15 Westland Ave, Boston, MA 02115", "(617) 375-1010");
         mart1.setShipcom_id("whole");
+
+        Mart mart1 = network1.createMart("Trader Joe", "834 Boylston St, Boston, MA 02115", "(617) 375-1010");
+        mart1.setShipcom_id("tarder");
+
         mart1.setPath("Images/StoreCut/default.png");
         mart1.setType(Mart.StoreCategory.Organic);
-        mart1.setOut_description("Eco-minded chain with natural & organic grocery items, housewares & other products.");
-        Product p1 = new Product(mart1, "Cookie", 2);
-        Product p2 = new Product(mart1, "Coke", 2.5);
-        Product p3 = new Product(mart1, "Water", 1);
-        Product p4 = new Product(mart1, "fork", 6);
+        mart1.setOut_description("Trader Joe's is an American chain of grocery stores headquartered in Monrovia, California. The chain has over 530 stores across the United States");
+        Product p1 = new Product(mart1, "Milk", 3.45);
+        Product p2 = new Product(mart1, "Eggs", 4.49);
+        Product p3 = new Product(mart1, "Chicken", 5.87);
+        Product p4 = new Product(mart1, "Bananas", 0.13);
+        Product p5 = new Product(mart1, "Cabbage", 1.0);
+        Product p6 = new Product(mart1, "Tomatos", 0.39);
+        Product p7 = new Product(mart1, "Onions", 0.56);
+        Product p8 = new Product(mart1, "Yoghurt", 4.69);
+        
         mart1.addProductToList(p1);
         mart1.addProductToList(p2);
         mart1.addProductToList(p3);
         mart1.addProductToList(p4);
+        mart1.addProductToList(p5);
+        mart1.addProductToList(p6);
+        mart1.addProductToList(p7);
+        mart1.addProductToList(p8);
         
-        Employee emp9 = mart1.getEmployeeDirectory().createEmployee("Whole", "Foods", "222", "boss@demo.com");
-        UserAccount user12 = mart1.getUserAccountDirectory().createEmployeeAccount("whole", "whole", new BossRole(), emp9);
+        Employee emp9 = mart1.getEmployeeDirectory().createEmployee("Hugo", "Lorris", "3889398398", "hugo@trader.com");
+        UserAccount user12 = mart1.getUserAccountDirectory().createEmployeeAccount("hugo", "hugo123", new BossRole(), emp9);
         
         SupervisorOrganization sup4 = (SupervisorOrganization) mart1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
-        Employee emp10 = sup4.getEmployeeDirectory().createEmployee("Manager", "Manager", "222", "manager@demo.com");
-        UserAccount user13 = sup4.getUserAccountDirectory().createEmployeeAccount("wm", "wm", new SupervisorRole(), emp10);
+        Employee emp10 = sup4.getEmployeeDirectory().createEmployee("Lacy", "Myers", "7488442332", "lacy@trader.com");
+        UserAccount user13 = sup4.getUserAccountDirectory().createEmployeeAccount("lacy", "lacy123", new SupervisorRole(), emp10);
         
         
-        // Atlanta Restaurant List
-        Restaurant restaurant3 = network2.createRestaurant("Home grown GA Restaurant", "968 Memorial Dr SE, Atlanta, GA 30316", "(404) 222-0455");
+        // Worchester Restaurant List
+        Restaurant restaurant3 = network2.createRestaurant("Deadhorse hill", "281 Main St, Worchester, MA 01608", "7744207107");
         restaurant3.setType(Restaurant.RestaurantCategory.American);
-        restaurant3.setShipcom_id("home");
+        restaurant3.setShipcom_id("deadhorse");
         restaurant3.setPath("Images/RestaurantCut/default.png");
-        restaurant3.setOut_description("Laid-back eatery serving locally sourced breakfast & Southern fare in a retro country-diner setting.");
-        Menu menu7 = new Menu(restaurant3, "D1", 10);
-        Menu menu8 = new Menu(restaurant3, "D2", 14);
-        Menu menu9 = new Menu(restaurant3, "D3", 11.99);
+        restaurant3.setOut_description("A hilltop hotel houses a rustic-chic New American dining room with daytime cafe and coffee bar.");
+        Menu menu7 = new Menu(restaurant3, "Grilled Cheese", 9);
+        Menu menu8 = new Menu(restaurant3, "Smoked turkey Breast", 12);
+        Menu menu9 = new Menu(restaurant3, "French Dip", 14);
         restaurant3.addDashToMenu(menu7);
         restaurant3.addDashToMenu(menu8);
         restaurant3.addDashToMenu(menu9);
         
-        Employee emp11 = restaurant3.getEmployeeDirectory().createEmployee("Home Grown", "Boss", "222", "boss@demo.com");
-        UserAccount user14 = restaurant3.getUserAccountDirectory().createEmployeeAccount("home", "home", new BossRole(), emp11);
+        
+        
+        Employee emp11 = restaurant3.getEmployeeDirectory().createEmployee("Sam", "Alfred", "8398983923", "sam@deadhorse.com");
+        UserAccount user14 = restaurant3.getUserAccountDirectory().createEmployeeAccount("sam", "sam123", new BossRole(), emp11);
         
         SupervisorOrganization sup5 = (SupervisorOrganization) restaurant3.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
-        Employee emp12 = sup5.getEmployeeDirectory().createEmployee("Manager", "Manager", "222", "manager@demo.com");
-        UserAccount user15 = sup5.getUserAccountDirectory().createEmployeeAccount("hm", "hm", new SupervisorRole(), emp12);
+        Employee emp12 = sup5.getEmployeeDirectory().createEmployee("Rachel", "Green", "8988399333", "rachel@deadhorse.com");
+        UserAccount user15 = sup5.getUserAccountDirectory().createEmployeeAccount("rachel", "rachel123", new SupervisorRole(), emp12);
         return system;
     }
 
