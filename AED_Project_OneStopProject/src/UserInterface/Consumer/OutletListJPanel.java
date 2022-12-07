@@ -28,7 +28,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
     private EcoSystem system;
     private JPanel panel;
     private ConsumerAccount consumeracc;
-    private Network net;
+    private Network network;
     private ShopType type;
     private JFrame frame;
 
@@ -40,7 +40,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
         this.system = system;
         this.panel = container;
         this.consumeracc = account;
-        this.net = net;
+        this.network = net;
         this.type = type;
         this.frame = frame;
 
@@ -54,7 +54,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
         DefaultTableModel dtm = (DefaultTableModel) OutletTable.getModel();
         dtm.setRowCount(0);
         if (type.equals(ShopType.Restaurant)) {
-            for (Restaurant res : net.getRestaurantList()) {
+            for (Restaurant res : network.getRestaurantList()) {
                 Object row[] = new Object[2];
                 row[0] = res;
                 row[1] = res.getCategoryString();
@@ -62,7 +62,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
             }
         }
         if (type.equals(ShopType.Mart)) {
-            for (Mart mart : net.getStoreList()) {
+            for (Mart mart : network.getStoreList()) {
                 Object row[] = new Object[2];
                 row[0] = mart;
                 row[1] = mart.getCategoryString();
@@ -259,14 +259,14 @@ public class OutletListJPanel extends javax.swing.JPanel {
             if (type.equals(ShopType.Mart)) {
                 Mart mart = (Mart) model.getValueAt(index, 0);
                 restaurantNameLabel.setText(mart.getOrg_name());
-                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, mart, this.consumeracc, net, type);
+                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, mart, this.consumeracc, network, type);
                 detailPanel.remove(this);
                 detailPanel.add(panel);
             }
             if (type.equals(ShopType.Restaurant)) {
                 Restaurant restaurant = (Restaurant) model.getValueAt(index, 0);
                 restaurantNameLabel.setText(restaurant.getOrg_name());
-                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, restaurant, this.consumeracc, net, type);
+                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, restaurant, this.consumeracc, network, type);
                 detailPanel.remove(this);
                 detailPanel.add(panel);
             }
@@ -277,7 +277,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_OutletTableMouseClicked
 
     private void cartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartButtonActionPerformed
-        //CartJFrame frame = new CartJFrame(this.system, this.consumeracc, net);
+        //CartJFrame frame = new CartJFrame(this.system, this.consumeracc, network);
         frame.setSize(500, 620);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
