@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author risha
  */
 public class OrderDetailJPanel extends javax.swing.JPanel {
 
@@ -298,15 +298,15 @@ public class OrderDetailJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cartTableMouseClicked
 
     private void reviewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewButtonActionPerformed
-//        ReviewJFrame f = new ReviewJFrame(this.system, this.order, this.outlet, this.cPanel, this, "Create");
-//        f.setLocationRelativeTo(null);
-//        f.setVisible(true);
+        ReviewJFrame f = new ReviewJFrame(this.system, this.order, this.outlet, this.cPanel, this, "Create");
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }//GEN-LAST:event_reviewButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
-//        ReviewJFrame f = new ReviewJFrame(this.system, this.order, this.outlet, this.cPanel, this, "View");
-//        f.setLocationRelativeTo(null);
-//        f.setVisible(true);
+        ReviewJFrame f = new ReviewJFrame(this.system, this.order, this.outlet, this.cPanel, this, "View");
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }//GEN-LAST:event_viewButtonActionPerformed
 
 

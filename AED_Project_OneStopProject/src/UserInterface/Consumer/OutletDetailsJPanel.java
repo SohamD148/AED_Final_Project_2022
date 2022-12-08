@@ -409,14 +409,14 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
             if (this.outletype.equals(ShopType.Mart)) {
                 line = new ProductOrder(this.outlet, item, quantity);
             }
-            if (!this.consumeracc.getBasket().isCartEmpty()) {
+            if (!this.consumeracc.getBasket().isBasketEmpty()) {
                 for (CommodityOrder or : this.consumeracc.getBasket().getCommodityDirectory()) {
                     if (!or.getShopModel().equals(this.outlet)) {
                         int choice = JOptionPane.showConfirmDialog(null, "You alreay have dashes from other restaurant in shopping cart. \n"
                                 + "Adding this dash will remove all previous dashes in shopping cart.\n" + "Do you want to continue?",
                                 "Restaurant Conflicts", JOptionPane.YES_NO_OPTION);
                         if (choice == JOptionPane.YES_OPTION) {
-                            this.consumeracc.getBasket().clearCart();
+                            this.consumeracc.getBasket().clearBasket();
                             break;
                         } else {
                             return;
@@ -429,7 +429,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
                     }
                 }
             }
-            this.consumeracc.getBasket().addToCart(line);
+            this.consumeracc.getBasket().addToBasket(line);
 
             JOptionPane.showMessageDialog(null, "Dash has been successfully added to Shopping Cart");
             DB4OUtil.getInstance().storeSystem(system);
