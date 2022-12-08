@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author risha
  */
 public class OrderJPanel extends javax.swing.JPanel {
 
