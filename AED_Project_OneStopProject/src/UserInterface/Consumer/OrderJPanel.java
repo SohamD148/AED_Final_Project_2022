@@ -284,13 +284,13 @@ public class OrderJPanel extends javax.swing.JPanel {
         or.setAmount(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         
         
-        consumeracc.getBasket().clearCart();
+        consumeracc.getBasket().clearBasket();
         consumeracc.getWorkQueue().getWorkRequestDirectory().add(or);
         outlet.getWorkQueue().getWorkRequestDirectory().add(or);
         DB4OUtil.getInstance().storeSystem(system);
         
         this.panel.remove(this);
-        //OrderConfirmationJPanel panel = new OrderConfirmationJPanel(or);
+        //OrderConfirmationJPanel basketpanel = new OrderConfirmationJPanel(or);
         this.panel.add(panel);
         CardLayout layout = (CardLayout)this.panel.getLayout();
         layout.next(this.panel);
@@ -301,10 +301,10 @@ public class OrderJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) this.panel.getLayout();
 
         for (Component com : this.panel.getComponents()) {
-//            if (com instanceof CartJPanel) {
-//                CartJPanel panel = (CartJPanel) com;
-//                panel.populateTable();
-//            }
+            if (com instanceof BasketJPanel) {
+                BasketJPanel basketpanel = (BasketJPanel) com;
+                basketpanel.populateTable();
+            }
         }
         layout.previous(this.panel);
     }//GEN-LAST:event_cancelButtonActionPerformed

@@ -35,15 +35,15 @@ public class ShoppingBasket {
         return totalPrice;
     }
     
-    public void addToCart(CommodityOrder order) {
+    public void addToBasket(CommodityOrder order) {
         this.commodityDirectory.add(order);
     }
     
-    public boolean isCartEmpty() {
+    public boolean isBasketEmpty() {
         return commodityDirectory.isEmpty();
     }
     
-    public void clearCart(){
+    public void clearBasket(){
         this.commodityDirectory = new ArrayList<>();
     }
     

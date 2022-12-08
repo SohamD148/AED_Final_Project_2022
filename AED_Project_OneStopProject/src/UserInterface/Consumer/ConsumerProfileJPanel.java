@@ -36,7 +36,7 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
     private Role accessRole;
 
     /**
-     * Creates new form CustomerProfileJPanel
+     * Creates new form ConsumerProfileJPanel
      */
     public ConsumerProfileJPanel(EcoSystem system, JPanel container, ConsumerAccount account, JFrame frame, Role accessRole) {
         initComponents();
@@ -509,10 +509,10 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
         this.panel.remove(this);
         CardLayout layout = (CardLayout) this.panel.getLayout();
         for (Component com : this.panel.getComponents()) {
-//            if (com instanceof ShopListJPanel) {
-//                this.frame.setSize(950, 600);
-//                this.frame.setLocationRelativeTo(null);
-//            }
+            if (com instanceof OutletListJPanel) {
+                this.frame.setSize(950, 600);
+                this.frame.setLocationRelativeTo(null);
+            }
         }
         layout.previous(this.panel);
     }//GEN-LAST:event_backButtonActionPerformed
