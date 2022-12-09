@@ -24,14 +24,14 @@ import javax.imageio.ImageIO;
 public class Mart extends Outlet {
     
     private int photoId;
-    private StoreCategory type;
+    private MartType type;
     private String shop_id;
     private static int shopid_counter = 0;
     private String photoPath;
 
     @Override
-    public ShopType getOut_type() {
-        return ShopType.Mart;
+    public OutletType getOut_type() {
+        return OutletType.Mart;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Mart extends Outlet {
         return "";
     }
 
-    public enum StoreCategory {
+    public enum MartType {
 
         Seafood, Chinese, Japanese, Korean, American, Mexicon, Organic
     }
@@ -52,7 +52,7 @@ public class Mart extends Outlet {
         this.photoId = shopid_counter;
         this.shop_id = "Store" + shopid_counter;
         shopid_counter++;
-        this.setOut_type(Outlet.ShopType.Mart);
+        this.setOut_type(Outlet.OutletType.Mart);
 
         String path = "Images/StoreCut/default.png";
         String fileName = "default.png";
@@ -79,11 +79,11 @@ public class Mart extends Outlet {
         return this.photoId;
     }
 
-    public StoreCategory getType() {
+    public MartType getType() {
         return this.type;
     }
 
-    public void setType(StoreCategory cat) {
+    public void setType(MartType cat) {
         this.type = cat;
     }
 

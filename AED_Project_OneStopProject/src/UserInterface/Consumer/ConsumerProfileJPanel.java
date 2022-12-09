@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsumerProfileJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
-    private JPanel panel;
+    private JPanel jPanel;
     private ConsumerAccount consumeracc;
     private Consumer consumer;
     private JFrame frame;
@@ -41,7 +41,7 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
     public ConsumerProfileJPanel(EcoSystem system, JPanel container, ConsumerAccount account, JFrame frame, Role accessRole) {
         initComponents();
         this.system = system;
-        this.panel = container;
+        this.jPanel = container;
         this.consumeracc = account;
         this.consumer = account.getConsumer();
         this.frame = frame;
@@ -491,7 +491,7 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
         DB4OUtil.getInstance().storeSystem(system);
         
         if (accessRole.getRoleType().equals(Role.RoleType.SystemAdmin)) {
-            //SystemManagerMainJPanel sp = (SystemManagerMainJPanel) panel;
+            //SystemManagerMainJPanel sp = (SystemManagerMainJPanel) jPanel;
             //sp.populateTable(system.getUserAccountDirectory().getUserAccountDirectory());
         }
     }//GEN-LAST:event_updateButtonActionPerformed
@@ -506,15 +506,15 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        this.panel.remove(this);
-        CardLayout layout = (CardLayout) this.panel.getLayout();
-        for (Component com : this.panel.getComponents()) {
+        this.jPanel.remove(this);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
+        for (Component com : this.jPanel.getComponents()) {
             if (com instanceof OutletListJPanel) {
                 this.frame.setSize(950, 600);
                 this.frame.setLocationRelativeTo(null);
             }
         }
-        layout.previous(this.panel);
+        layout.previous(this.jPanel);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void customerProfileTabPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_customerProfileTabPropertyChange
@@ -577,8 +577,8 @@ public class ConsumerProfileJPanel extends javax.swing.JPanel {
         if (index >= 0) {
             OrderRequest order = (OrderRequest) orderHistTable.getValueAt(index, 1);
             Outlet outlet = (Outlet) orderHistTable.getValueAt(index, 3);
-            //OrderDetailJPanel panel = new OrderDetailJPanel(system, order, outlet, this);
-            detailPanel.add(panel);
+            OrderDetailJPanel jPanel = new OrderDetailJPanel(system, order, outlet, this);
+            detailPanel.add(jPanel);
             CardLayout layout = (CardLayout) this.detailPanel.getLayout();
             layout.next(detailPanel);
         }

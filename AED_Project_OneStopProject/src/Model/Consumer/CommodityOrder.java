@@ -6,7 +6,7 @@ package Model.Consumer;
 
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Outlet;
-import Model.Enterprise.Outlet.ShopType;
+import Model.Enterprise.Outlet.OutletType;
 import java.math.BigDecimal;
 
 /**

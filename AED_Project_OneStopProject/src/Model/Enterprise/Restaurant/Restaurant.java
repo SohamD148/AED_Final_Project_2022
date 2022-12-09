@@ -30,8 +30,8 @@ public class Restaurant extends Outlet {
     private String photoPath;
 
     @Override
-    public ShopType getOut_type() {
-        return ShopType.Restaurant;
+    public OutletType getOut_type() {
+        return OutletType.Restaurant;
     }
 
     public enum RestaurantCategory {
@@ -61,7 +61,7 @@ public class Restaurant extends Outlet {
         this.photoId = restaurantid_counter;
         this.restaurant_id = "Restaurant" + restaurantid_counter;
         restaurantid_counter++;
-        this.setOut_type(ShopType.Restaurant);
+        this.setOut_type(OutletType.Restaurant);
 
         String path = "Images/RestaurantCut/default.png";
         String fileName = "default.png";

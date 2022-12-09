@@ -166,9 +166,9 @@ public class ReviewJFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         this.orderReq.getReview().setMessage(this.commentTextArea.getText());
         this.orderReq.getReview().setRating((int)this.rateSpinner.getValue());
-        system.getEnterpriseById(outlet.getOrg_name()).getWorkQueue().
+        system.getEnterpriseById(outlet.getShipcom_id()).getWorkQueue().
                 getOderById(this.orderReq.getOrderrequest_id()).getReview().setRating((int)this.rateSpinner.getValue());
-        system.getEnterpriseById(outlet.getOrg_name()).getWorkQueue().
+        system.getEnterpriseById(outlet.getShipcom_id()).getWorkQueue().
                 getOderById(this.orderReq.getOrderrequest_id()).getReview().setMessage(this.commentTextArea.getText());
         DB4OUtil.getInstance().storeSystem(system);
         this.dispose();

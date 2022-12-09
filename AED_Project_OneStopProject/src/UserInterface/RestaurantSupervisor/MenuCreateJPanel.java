@@ -10,7 +10,7 @@ import Model.Business.EcoSystem;
 import Model.Enterprise.Restaurant.Menu;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Outlet;
-import Model.Enterprise.Outlet.ShopType;
+import Model.Enterprise.Outlet.OutletType;
 import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
@@ -141,7 +141,7 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
                 return;
             }
             BigDecimal bd = new BigDecimal(price);
-            if (shop.getOut_type().equals(ShopType.Restaurant)) {
+            if (shop.getOut_type().equals(OutletType.Restaurant)) {
                 Restaurant res = (Restaurant) shop;
                 Menu dash = new Menu(res, name, price);
                 res.addDashToMenu(dash);
@@ -150,7 +150,7 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
                 p.populateMenuTable();
                 JOptionPane.showMessageDialog(null, "Dash created successfully");
             }
-            if (shop.getOut_type().equals(ShopType.Mart)) {
+            if (shop.getOut_type().equals(OutletType.Mart)) {
                 Mart store = (Mart) shop;
                 Product pro = new Product(store, name, price);
                 store.addProductToList(pro);

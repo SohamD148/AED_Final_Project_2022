@@ -7,7 +7,7 @@ package UserInterface.Consumer;
 
 import Model.Business.EcoSystem;
 import Model.Enterprise.Restaurant.Restaurant;
-import Model.Enterprise.Outlet.ShopType;
+import Model.Enterprise.Outlet.OutletType;
 import Model.Enterprise.Mart.Mart;
 import Model.Network.Network;
 import Model.Role.ConsumerRole;
@@ -26,19 +26,19 @@ import javax.swing.table.TableModel;
 public class OutletListJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
-    private JPanel panel;
+    private JPanel jPanel;
     private ConsumerAccount consumeracc;
     private Network network;
-    private ShopType type;
+    private OutletType type;
     private JFrame frame;
 
     /**
      * Creates new form RestaurantListJPanel
      */
-    public OutletListJPanel(EcoSystem system, Network net, JPanel container, ConsumerAccount account, ShopType type, JFrame frame) {
+    public OutletListJPanel(EcoSystem system, Network net, JPanel container, ConsumerAccount account, OutletType type, JFrame frame) {
         initComponents();
         this.system = system;
-        this.panel = container;
+        this.jPanel = container;
         this.consumeracc = account;
         this.network = net;
         this.type = type;
@@ -53,7 +53,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) OutletTable.getModel();
         dtm.setRowCount(0);
-        if (type.equals(ShopType.Restaurant)) {
+        if (type.equals(OutletType.Restaurant)) {
             for (Restaurant res : network.getRestaurantList()) {
                 Object row[] = new Object[2];
                 row[0] = res;
@@ -61,7 +61,7 @@ public class OutletListJPanel extends javax.swing.JPanel {
                 dtm.addRow(row);
             }
         }
-        if (type.equals(ShopType.Mart)) {
+        if (type.equals(OutletType.Mart)) {
             for (Mart mart : network.getStoreList()) {
                 Object row[] = new Object[2];
                 row[0] = mart;
@@ -256,17 +256,17 @@ public class OutletListJPanel extends javax.swing.JPanel {
         TableModel model = OutletTable.getModel();
 
         if (index >= 0) {
-            if (type.equals(ShopType.Mart)) {
+            if (type.equals(OutletType.Mart)) {
                 Mart mart = (Mart) model.getValueAt(index, 0);
                 restaurantNameLabel.setText(mart.getOrg_name());
-                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, mart, this.consumeracc, network, type);
+                OutletDetailsJPanel panel = new OutletDetailsJPanel(this.system, mart, this.consumeracc, network, type);
                 detailPanel.remove(this);
                 detailPanel.add(panel);
             }
-            if (type.equals(ShopType.Restaurant)) {
+            if (type.equals(OutletType.Restaurant)) {
                 Restaurant restaurant = (Restaurant) model.getValueAt(index, 0);
                 restaurantNameLabel.setText(restaurant.getOrg_name());
-                //ShopDetailsJPanel panel = new ShopDetailsJPanel(this.system, restaurant, this.consumeracc, network, type);
+                OutletDetailsJPanel panel = new OutletDetailsJPanel(this.system, restaurant, this.consumeracc, network, type);
                 detailPanel.remove(this);
                 detailPanel.add(panel);
             }
@@ -277,17 +277,17 @@ public class OutletListJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_OutletTableMouseClicked
 
     private void cartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartButtonActionPerformed
-        //CartJFrame frame = new CartJFrame(this.system, this.consumeracc, network);
+        BasketJFrame frame = new BasketJFrame(this.system, this.consumeracc, network);
         frame.setSize(500, 620);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }//GEN-LAST:event_cartButtonActionPerformed
 
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-        ConsumerProfileJPanel panel = new ConsumerProfileJPanel(this.system, this.panel, this.consumeracc, this.frame, new ConsumerRole());
-        this.panel.add(panel);
-        CardLayout layout = (CardLayout) this.panel.getLayout();
-        layout.next(this.panel);
+        ConsumerProfileJPanel panel = new ConsumerProfileJPanel(this.system, this.jPanel, this.consumeracc, this.frame, new ConsumerRole());
+        this.jPanel.add(panel);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
+        layout.next(this.jPanel);
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -298,10 +298,10 @@ public class OutletListJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CardLayout layout = (CardLayout) this.panel.getLayout();
-        ConsumerMainJPanel cp = new ConsumerMainJPanel(system, panel, this.consumeracc, frame);
-        this.panel.add(cp);
-        layout.next(this.panel);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
+        ConsumerMainJPanel cp = new ConsumerMainJPanel(system, jPanel, this.consumeracc, frame);
+        this.jPanel.add(cp);
+        layout.next(this.jPanel);
     }//GEN-LAST:event_backButtonActionPerformed
 
 

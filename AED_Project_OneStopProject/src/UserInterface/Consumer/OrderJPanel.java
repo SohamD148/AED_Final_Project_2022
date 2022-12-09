@@ -28,7 +28,7 @@ public class OrderJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
     private ConsumerAccount consumeracc;
-    private JPanel panel;
+    private JPanel jPanel;
     private Outlet outlet;
     private Network network;
 
@@ -39,7 +39,7 @@ public class OrderJPanel extends javax.swing.JPanel {
             Outlet outlet, Network network) {
         initComponents();
         this.system = system;
-        this.panel = panel;
+        this.jPanel = panel;
         this.consumeracc = customerAccount;
         this.outlet = outlet;
         this.network = network;
@@ -289,24 +289,24 @@ public class OrderJPanel extends javax.swing.JPanel {
         outlet.getWorkQueue().getWorkRequestDirectory().add(or);
         DB4OUtil.getInstance().storeSystem(system);
         
-        this.panel.remove(this);
-        //OrderConfirmationJPanel basketpanel = new OrderConfirmationJPanel(or);
-        this.panel.add(panel);
-        CardLayout layout = (CardLayout)this.panel.getLayout();
-        layout.next(this.panel);
+        this.jPanel.remove(this);
+        OrderConfirmationJPanel basketpanel = new OrderConfirmationJPanel(or);
+        this.jPanel.add(basketpanel);
+        CardLayout layout = (CardLayout)this.jPanel.getLayout();
+        layout.next(this.jPanel);
     }//GEN-LAST:event_confirmOrderButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        this.panel.remove(this);
-        CardLayout layout = (CardLayout) this.panel.getLayout();
+        this.jPanel.remove(this);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
 
-        for (Component com : this.panel.getComponents()) {
+        for (Component com : this.jPanel.getComponents()) {
             if (com instanceof BasketJPanel) {
                 BasketJPanel basketpanel = (BasketJPanel) com;
                 basketpanel.populateTable();
             }
         }
-        layout.previous(this.panel);
+        layout.previous(this.jPanel);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 

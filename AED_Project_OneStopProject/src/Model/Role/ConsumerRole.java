@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model.Role;
 
 import Model.Business.EcoSystem;
@@ -10,7 +7,7 @@ import Model.Network.Network;
 import Model.Organization.Organization;
 import Model.UserAccount.UserAccount;
 
-//import UserInterface.Consumer.ConsumerMainJPanel;
+import UserInterface.Consumer.ConsumerMainJPanel;
 
 import UserInterface.Consumer.ConsumerMainJPanel;
 

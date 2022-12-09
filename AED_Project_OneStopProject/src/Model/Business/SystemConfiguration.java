@@ -77,9 +77,9 @@ public class SystemConfiguration {
         restaurant1.setShipcom_id("Row");
         restaurant1.setPath("Images/RestaurantCut/default.png");
         restaurant1.setOut_description("This stylish brick-&-wood eatery serves an extensive oyster menu plus fish entrees & craft beers.");
-        Menu menu1 = new Menu(restaurant1, "Dash1", 20);
-        Menu menu2 = new Menu(restaurant1, "Dash2", 30);
-        Menu menu3 = new Menu(restaurant1, "Dash3", 27.6);
+        Menu menu1 = new Menu(restaurant1, "Menu1", 20);
+        Menu menu2 = new Menu(restaurant1, "Menu2", 30);
+        Menu menu3 = new Menu(restaurant1, "Menu3", 27.6);
         restaurant1.addDashToMenu(menu1);
         restaurant1.addDashToMenu(menu2);
         restaurant1.addDashToMenu(menu3);
@@ -116,7 +116,7 @@ public class SystemConfiguration {
         mart1.setShipcom_id("tarder");
 
         mart1.setPath("Images/StoreCut/default.png");
-        mart1.setType(Mart.StoreCategory.Organic);
+        mart1.setType(Mart.MartType.Organic);
         mart1.setOut_description("Trader Joe's is an American chain of grocery stores headquartered in Monrovia, California. The chain has over 530 stores across the United States");
         Product p1 = new Product(mart1, "Milk", 3.45);
         Product p2 = new Product(mart1, "Eggs", 4.49);

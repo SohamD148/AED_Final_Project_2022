@@ -25,7 +25,7 @@ public class BasketJPanel extends javax.swing.JPanel {
     private EcoSystem system;
     private ConsumerAccount consumeracc;
     private Network network;
-    private JPanel panel;
+    private JPanel jPanel;
 
     /**
      * Creates new form CartJPanel
@@ -34,7 +34,7 @@ public class BasketJPanel extends javax.swing.JPanel {
         initComponents();
 
         this.system = system;
-        this.panel = container;
+        this.jPanel = container;
         this.consumeracc = account;
         this.network = net;
 
@@ -220,11 +220,11 @@ public class BasketJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cartTableMouseClicked
 
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
-        OrderJPanel panel = new OrderJPanel(this.system, this.panel, this.consumeracc, 
+        OrderJPanel panel = new OrderJPanel(this.system, this.jPanel, this.consumeracc, 
             consumeracc.getBasket().getCommodityDirectory().get(0).getShopModel(), network);
-        this.panel.add(panel);
-        CardLayout layout = (CardLayout) this.panel.getLayout();
-        layout.next(this.panel);
+        this.jPanel.add(panel);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
+        layout.next(this.jPanel);
     }//GEN-LAST:event_checkoutButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

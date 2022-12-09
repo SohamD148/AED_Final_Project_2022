@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package UserInterface.MartSupervisor;
 
 import Model.Consumer.CommodityOrder;
@@ -13,7 +9,7 @@ import Model.Enterprise.Enterprise;
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
-import Model.Enterprise.Mart.Mart.StoreCategory;
+import Model.Enterprise.Mart.Mart.MartType;
 import Model.Network.Network;
 import Model.Organization.Organization;
 import Model.Role.Role;
@@ -87,7 +83,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
             jTabbedPane1.removeTabAt(5);
         }
         
-        for (StoreCategory c : EnumSet.allOf(StoreCategory.class)) {
+        for (MartType c : EnumSet.allOf(MartType.class)) {
             categoryComboBox.addItem(c);
         }
 
@@ -690,7 +686,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "Dash", "Quantity"
+                "Menu", "Quantity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -796,7 +792,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Date", "Customer", "Rate", "Comment"
+                "Menu", "Customer", "Rate", "Comment"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1202,7 +1198,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
             store.setOrg_name(nameTextField.getText());
             store.setOut_address(addressTextArea.getText());
             store.setOut_description(descriptionTextArea.getText());
-            store.setType((StoreCategory) categoryComboBox.getSelectedItem());
+            store.setType((MartType) categoryComboBox.getSelectedItem());
             store.setOut_phone(phoneTextField.getText());
             if (!path.equalsIgnoreCase(originPath)) {
                 store.setPath(path);
@@ -1441,7 +1437,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelOrderButton;
-    private javax.swing.JComboBox<StoreCategory> categoryComboBox;
+    private javax.swing.JComboBox<MartType> categoryComboBox;
     private javax.swing.JTextArea commentTextArea;
     private javax.swing.JTextField compayTextField;
     private javax.swing.JButton createButton1;

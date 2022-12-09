@@ -6,7 +6,7 @@
 package UserInterface.Consumer;
 
 import Model.Business.EcoSystem;
-import Model.Enterprise.Outlet.ShopType;
+import Model.Enterprise.Outlet.OutletType;
 import Model.Network.Network;
 import Model.Role.ConsumerRole;
 import Model.UserAccount.ConsumerAccount;
@@ -27,7 +27,7 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
     private ConsumerAccount consumerAccount;
-    private JPanel panel;
+    private JPanel jPanel;
     private JFrame frame;
 
     /**
@@ -41,7 +41,7 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
     public ConsumerMainJPanel(EcoSystem system, JPanel panel, UserAccount userAccount, JFrame frame) {
         initComponents();
         this.system = system;
-        this.panel = panel;
+        this.jPanel = panel;
         this.frame = frame;
         this.consumerAccount = (ConsumerAccount) userAccount;
 
@@ -192,20 +192,20 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
         if (networkList.getSelectedValue() != null) {
             Network net = system.getNetworkByCity((String) networkList.getSelectedValue());
             String city = (String) networkList.getSelectedValue();
-            ShopType type = (ShopType) enterpriseList.getSelectedValue();
+            OutletType type = (OutletType) enterpriseList.getSelectedValue();
 
-            //ShopListJPanel panel = new ShopListJPanel(system, net, this.panel, this.consumerAccount, type, this.frame);
-            this.panel.add(panel);
-            CardLayout layout = (CardLayout) this.panel.getLayout();
-            layout.next(this.panel);
+            OutletListJPanel panel = new OutletListJPanel(system, net, this.jPanel, this.consumerAccount, type, this.frame);
+            this.jPanel.add(panel);
+            CardLayout layout = (CardLayout) this.jPanel.getLayout();
+            layout.next(this.jPanel);
         }
     }//GEN-LAST:event_goButtonActionPerformed
 
     private void networkListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_networkListValueChanged
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) enterpriseList.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
-        DefaultListModel<ShopType> model = new DefaultListModel<>();
-        for (ShopType type : ShopType.values()) {
+        DefaultListModel<OutletType> model = new DefaultListModel<>();
+        for (OutletType type : OutletType.values()) {
             model.addElement(type);
         }
         enterpriseList.setModel(model);
@@ -213,10 +213,10 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkListValueChanged
 
     private void viewprofileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewprofileButtonActionPerformed
-        //CustomerProfileJPanel panel = new CustomerProfileJPanel(this.system, this.panel, this.consumerAccount, this.frame, new CustomerRole());
-        this.panel.add(panel);
-        CardLayout layout = (CardLayout) this.panel.getLayout();
-        layout.next(this.panel);
+        //CustomerProfileJPanel jPanel = new CustomerProfileJPanel(this.system, this.jPanel, this.consumerAccount, this.frame, new CustomerRole());
+        this.jPanel.add(jPanel);
+        CardLayout layout = (CardLayout) this.jPanel.getLayout();
+        layout.next(this.jPanel);
     }//GEN-LAST:event_viewprofileButtonActionPerformed
 
     private void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
@@ -236,7 +236,7 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<ShopType> enterpriseList;
+    private javax.swing.JList<OutletType> enterpriseList;
     private javax.swing.JButton goButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

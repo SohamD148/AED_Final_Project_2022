@@ -14,7 +14,7 @@ import Model.Enterprise.Commodity;
 import Model.Enterprise.Restaurant.Menu;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Outlet;
-import Model.Enterprise.Outlet.ShopType;
+import Model.Enterprise.Outlet.OutletType;
 import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
 import Model.Network.Network;
@@ -37,12 +37,12 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
     private Outlet outlet;
     private ConsumerAccount consumeracc;
     private Network network;
-    private ShopType outletype;
+    private OutletType outletype;
 
     /**
      * Creates new form RestaurantDetailsJPanel
      */
-    public OutletDetailsJPanel(EcoSystem system, Outlet outlet, ConsumerAccount account, Network net, ShopType type) {
+    public OutletDetailsJPanel(EcoSystem system, Outlet outlet, ConsumerAccount account, Network net, OutletType type) {
         initComponents();
         this.system = system;
         this.outlet = outlet;
@@ -50,7 +50,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
         this.network = net;
         this.outletype = type;
 
-        if (!type.equals(ShopType.Restaurant)) {
+        if (!type.equals(OutletType.Restaurant)) {
             this.outletDetailTab.setTitleAt(1, "Product");
         }
 
@@ -92,7 +92,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) menuTable.getModel();
         dtm.setRowCount(0);
-        if (outletype.equals(ShopType.Restaurant)) {
+        if (outletype.equals(OutletType.Restaurant)) {
             Restaurant res = (Restaurant) outlet;
             if (res.getCategoryString() != null) {
                 categoryLabel.setText(res.getCategoryString());
@@ -105,7 +105,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
                 dtm.addRow(row);
             }
         }
-        if (outletype.equals(ShopType.Mart)) {
+        if (outletype.equals(OutletType.Mart)) {
             Mart mart = (Mart) outlet;
             if (mart.getCategoryString() != null) {
                 categoryLabel.setText(mart.getCategoryString());
@@ -121,11 +121,11 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
 
     private void showImage() {
         ImageIcon image = null;
-        if (outletype.equals(ShopType.Restaurant)) {
+        if (outletype.equals(OutletType.Restaurant)) {
             Restaurant res = (Restaurant) outlet;
             image = new ImageIcon(res.getPath());
         }
-        if (outletype.equals(ShopType.Mart)) {
+        if (outletype.equals(OutletType.Mart)) {
             Mart store = (Mart) outlet;
             image = new ImageIcon(store.getPath());
         }
@@ -403,10 +403,10 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
             int quantity = (int) quantitySpinner.getValue();
 
             CommodityOrder line = null;
-            if (this.outletype.equals(ShopType.Restaurant)) {
+            if (this.outletype.equals(OutletType.Restaurant)) {
                 line = new OrderMenu(this.outlet, item, quantity);
             }
-            if (this.outletype.equals(ShopType.Mart)) {
+            if (this.outletype.equals(OutletType.Mart)) {
                 line = new ProductOrder(this.outlet, item, quantity);
             }
             if (!this.consumeracc.getBasket().isBasketEmpty()) {

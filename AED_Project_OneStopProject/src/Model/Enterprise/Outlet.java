@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model.Enterprise;
 
 import java.util.ArrayList;
@@ -16,17 +13,17 @@ public abstract class Outlet extends Enterprise {
     private String out_address;
     private String out_phone;
     private String out_description;
-    private ShopType out_type;
+    private OutletType out_type;
     private ArrayList<Commodity> commodity;
 
-    public enum ShopType {
+    public enum OutletType {
 
         Restaurant("Restaurant"),
         Mart("Store");
 
         private String value;
 
-        private ShopType(String value) {
+        private OutletType(String value) {
             this.value = value;
         }
 
@@ -77,11 +74,11 @@ public abstract class Outlet extends Enterprise {
         this.out_description = des;
     }
 
-    public void setOut_type(ShopType out_type) {
+    public void setOut_type(OutletType out_type) {
         this.out_type = out_type;
     }
 
-    public abstract ShopType getOut_type();
+    public abstract OutletType getOut_type();
 
     public ArrayList<Commodity> getCommodity() {
         return this.commodity;
