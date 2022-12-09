@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.RestaurantSupervisor;
+package UserInterface.MartSupervisor;
 
 import Model.Consumer.CommodityOrder;
 import Model.DB4OUtil.DB4OUtil;
@@ -11,9 +11,9 @@ import Model.Business.EcoSystem;
 import Model.Employee.Employee;
 import Model.Enterprise.Enterprise;
 import Model.Enterprise.Commodity;
-import Model.Enterprise.Restaurant.Menu;
-import Model.Enterprise.Restaurant.Restaurant;
-import Model.Enterprise.Restaurant.Restaurant.RestaurantCategory;
+import Model.Enterprise.Mart.Product;
+import Model.Enterprise.Mart.Mart;
+import Model.Enterprise.Mart.Mart.StoreCategory;
 import Model.Network.Network;
 import Model.Organization.Organization;
 import Model.Role.Role;
@@ -24,9 +24,12 @@ import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.ReviewRequest;
 import Model.WorkQueue.WorkRequest;
 import Model.WorkQueue.WorkRequest.StatusEnum;
-import UserInterface.Employee.CreateEmployeeJPanel;
-import UserInterface.Employee.EditEmployeeJPanel;
 import UserInterface.SignInJFrame;
+import UserInterface.Employee.CreateEmployeeJPanel;
+import UserInterface.RestaurantSupervisor.MenuCreateJPanel;
+import UserInterface.RestaurantSupervisor.EditMenuJPanel;
+import UserInterface.Employee.EditEmployeeJPanel;
+import UserInterface.RestaurantSupervisor.SelectShipmentJFrame;
 import java.awt.CardLayout;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -42,14 +45,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rutu
  */
-public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
+public class MartSupervisorMainJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
     private JPanel container;
     private Network net;
     private Enterprise en;
     private EmployeeAccount employeeAccount;
-    private Restaurant restaurant;
+    private Mart store;
     private JFrame frame;
     private Role accessRole;
     private String path;
@@ -60,7 +63,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RestaurantMainJPanel
      */
-    public RestaurantSupervisorMainJPanel(EcoSystem system, JPanel container, Network net, Enterprise en,
+    public MartSupervisorMainJPanel(EcoSystem system, JPanel container, Network net, Enterprise en,
             UserAccount userAccount, JFrame frame, Role accessRole) {
         initComponents();
         this.system = system;
@@ -70,9 +73,9 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         this.employeeAccount = (EmployeeAccount) userAccount;
         this.frame = frame;
         this.accessRole = accessRole;
-        this.restaurant = (Restaurant) en;
-        this.originPath = this.restaurant.getPath();
-        this.path = this.restaurant.getPath();
+        this.store = (Mart) en;
+        this.originPath = this.store.getPath();
+        this.path = this.store.getPath();
         this.employee = this.employeeAccount.getEmployee();
 
         if (accessRole.getRoleType().equals(RoleType.SystemAdmin)) {
@@ -83,10 +86,14 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
             jTabbedPane1.removeTabAt(5);
             jTabbedPane1.removeTabAt(5);
         }
+        
+        for (StoreCategory c : EnumSet.allOf(StoreCategory.class)) {
+            categoryComboBox.addItem(c);
+        }
 
         populateOrderTable();
         populateMenuTable();
-        populateEmployeeTable(restaurant.getOrganizationDirectory().getOrganizationDirectory());
+        populateEmployeeTable(store.getOrganizationDirectory().getOrganizationDirectory());
 
         if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
             editButton.setVisible(false);
@@ -95,10 +102,10 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
             cancelButton.setVisible(false);
         }
 
-        for (RestaurantCategory c : EnumSet.allOf(RestaurantCategory.class)) {
-            categoryComboBox.addItem(c);
-        }
-
+//        categoryComboBox = new JComboBox<RestaurantCategory>();
+//        for (RestaurantCategory c : Restaurant.RestaurantCategory.values()) {
+//            categoryComboBox.addItem(c);
+//        }
         // Overview Panel
         editButton.setEnabled(true);
         saveButton.setEnabled(false);
@@ -120,20 +127,20 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         commentTextArea.setEnabled(false);
         deliveryButton.setEnabled(false);
         cancelOrderButton.setEnabled(false);
-
+        
         // Review Panel
         populateReviewTable();
-        if (restaurant.getRate() == -1) {
+        if (store.getRate() == -1) {
             currentRateTextField.setText("N/A");
         } else {
-            currentRateTextField.setText(restaurant.getRate() + "");
+            currentRateTextField.setText(store.getRate()+"");
         }
     }
-
+    
     public void populateReviewTable() {
         DefaultTableModel dtm = (DefaultTableModel) reviewTable.getModel();
         dtm.setRowCount(0);
-        for (WorkRequest wr : restaurant.getWorkQueue().getWorkRequestDirectory()) {
+        for (WorkRequest wr : store.getWorkQueue().getWorkRequestDirectory()) {
             OrderRequest or = (OrderRequest) wr;
             if (or.isReviewed()) {
                 Object row[] = new Object[4];
@@ -150,13 +157,12 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     public void populateMenuTable() {
         DefaultTableModel dtm = (DefaultTableModel) menuTable.getModel();
         dtm.setRowCount(0);
-        for (Menu dash : restaurant.getMenu()) {
+        for (Product product : store.getGoods()) {
             Object row[] = new Object[2];
-            row[0] = dash;
-            row[1] = dash.getCom_price();
+            row[0] = product;
+            row[1] = product.getCom_price();
             dtm.addRow(row);
         }
-        
         jButton2.setEnabled(false);
     }
 
@@ -184,7 +190,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     public void populateOrderTable() {
         DefaultTableModel dtm = (DefaultTableModel) orderTable.getModel();
         dtm.setRowCount(0);
-        for (WorkRequest wr : restaurant.getWorkQueue().getWorkRequestDirectory()) {
+        for (WorkRequest wr : store.getWorkQueue().getWorkRequestDirectory()) {
             OrderRequest or = (OrderRequest) wr;
             Object row[] = new Object[5];
             row[0] = or;
@@ -239,12 +245,12 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     }
 
     private void setOverviewInfo() {
-        nameLabel.setText(restaurant.getOrg_name());
-        nameTextField.setText(restaurant.getOrg_name());
-        phoneTextField.setText(restaurant.getOut_phone());
-        addressTextArea.setText(restaurant.getOut_address());
-        descriptionTextArea.setText(restaurant.getOut_description());
-        categoryComboBox.setSelectedItem(restaurant.getType());
+        nameLabel.setText(store.getOrg_name());
+        nameTextField.setText(store.getOrg_name());
+        phoneTextField.setText(store.getOut_phone());
+        addressTextArea.setText(store.getOut_address());
+        descriptionTextArea.setText(store.getOut_description());
+        categoryComboBox.setSelectedItem(store.getType());
         ImageIcon image = new ImageIcon(originPath);
         image.setImage(image.getImage().getScaledInstance(250, 180, Image.SCALE_DEFAULT));
         imageLabel.setIcon(image);
@@ -298,8 +304,8 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         menuTable = new javax.swing.JTable();
         detailPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         createPanel = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         employeePanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -416,7 +422,6 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         jScrollPane4.setViewportView(addressTextArea);
 
         descriptionTextArea.setColumns(20);
-        descriptionTextArea.setLineWrap(true);
         jScrollPane5.setViewportView(descriptionTextArea);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -513,7 +518,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "Dash", "Price"
+                "Product", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -533,16 +538,16 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
 
         detailPanel.setLayout(new java.awt.CardLayout());
 
-        jButton1.setText("Create Dash");
+        createPanel.setLayout(new java.awt.CardLayout());
+
+        jButton1.setText("Create Product");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        createPanel.setLayout(new java.awt.CardLayout());
-
-        jButton2.setText("Remove Dash");
+        jButton2.setText("Remove Product");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -561,10 +566,10 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                     .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(createPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(88, 88, 88))
+                .addGap(77, 77, 77))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,7 +588,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Manage Menu", menuPanel);
+        jTabbedPane1.addTab("Manage Products", menuPanel);
 
         employeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1180,7 +1185,6 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         cancelButton.setEnabled(false);
         editButton.setEnabled(true);
         uploadButton.setEnabled(false);
-        categoryComboBox.setEnabled(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -1188,7 +1192,6 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         cancelButton.setEnabled(true);
         editButton.setEnabled(false);
         uploadButton.setEnabled(true);
-        categoryComboBox.setEnabled(true);
 
         setOverviewFieldsEditable(true);
     }//GEN-LAST:event_editButtonActionPerformed
@@ -1196,13 +1199,14 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (!phoneTextField.getText().equals("") && !addressTextArea.getText().equals("")
                 && !descriptionTextArea.getText().equals("") && !nameTextField.getText().equals("")) {
-            restaurant.setOrg_name(nameTextField.getText());
-            restaurant.setOut_address(addressTextArea.getText());
-            restaurant.setOut_description(descriptionTextArea.getText());
-            restaurant.setType((RestaurantCategory) categoryComboBox.getSelectedItem());
-            restaurant.setOut_phone(phoneTextField.getText());
+            store.setOrg_name(nameTextField.getText());
+            store.setOut_address(addressTextArea.getText());
+            store.setOut_description(descriptionTextArea.getText());
+            store.setType((StoreCategory) categoryComboBox.getSelectedItem());
+            store.setOut_phone(phoneTextField.getText());
             if (!path.equalsIgnoreCase(originPath)) {
-                restaurant.setPath(path);
+                store.setPath(path);
+                System.out.println(path);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Information can't be empty");
@@ -1217,7 +1221,6 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         cancelButton.setEnabled(false);
         editButton.setEnabled(true);
         uploadButton.setEnabled(false);
-        categoryComboBox.setEnabled(false);
 
         DB4OUtil.getInstance().storeSystem(system);
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -1228,7 +1231,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         int i = chooser.showOpenDialog(null);
         if (i == chooser.APPROVE_OPTION) {
             path = chooser.getSelectedFile().getAbsolutePath();
-            restaurant.setPath(path);
+            store.setPath(path);
         } else {
             JOptionPane.showMessageDialog(null, "No file was selected");
         }
@@ -1287,8 +1290,8 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         int index = menuTable.getSelectedRow();
 
         if (index >= 0) {
-            Menu dash = (Menu) menuTable.getValueAt(index, 0);
-            EditMenuJPanel panel = new EditMenuJPanel(this.system, this, this.detailPanel, dash);
+            Product product = (Product) menuTable.getValueAt(index, 0);
+            EditMenuJPanel panel = new EditMenuJPanel(this.system, this, this.detailPanel, product);
             this.detailPanel.add(panel);
             CardLayout layout = (CardLayout) this.detailPanel.getLayout();
             layout.next(this.detailPanel);
@@ -1318,7 +1321,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelOrderButtonActionPerformed
 
     private void deliveryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliveryButtonActionPerformed
-        SelectShipmentJFrame f = new SelectShipmentJFrame(this.system, this, this.net, this.restaurant, this.selectedOrder);
+        SelectShipmentJFrame f = new SelectShipmentJFrame(this.system, this, this.net, this.store, this.selectedOrder);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }//GEN-LAST:event_deliveryButtonActionPerformed
@@ -1386,11 +1389,22 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameTextFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MenuCreateJPanel p = new MenuCreateJPanel(system, this, createPanel, this.restaurant);
+        MenuCreateJPanel p = new MenuCreateJPanel(system, this, createPanel, this.store);
         this.createPanel.add(p);
-        CardLayout layout = (CardLayout) createPanel.getLayout();
+        CardLayout layout = (CardLayout)createPanel.getLayout();
         layout.next(createPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void reviewTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewTableMouseClicked
+        int index = reviewTable.getSelectedRow();
+
+        if (index >= 0) {
+            ReviewRequest rr = (ReviewRequest) reviewTable.getValueAt(index, 0);
+            customerTextField.setText(rr.getAccount().getUsername());
+            rateTextField.setText(rr.getRating()+"");
+            reviewTextArea.setText(rr.getMessage());
+        }
+    }//GEN-LAST:event_reviewTableMouseClicked
 
     private void rateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rateTextFieldActionPerformed
         // TODO add your handling code here:
@@ -1400,17 +1414,6 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_customerTextFieldActionPerformed
 
-    private void reviewTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewTableMouseClicked
-        int index = reviewTable.getSelectedRow();
-
-        if (index >= 0) {
-            ReviewRequest rr = (ReviewRequest) reviewTable.getValueAt(index, 0);
-            customerTextField.setText(rr.getAccount().getUsername());
-            rateTextField.setText(rr.getRating() + "");
-            reviewTextArea.setText(rr.getMessage());
-        }
-    }//GEN-LAST:event_reviewTableMouseClicked
-
     private void currentRateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentRateTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_currentRateTextFieldActionPerformed
@@ -1419,14 +1422,13 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         int index = menuTable.getSelectedRow();
 
         if (index >= 0) {
-            Restaurant res = (Restaurant) this.en;
-            int choice = JOptionPane.showConfirmDialog(null, "Are you sure to remove this dash from the system?");
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure to remove this product from the system?");
             if (choice == 0) {
-                ArrayList<Commodity> result = res.getCommodity();
+                ArrayList<Commodity> result = store.getCommodity();
                 result.remove(index);
-                res.setCommodity(result);
+                store.setCommodity(result);
                 DB4OUtil.getInstance().storeSystem(system);
-                
+
                 populateMenuTable();
             }
         }
@@ -1439,7 +1441,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelOrderButton;
-    private javax.swing.JComboBox<RestaurantCategory> categoryComboBox;
+    private javax.swing.JComboBox<StoreCategory> categoryComboBox;
     private javax.swing.JTextArea commentTextArea;
     private javax.swing.JTextField compayTextField;
     private javax.swing.JButton createButton1;
