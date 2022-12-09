@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author rutu
+ * @author ranranhe
  */
 public class NetworkJFrame extends javax.swing.JFrame {
 

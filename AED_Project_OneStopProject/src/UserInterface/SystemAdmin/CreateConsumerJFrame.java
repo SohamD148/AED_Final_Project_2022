@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author rutu
+ * @author ranranhe
  */
 public class CreateConsumerJFrame extends javax.swing.JFrame {
     

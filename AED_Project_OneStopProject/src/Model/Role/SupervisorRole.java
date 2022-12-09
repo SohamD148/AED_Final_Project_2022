@@ -11,9 +11,15 @@ import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Mart;
 import Model.Network.Network;
 import Model.UserAccount.UserAccount;
+
 //import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
 //import UserInterface.Restaurant.Supervisor.RestaurantSupervisorMainJPanel;
 //import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+
+import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
+import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,6 +41,7 @@ public class SupervisorRole extends Role{
 
     @Override
     public void createWorkArea(EcoSystem system, JPanel container, UserAccount userAccount, Network net, Enterprise en, JFrame frame) {
+
 //        if (en instanceof Restaurant) {
 //            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
 //            container.add(cp);
@@ -47,6 +54,20 @@ public class SupervisorRole extends Role{
 //            MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
 //            container.add(cp);
 //        }
+
+        if (en instanceof Restaurant) {
+            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
+            container.add(cp);
+        }
+        if (en instanceof ShipmentCompany) {
+            ShipmentCompanySupervisorMainJPanel cp = new ShipmentCompanySupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
+            container.add(cp);
+        }
+        if (en instanceof Mart) {
+            MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
+            container.add(cp);
+        }
+
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }

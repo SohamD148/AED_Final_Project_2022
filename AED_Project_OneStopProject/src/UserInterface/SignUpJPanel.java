@@ -6,7 +6,15 @@
 package UserInterface;
 
 import Model.Business.EcoSystem;
+
 //import UI.Consumer.ConsumerRegistrationInfoJPanel;
+
+
+import UserInterface.Consumer.ConsumerRegistrationJPanel;
+
+//import UI.Consumer.ConsumerRegistrationInfoJPanel;
+
+
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -182,8 +190,18 @@ public class SignUpJPanel extends javax.swing.JPanel {
         if (system.isUserNameAvaliable(username)) {
             if (password1.equals(password2)) {
                 this.frame.setSize(500, 430);
+
 //                ConsumerRegistrationInfoJPanel cp = new ConsumerRegistrationInfoJPanel(this.system, this.leftPanel, this.frame, username, password1);
 //                this.leftPanel.add("CustomerRegistrationInfoJPanel", cp);
+
+
+                ConsumerRegistrationJPanel cp = new ConsumerRegistrationJPanel(this.system, this.leftPanel, this.frame, username, password1);
+                this.leftPanel.add("CustomerRegistrationInfoJPanel", cp);
+
+//                ConsumerRegistrationInfoJPanel cp = new ConsumerRegistrationInfoJPanel(this.system, this.leftPanel, this.frame, username, password1);
+//                this.leftPanel.add("CustomerRegistrationInfoJPanel", cp);
+
+
                 CardLayout layout = (CardLayout) this.leftPanel.getLayout();
                 leftPanel.remove(this);
                 layout.next(this.leftPanel);

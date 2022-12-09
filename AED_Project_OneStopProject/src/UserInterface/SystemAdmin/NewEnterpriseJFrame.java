@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author rutu
+ * @author ranranhe
  */
 public class NewEnterpriseJFrame extends javax.swing.JFrame {
 

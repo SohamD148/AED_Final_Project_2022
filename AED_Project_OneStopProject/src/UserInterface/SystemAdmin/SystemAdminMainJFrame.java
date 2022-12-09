@@ -16,14 +16,14 @@ import Model.UserAccount.ConsumerAccount;
 import Model.UserAccount.EmployeeAccount;
 import Model.UserAccount.UserAccount;
 import UserInterface.Consumer.ConsumerProfileJPanel;
-//import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
-//import UserInterface.Restaurant.Supervisor.RestaurantSupervisorMainJPanel;
-//import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
+import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
 import java.awt.CardLayout;
 
 /**
  *
- * @author rutu
+ * @author ranranhe
  */
 public class SystemAdminMainJFrame extends javax.swing.JFrame {
 
@@ -39,21 +39,21 @@ public class SystemAdminMainJFrame extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-//        if (selectedEnterprise instanceof Restaurant) {
-//            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, this.jPanel1,
-//                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
-//            this.jPanel1.add(cp);
-//        }
-//        if (selectedEnterprise instanceof ShipmentCompany) {
-//            ShipmentCompanySupervisorMainJPanel cp = new ShipmentCompanySupervisorMainJPanel(system, this.jPanel1,
-//                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
-//            this.jPanel1.add(cp);
-//        }
-//        if (selectedEnterprise instanceof Mart) {
-//            MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, this.jPanel1,
-//                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
-//            this.jPanel1.add(cp);
-//        }
+        if (selectedEnterprise instanceof Restaurant) {
+            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, this.jPanel1,
+                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
+            this.jPanel1.add(cp);
+        }
+        if (selectedEnterprise instanceof ShipmentCompany) {
+            ShipmentCompanySupervisorMainJPanel cp = new ShipmentCompanySupervisorMainJPanel(system, this.jPanel1,
+                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
+            this.jPanel1.add(cp);
+        }
+        if (selectedEnterprise instanceof Mart) {
+            MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, this.jPanel1,
+                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
+            this.jPanel1.add(cp);
+        }
         if (selectedEnterprise == null) {
             ConsumerProfileJPanel cp = new ConsumerProfileJPanel(system, panel, 
                     (ConsumerAccount) customerAccount, this, new SystemAdminRole());
