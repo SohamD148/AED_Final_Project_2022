@@ -6,7 +6,6 @@
 package UserInterface;
 
 import Model.Business.EcoSystem;
-import Model.Business.SystemConfiguration;
 import Model.Enterprise.Enterprise;
 import Model.Network.Network;
 import Model.Organization.Organization;
