@@ -9,6 +9,7 @@ import Model.Enterprise.Enterprise;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Network.Network;
 import Model.UserAccount.UserAccount;
+import UserInterfaceChef.ChefMainJPanel;
 //import UserInterfaceChef.ChefMainJPanel;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
@@ -23,28 +24,19 @@ public class ChefRole extends Role{
         super(Role.RoleType.Chef);
     }
 
-//    @Override
-//    public String toString() {
-//        return Role.RoleType.Chef.getValue();
-//}
-//
-//    @Override
-//    public void createWorkArea(EcoSystem system, JPanel container, UserAccount userAccount, Network net, Enterprise en, JFrame frame) {
-//
-//            ChefMainJPanel cp = new ChefMainJPanel(system, container, net, en, userAccount, frame, this);
-//            container.add(cp);
-//     CardLayout layout = (CardLayout) container.getLayout();
-//        layout.next(container);
-//    }
-
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        return Role.RoleType.Chef.getValue();
+}
 
     @Override
     public void createWorkArea(EcoSystem system, JPanel container, UserAccount userAccount, Network net, Enterprise en, JFrame frame) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+            ChefMainJPanel cp = new ChefMainJPanel(system, container, net, en, userAccount, frame, this);
+            container.add(cp);
+     CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }
 }
+
 
