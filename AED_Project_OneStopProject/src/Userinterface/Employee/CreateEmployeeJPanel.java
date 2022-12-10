@@ -271,10 +271,15 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                 char[] passwordCharArray2 = passwordField2.getPassword();
                 String new2 = String.valueOf(passwordCharArray2);
                 
-                
-                
-                
-
+                if(!Validation.isValidEmail(emailTextField.getText()))
+                {
+                JOptionPane.showMessageDialog(null, "Please enter valid email id");
+                return;
+                }
+                if(!Validation.isValidMobileNumber(phoneTextField.getText())){
+                JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
+                return;
+                }
                 if (!emailTextField.getText().equals("") && !firstNameTextField.getText().equals("") && !new1.equals("") && !new2.equals("")
                         && !lastNameTextField.getText().equals("") && !phoneTextField.getText().equals("")) {
                     if (new1.equals(new2)) {
