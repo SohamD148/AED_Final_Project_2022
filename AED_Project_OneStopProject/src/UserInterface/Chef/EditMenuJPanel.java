@@ -3,19 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterfaceChef;
+package UserInterface.Chef;
 
 import UserInterface.RestaurantSupervisor.*;
 import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
-import Model.Enterprise.Restaurant.Menu;
-import Model.Enterprise.Restaurant.Restaurant;
-import Model.Enterprise.Outlet;
-import Model.Enterprise.Outlet.OutletType;
-import Model.Enterprise.Mart.Product;
-import Model.Enterprise.Mart.Mart;
+import Model.Enterprise.Commodity;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
-import java.awt.CardLayout;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,22 +18,39 @@ import javax.swing.JPanel;
  *
  * @author rutu
  */
-public class MenuCreateJPanel extends javax.swing.JPanel {
+public class EditMenuJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
     private JPanel panel;
-    private JPanel createPanel;
-    private Outlet shop;
+    private JPanel detailPanel;
+    private Commodity item;
 
     /**
-     * Creates new form DashCreateJPanel
+     * Creates new form DashEditJPanel
      */
-    public MenuCreateJPanel(EcoSystem system, JPanel panel, JPanel createPanel, Outlet shop) {
+    public EditMenuJPanel(EcoSystem system, JPanel panel, JPanel detailPanel, Commodity item) {
         initComponents();
         this.system = system;
         this.panel = panel;
-        this.createPanel = createPanel;
-        this.shop = shop;
+        this.detailPanel = detailPanel;
+        this.item = item;
+
+        setInfo();
+
+        setFieldsEditable(false);
+        cancelButton.setEnabled(false);
+        editButton.setEnabled(true);
+        submitButton.setEnabled(false);
+    }
+
+    private void setFieldsEditable(boolean b) {
+        priceTextField.setEnabled(b);
+        nameTextField.setEnabled(b);
+    }
+
+    private void setInfo() {
+        nameTextField.setText(item.getCom_name());
+        priceTextField.setText(item.getCom_price() + "");
     }
 
     /**
@@ -55,19 +66,16 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
         priceTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setText("Name:");
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setText("Price:");
-
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Create");
 
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,30 +91,44 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
             }
         });
 
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Edit");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
-                    .addGap(26, 26, 26)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(40, 40, 40))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(26, 26, 26)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(submitButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)))
+                .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -125,7 +147,8 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
-                    .addComponent(cancelButton))
+                    .addComponent(cancelButton)
+                    .addComponent(editButton))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -141,40 +164,50 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Information can't be empty!");
                 return;
             }
+            this.item.setCom_name(name);
             BigDecimal bd = new BigDecimal(price);
-            if (shop.getOut_type().equals(OutletType.Restaurant)) {
-                Restaurant res = (Restaurant) shop;
-                Menu dash = new Menu(res, name, price);
-                res.addToMenu(dash);
-                DB4OUtil.getInstance().storeSystem(system);
-                ChefMainJPanel p = (ChefMainJPanel) panel;
+            this.item.setCom_price(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            DB4OUtil.getInstance().storeSystem(system);
+
+            setFieldsEditable(false);
+            cancelButton.setEnabled(false);
+            editButton.setEnabled(true);
+            submitButton.setEnabled(false);
+            if (panel instanceof ChefMainJPanel) {
+                ChefMainJPanel p = (ChefMainJPanel)panel;
                 p.populateMenuTable();
-                JOptionPane.showMessageDialog(null, "Dash created successfully");
+                JOptionPane.showMessageDialog(null, "Dash Information modified successfully");
             }
-            if (shop.getOut_type().equals(OutletType.Mart)) {
-                Mart store = (Mart) shop;
-                Product pro = new Product(store, name, price);
-                store.addProductToList(pro);
-                DB4OUtil.getInstance().storeSystem(system);
-                MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
+            if (panel instanceof MartSupervisorMainJPanel) {
+                MartSupervisorMainJPanel p = (MartSupervisorMainJPanel)panel;
                 p.populateMenuTable();
-                JOptionPane.showMessageDialog(null, "Product created successfully");
+                JOptionPane.showMessageDialog(null, "Product Information modified successfully");
             }
-            createPanel.remove(this);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Price should be a number.");
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        setFieldsEditable(true);
+        cancelButton.setEnabled(true);
+        editButton.setEnabled(false);
+        submitButton.setEnabled(true);
+    }//GEN-LAST:event_editButtonActionPerformed
+
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        createPanel.remove(this);
-        CardLayout layout = (CardLayout) createPanel.getLayout();
-        layout.previous(createPanel);
+        setFieldsEditable(false);
+        cancelButton.setEnabled(false);
+        editButton.setEnabled(true);
+        submitButton.setEnabled(false);
+
+        setInfo();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
