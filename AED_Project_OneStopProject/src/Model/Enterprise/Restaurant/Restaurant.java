@@ -6,6 +6,7 @@ package Model.Enterprise.Restaurant;
 
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Outlet;
+import Model.Organization.ChefOrganization;
 import Model.Organization.SupervisorOrganization;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.WorkRequest;
@@ -94,6 +95,7 @@ public class Restaurant extends Outlet {
     @Override
     public void createOrganizations() {
         this.getOrganizationDirectory().getOrganizationDirectory().add(new SupervisorOrganization());
+        this.getOrganizationDirectory().getOrganizationDirectory().add(new ChefOrganization());
     }
 
     public int getPhotoId() {

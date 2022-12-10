@@ -21,7 +21,8 @@ public abstract class Role {
         Supervisor("Manager"),
         Consumer("Consumer"),
         Courier("Delivery Man"),
-        SystemAdmin("System Manager");
+        SystemAdmin("System Manager"),
+        Chef("Chef");
         
         private String value;
         private RoleType(String value){

@@ -37,6 +37,13 @@ public class OrganizationDirectory {
                 }
             }
         }
+        if (type.equals(Type.Chef)) {
+            for (Organization or:this.organizationDirectory) {
+                if (or.getOrg_name().equalsIgnoreCase(Type.Chef.getValue())) {
+                    return or;
+                }
+            }
+        }
         return null;
     }
 }

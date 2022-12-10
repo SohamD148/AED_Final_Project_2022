@@ -22,6 +22,9 @@ public class RoleSelection {
         if(type.equals(RoleType.SystemAdmin)) {
             return new SystemAdminRole();
         }
+        if(type.equals(RoleType.Chef)) {
+            return new ChefRole();
+        }
         return null;
     }
 }
