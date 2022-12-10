@@ -27,7 +27,8 @@ public abstract class Organization {
     public enum Type {
 
         Supervisor("Manager Organization"),
-        Courier("Delivery Man Organization");
+        Courier("Delivery Man Organization"),
+        Chef("Chef Organization");
 
         private String value;
 
