@@ -19,6 +19,8 @@ import Model.WorkQueue.ReviewRequest;
 import Model.WorkQueue.WorkRequest;
 import Model.WorkQueue.WorkRequest.StatusEnum;
 import UserInterface.SignInJFrame;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -785,6 +787,22 @@ public class CourierMainJPanel extends javax.swing.JPanel {
     private void deliveredButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliveredButtonActionPerformed
         selectedRequest.setStatus(StatusEnum.Completed);
         selectedRequest.getOrder().setStatus(StatusEnum.Completed);
+        try
+      {
+        String ACCOUNT_SID = "AC14e5000f99586319c09d4e67d9d34ac4";
+        String Auth_Token = "530c68c7e01398c374d88527c889f850";
+        
+        Twilio.init(ACCOUNT_SID, Auth_Token);
+        
+        Message message = Message.creator(new com.twilio.type.PhoneNumber(deliveryPhoneTextField.getText()), 
+                new com.twilio.type.PhoneNumber("+15642095234"), 
+                "Your Order has been delivered successfully of Thank you for Shopping with us").create();
+        message.getSid();
+      }
+      catch(Exception e)
+      {
+          JOptionPane.showMessageDialog(null, "Error Message "+e);
+      }
         
         ReviewRequest rr = new ReviewRequest(selectedRequest.getEnterprise(), 
                 selectedRequest.getOrder().getAccount());
