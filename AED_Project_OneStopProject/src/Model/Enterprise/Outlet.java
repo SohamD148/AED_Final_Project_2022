@@ -19,7 +19,8 @@ public abstract class Outlet extends Enterprise {
     public enum OutletType {
 
         Restaurant("Restaurant"),
-        Mart("Store");
+        Mart("Store"),
+        Inventory("Inventory");
 
         private String value;
 
