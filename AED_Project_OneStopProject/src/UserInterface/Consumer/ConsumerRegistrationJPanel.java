@@ -9,6 +9,7 @@ import Model.Consumer.Consumer;
 import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
 import Model.UserAccount.UserAccount;
+import Model.Validation.Validation;
 import UserInterface.MainJFrame;
 import UserInterface.SignUpJPanel;
 import com.twilio.Twilio;
@@ -226,9 +227,7 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-       if(Integer.parseInt(txtOTP.getText())==OTP)
-       {
-        
+       
         if (firstNameTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "First name can't be empty!");
             return;
@@ -245,6 +244,10 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Email can't be empty!");
             return;
         }
+        
+        if(Integer.parseInt(txtOTP.getText())==OTP)
+        {
+        
         Consumer consumer = new Consumer(firstNameTextField.getText(), lastNameTextField.getText(),
                 emailTextField.getText(), phoneTextField.getText());
         UserAccount ua = system.getUserAccountDirectory().createConsumerAccount(username, password, consumer);
