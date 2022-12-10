@@ -11,7 +11,10 @@ import Model.Business.EcoSystem;
 import Model.UserAccount.UserAccount;
 import UserInterface.MainJFrame;
 import UserInterface.SignUpJPanel;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import java.awt.CardLayout;
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +30,7 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
     private String username;
     private String password;
     private EcoSystem system;
+    int OTP;
 
     /**
      * Creates new form CustomerInfoJPanel
@@ -63,6 +67,9 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
         saveButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        txtOTP = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        btnOTP = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel1.setText("Please provide information to complete your registration:");
@@ -81,6 +88,12 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("*Mobile Phone:");
+
+        emailTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTextFieldKeyReleased(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setText("*Email Id:");
@@ -105,6 +118,22 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel7.setText("* is required field");
 
+        txtOTP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOTPActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel8.setText("*OTP :");
+
+        btnOTP.setText("Send OTP");
+        btnOTP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOTPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,20 +149,25 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lastNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(firstNameTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(phoneTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(108, 108, 108)
                                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(addressTextField, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(firstNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(phoneTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lastNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(addressTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(emailTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(txtOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnOTP))))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,11 +197,16 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtOTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(btnOTP))
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(backButton))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -181,6 +220,9 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+       if(Integer.parseInt(txtOTP.getText())==OTP)
+       {
+        
         if (firstNameTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "First name can't be empty!");
             return;
@@ -208,12 +250,49 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
         this.frame.dispose();
         mFrame.setVisible(true);
         mFrame.setLocationRelativeTo(null);
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "Incorrect OTP please enter again");
+       }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void txtOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOTPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOTPActionPerformed
+
+    private void emailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailTextFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTextFieldKeyReleased
+
+    private void btnOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOTPActionPerformed
+        // TODO add your handling code here:
+        Random rand = new Random();
+        OTP = rand.nextInt(999999);
+    try
+      {
+        String ACCOUNT_SID = "AC14e5000f99586319c09d4e67d9d34ac4";
+        String Auth_Token = "530c68c7e01398c374d88527c889f850";
+        
+        Twilio.init(ACCOUNT_SID, Auth_Token);
+        
+        Message message = Message.creator(new com.twilio.type.PhoneNumber(phoneTextField.getText()), 
+                new com.twilio.type.PhoneNumber("+15642095234"), 
+                "Your OTP for OneStopShop registration is "+String.valueOf(OTP)).create();
+        message.getSid();
+        JOptionPane.showMessageDialog(null, "OTP Send successfully to "+phoneTextField.getText());
+      }
+      catch(Exception e)
+      {
+          JOptionPane.showMessageDialog(null, "Error Message "+e);
+      }
+    }//GEN-LAST:event_btnOTPActionPerformed
 
 //    emailTextField , firstNameTextField lastNameTextField phoneTextField
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressTextField;
     private javax.swing.JButton backButton;
+    private javax.swing.JButton btnOTP;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel jLabel1;
@@ -223,8 +302,10 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField lastNameTextField;
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JTextField txtOTP;
     // End of variables declaration//GEN-END:variables
 }
