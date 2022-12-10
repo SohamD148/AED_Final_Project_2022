@@ -17,6 +17,7 @@ public class ShipmentRequest extends WorkRequest {
     
     private StatusEnum status;
     private OrderRequest order;
+    private InventoryItemRequest request;
     private Date preparedTime;
     private Date pickupTime;
     private Date deliveredTime;
@@ -26,6 +27,11 @@ public class ShipmentRequest extends WorkRequest {
     public ShipmentRequest(Enterprise enterprise, UserAccount account, OrderRequest order) {
         super(enterprise, account);
         this.order = order;
+    }
+    
+    public ShipmentRequest(Enterprise enterprise, UserAccount account, InventoryItemRequest request) {
+        super(enterprise, account);
+        this.request = request;
     }
 
     public String getPreparedTime() {

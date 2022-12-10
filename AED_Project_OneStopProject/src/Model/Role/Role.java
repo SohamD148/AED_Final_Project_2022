@@ -4,6 +4,7 @@ package Model.Role;
 import Model.Business.EcoSystem;
 import Model.Enterprise.Enterprise;
 import Model.Network.Network;
+import Model.Organization.Organization;
 import Model.Organization.Organization.Type;
 import Model.UserAccount.UserAccount;
 import javax.swing.JFrame;
@@ -18,11 +19,12 @@ public abstract class Role {
     
     public enum RoleType{
         Boss("Boss"),
-        Supervisor("Manager"),
+        Supervisor("Supervisor"),
         Consumer("Consumer"),
-        Courier("Delivery Man"),
-        SystemAdmin("System Manager"),
-        Chef("Chef");
+        Courier("Courier"),
+        SystemAdmin("System Admin"),
+        Chef("Chef"),
+        InventoryManager("Inventory Manager");
         
         private String value;
         private RoleType(String value){
@@ -39,6 +41,9 @@ public abstract class Role {
             }
             if (this.value.equals(Courier.getValue())) {
                 return Type.Courier;
+            }
+            if (this.value.equals(InventoryManager.getValue())) {
+                return Type.InventoryManager;
             }
             else {
                 return null;
