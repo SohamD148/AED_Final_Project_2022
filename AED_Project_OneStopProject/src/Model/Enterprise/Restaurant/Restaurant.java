@@ -36,9 +36,8 @@ public class Restaurant extends Outlet {
 
     public enum RestaurantCategory {
 
-        Seafood("Korean"), Chinese("Chinese"),
-        Japanese("Japanese"), Korean("Indian"),
-        American("American"), Mexicon("Mexicon");
+        Chinese("Chinese"),Japanese("Japanese"), Indian("Indian"),
+        American("American"), Mexican("Mexican");
 
         private String value;
 
@@ -118,7 +117,7 @@ public class Restaurant extends Outlet {
         return result;
     }
 
-    public void addDashToMenu(Menu dash) {
+    public void addToMenu(Menu dash) {
         this.getCommodity().add(dash);
     }
 

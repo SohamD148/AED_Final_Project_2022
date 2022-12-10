@@ -196,7 +196,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
 
 
                 ConsumerRegistrationJPanel cp = new ConsumerRegistrationJPanel(this.system, this.leftPanel, this.frame, username, password1);
-                this.leftPanel.add("CustomerRegistrationInfoJPanel", cp);
+                this.leftPanel.add("ConsumerRegistrationInfoJPanel", cp);
 
 //                ConsumerRegistrationInfoJPanel cp = new ConsumerRegistrationInfoJPanel(this.system, this.leftPanel, this.frame, username, password1);
 //                this.leftPanel.add("CustomerRegistrationInfoJPanel", cp);

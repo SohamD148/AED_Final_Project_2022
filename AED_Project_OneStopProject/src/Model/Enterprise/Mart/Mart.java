@@ -44,7 +44,7 @@ public class Mart extends Outlet {
 
     public enum MartType {
 
-        Seafood, Chinese, Japanese, Korean, American, Mexicon, Organic
+        Pharmacy, ConvineceStore, GroceryStore
     }
 
     public Mart(String name, String address, String phone) {

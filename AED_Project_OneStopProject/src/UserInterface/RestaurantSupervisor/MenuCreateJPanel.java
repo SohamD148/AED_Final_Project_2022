@@ -144,7 +144,7 @@ public class MenuCreateJPanel extends javax.swing.JPanel {
             if (shop.getOut_type().equals(OutletType.Restaurant)) {
                 Restaurant res = (Restaurant) shop;
                 Menu dash = new Menu(res, name, price);
-                res.addDashToMenu(dash);
+                res.addToMenu(dash);
                 DB4OUtil.getInstance().storeSystem(system);
                 RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
                 p.populateMenuTable();
