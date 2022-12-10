@@ -9,7 +9,7 @@ import Model.Enterprise.Enterprise;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Network.Network;
 import Model.UserAccount.UserAccount;
-import UserInterfaceChef.ChefMainJPanel;
+import UserInterface.Chef.ChefMainJPanel;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

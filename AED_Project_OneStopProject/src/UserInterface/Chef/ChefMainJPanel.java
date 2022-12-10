@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterfaceChef;
+package UserInterface.Chef;
 
 import UserInterface.RestaurantSupervisor.*;
 import Model.Consumer.CommodityOrder;
