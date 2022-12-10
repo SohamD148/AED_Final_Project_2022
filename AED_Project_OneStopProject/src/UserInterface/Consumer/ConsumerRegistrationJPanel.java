@@ -14,7 +14,13 @@ import UserInterface.SignUpJPanel;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import java.awt.CardLayout;
+import java.util.Properties;
 import java.util.Random;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -243,6 +249,38 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
                 emailTextField.getText(), phoneTextField.getText());
         UserAccount ua = system.getUserAccountDirectory().createConsumerAccount(username, password, consumer);
 
+        String to = emailTextField.getText();
+        String from = "donotreplyonestopshop@gmail.com";
+        String pass = "pzunllihajcjccan";
+        Properties properties = System.getProperties();
+        String host = "smtp.gmail.com";
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.trust", host);
+        properties.put("mail.smtp.user", from);
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+        Session session = Session.getDefaultInstance(properties);
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipients(javax.mail.Message.RecipientType.TO, to);
+            message.setSubject("Email Verification");
+            message.setText("Hi, Welcome to OneStopShop Family");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+            System.out.println("Sent message successfully....");
+        } 
+        catch (MessagingException mex) 
+        {
+            mex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Invalid email id");
+        }
+        
+        
         DB4OUtil.getInstance().storeSystem(system);
 
         this.frame.dispose();
