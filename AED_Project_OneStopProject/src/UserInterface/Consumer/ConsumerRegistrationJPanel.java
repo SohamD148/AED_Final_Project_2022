@@ -245,6 +245,15 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
             return;
         }
         
+        if(!Validation.isValidEmail(emailTextField.getText())){
+            JOptionPane.showMessageDialog(null, "Please enter valid email id");
+            return;
+        }
+        if(!Validation.isValidMobileNumber(phoneTextField.getText())){
+            JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
+            return;
+        }
+        
         if(Integer.parseInt(txtOTP.getText())==OTP)
         {
         
