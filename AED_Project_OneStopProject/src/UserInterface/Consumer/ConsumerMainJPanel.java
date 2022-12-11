@@ -13,11 +13,17 @@ import Model.UserAccount.UserAccount;
 import Model.Role.ConsumerRole;
 import UserInterface.SignInJFrame;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 
 /**
@@ -77,6 +83,8 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
         viewprofileButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         enterpriseList = new javax.swing.JList<>();
+        chatBotButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         jLabel1.setText("Hello, ");
@@ -130,6 +138,16 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(enterpriseList);
 
+        chatBotButton.setText("Chat With Us");
+        chatBotButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatBotButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        jLabel4.setText("Need Support? ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,16 +162,22 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
                         .addContainerGap(567, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label)
-                        .addGap(18, 18, 18))
+                        .addComponent(label))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(77, 77, 77)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(chatBotButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(7, 7, 7))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(goButton)
                     .addGroup(layout.createSequentialGroup()
@@ -172,6 +196,10 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
                     .addComponent(signoutButton)
                     .addComponent(viewprofileButton))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(goButton)
+                        .addGap(250, 250, 250))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(jLabel3)
@@ -181,11 +209,11 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(115, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(goButton)
-                        .addGap(250, 250, 250))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chatBotButton)
+                            .addComponent(jLabel4))
+                        .addGap(44, 44, 44))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -212,7 +240,10 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
         enterpriseList.setModel(model);
         goButton.setEnabled(false);
     }//GEN-LAST:event_networkListValueChanged
-
+    private void bot(String bot_resp, JTextArea chatarea)
+    {
+        chatarea.append("BOT ->"+bot_resp+"\n");
+    }
     private void viewprofileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewprofileButtonActionPerformed
         ConsumerProfileJPanel Panel = new ConsumerProfileJPanel(this.system, this.jPanel, this.consumerAccount, this.frame, new ConsumerRole());
         this.jPanel.add(Panel);
@@ -235,12 +266,81 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
         goButton.setEnabled(true);
     }//GEN-LAST:event_enterpriseListValueChanged
 
+    private void chatBotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatBotButtonActionPerformed
+        // TODO add your handling code here:
+        final ArrayList<String> user_input = new ArrayList<String>();
+        final JTextArea chatarea = new JTextArea();
+        final JTextField chatbox = new JTextField();
+        JFrame jframe = new JFrame();
+        jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jframe.setVisible(true);
+        jframe.setResizable(false);
+        jframe.setLayout(null);
+        jframe.setSize(600, 600);
+        jframe.setTitle("Deep");
+        jframe.add(chatarea);
+        jframe.add(chatbox);
+
+        //For chat area
+        chatarea.setSize(500, 400);
+        chatarea.setLocation(2,2);
+
+        // for input area
+        chatbox.setSize(540,30);
+        chatbox.setLocation(2,500);
+
+        chatbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean chat_end = false;
+                String gtext = chatbox.getText().toLowerCase();
+                chatarea.append("YOU -> "+gtext+"\n");
+                chatbox.setText("");
+                String req_cat  = "";
+
+                if(gtext.contains("hi"))
+                {
+                    bot("Hi, I am Alfred ./n I am here to help you. Can you please provide Your name, number and city?",chatarea);
+                }
+                if(gtext.contains("boston"))
+                {
+
+                    bot("Do want to know about Restaurant or Stores in Boston",chatarea);
+                }
+                if(gtext.contains("worchester"))
+                {
+                    bot("Do want to know about Restaurant or Stores in Worchester",chatarea);
+                }
+                if(gtext.contains("restaurant"))
+                {
+                    bot("Chipotle,Chick-Fil-A",chatarea);
+
+                }
+                if(gtext.contains("store")){
+                    bot("Trader Joes, CVS Pharmacy",chatarea);
+
+                }
+
+                else if(gtext.contains("delivery") && gtext.contains("time")){
+                    bot("Estimated delivery time is approximate 30 mins but will try to deliver as soon as possible.",chatarea);
+                    if(gtext.contains("placed order")){
+
+                        bot("Thankyou for ordering, Our delivery partner will be deliverying soon to Delivery address",chatarea);
+                    }
+                }
+            }
+        });
+
+    }//GEN-LAST:event_chatBotButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chatBotButton;
     private javax.swing.JList<OutletType> enterpriseList;
     private javax.swing.JButton goButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
