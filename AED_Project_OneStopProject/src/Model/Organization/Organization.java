@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model.Organization;
 
 import Model.Employee.EmployeeDirectory;
@@ -27,6 +24,8 @@ public abstract class Organization {
     public enum Type {
 
         Supervisor("Supervisor Organization"),
+        ShipmentSupervisor("Shipment Supervisor Organization"),
+        MartSupervisor("Mart Supervisor Organization"),
         Courier("Courier Organization"),
         InventoryManager("Inventory Manager Organization"),
         Chef("Chef Organization");

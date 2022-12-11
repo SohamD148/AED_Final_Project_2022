@@ -43,7 +43,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author rutu
  */
 public class InventoryManagerMainJPanel extends javax.swing.JPanel {
 

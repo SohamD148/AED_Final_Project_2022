@@ -24,7 +24,7 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author ranranhe
+ * @author rutu
  */
 public class SelectInventoryDeliveryJFrame extends javax.swing.JFrame {
 
