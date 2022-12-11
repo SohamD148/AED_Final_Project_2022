@@ -1,7 +1,7 @@
 
 package Model.Role;
 
-//import New.MartSupervisorRole;
+import Model.Role.MartSupervisorRole;
 import Model.Role.Role.RoleType;
 
 /**
@@ -14,9 +14,9 @@ public class RoleSelection {
         if(type.equals(RoleType.Courier)) {
             return new DeliveryManRole();
         }
-//        if (type.equals(RoleType.MartSupervisor)) {
-//            return new MartSupervisorRole();
-//        }
+        if (type.equals(RoleType.MartSupervisor)) {
+            return new MartSupervisorRole();
+        }
 //        if (type.equals(RoleType.RestaurantSupervisor)) {
 //            return new RestaurantSupervisorRole();
 //        }
