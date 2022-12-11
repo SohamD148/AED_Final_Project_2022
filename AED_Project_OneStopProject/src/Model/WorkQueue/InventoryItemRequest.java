@@ -1,6 +1,7 @@
 
 package Model.WorkQueue;
 
+import Model.Consumer.CommodityOrder;
 import Model.Consumer.InventoryOrder;
 import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Enterprise;
@@ -20,7 +21,7 @@ public class InventoryItemRequest extends WorkRequest
     private String deliveryPhone;
     private double amount;
     private ShipmentCompany company;
-    private ArrayList<InventoryOrder> inventoryorders;
+    private ArrayList<CommodityOrder> inventoryorders;
     private ReviewRequest review;
     
     public static String genId() 
@@ -54,7 +55,7 @@ public class InventoryItemRequest extends WorkRequest
         }
     }
     
-    public InventoryItemRequest(Enterprise enterprise, UserAccount account, ArrayList<InventoryOrder> inventoryOrder) {
+    public InventoryItemRequest(Enterprise enterprise, UserAccount account, ArrayList<CommodityOrder> inventoryOrder) {
         super(enterprise, account);
         this.inventoryorders = inventoryOrder;
         this.InventoryOrderId = genId();
@@ -89,7 +90,7 @@ public class InventoryItemRequest extends WorkRequest
         this.deliveryPhone = deliveryPhone;
     }
 
-    public ArrayList<InventoryOrder> getInventorOrder() {
+    public ArrayList<CommodityOrder> getInventorOrder() {
         return inventoryorders;
     }
 

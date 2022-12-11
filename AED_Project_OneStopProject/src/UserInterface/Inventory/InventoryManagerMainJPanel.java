@@ -202,11 +202,11 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     public void populateDetailTable(InventoryItemRequest inventoryreq) {
         DefaultTableModel dtm = (DefaultTableModel) orderDetailTable.getModel();
         dtm.setRowCount(0);
-        ArrayList<InventoryOrder> list = inventoryreq.getInventorOrder();
-        for (InventoryOrder d : list) {
+        ArrayList<CommodityOrder> list = inventoryreq.getInventorOrder();
+        for (CommodityOrder d : list) {
             Object row[] = new Object[5];
             row[0] = d;
-            row[1] = d.getItemQuantity();
+            row[1] = d.getQuantity();
             dtm.addRow(row);
         }
         commentTextArea.setText(inventoryreq.getMessage());
