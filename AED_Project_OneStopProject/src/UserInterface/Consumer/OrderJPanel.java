@@ -11,6 +11,7 @@ import Model.Business.EcoSystem;
 import Model.Enterprise.Outlet;
 import Model.Network.Network;
 import Model.UserAccount.ConsumerAccount;
+import Model.Validation.Validation;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.WorkRequest;
 import com.twilio.Twilio;
@@ -267,24 +268,7 @@ public class OrderJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_basketTableMouseClicked
 
     private void confirmOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmOrderButtonActionPerformed
-        try
-      {
-        String ACCOUNT_SID = "AC14e5000f99586319c09d4e67d9d34ac4";
-        String Auth_Token = "530c68c7e01398c374d88527c889f850";
-        
-        Twilio.init(ACCOUNT_SID, Auth_Token);
-        
-        Message message = Message.creator(new com.twilio.type.PhoneNumber(phoneTextField.getText()), 
-                new com.twilio.type.PhoneNumber("+15642095234"), 
-                "Your Order has been placed successfully of total price"+ String.valueOf(this.consumeracc.getBasket().getTotalPrice()) + "Thank you for Shopping with us").create();
-        message.getSid();
-      }
-      catch(Exception e)
-      {
-          JOptionPane.showMessageDialog(null, "Error Message "+e);
-      }
-        
-        
+       
         if (this.nameTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Name can't be empty!");
             return;
@@ -298,27 +282,58 @@ public class OrderJPanel extends javax.swing.JPanel {
             return;
         }
         
-        OrderRequest or = new OrderRequest(outlet, consumeracc,
-                consumeracc.getBasket().getCommodityDirectory());
-        or.setDeliveryAddress(this.addressTextField.getText());
-        or.setDeliveryName(this.nameTextField.getText());
-        or.setDeliveryPhone(this.phoneTextField.getText());
-        or.setMessage(this.commentTextArea.getText());
-        or.setStatus(WorkRequest.StatusEnum.Processing);
-        BigDecimal bd = new BigDecimal(this.consumeracc.getBasket().getTotalPrice());
-        or.setAmount(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+       if(!Validation.isValidMobileNumber(phoneTextField.getText())){
+            JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
+            return;
+        }
+       
+        try
+        {
+            OrderRequest or = new OrderRequest(outlet, consumeracc, consumeracc.getBasket().getCommodityDirectory());
+            or.setDeliveryAddress(this.addressTextField.getText());
+            or.setDeliveryName(this.nameTextField.getText());
+            or.setDeliveryPhone(this.phoneTextField.getText());
+            or.setMessage(this.commentTextArea.getText());
+            or.setStatus(WorkRequest.StatusEnum.Processing);
+            BigDecimal bd = new BigDecimal(this.consumeracc.getBasket().getTotalPrice());
+            or.setAmount(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+
+            consumeracc.getBasket().clearBasket();
+            consumeracc.getWorkQueue().getWorkRequestDirectory().add(or);
+            outlet.getWorkQueue().getWorkRequestDirectory().add(or);
+            DB4OUtil.getInstance().storeSystem(system);
+
+            this.jPanel.remove(this);
+            OrderConfirmationJPanel basketpanel = new OrderConfirmationJPanel(or);
+            this.jPanel.add(basketpanel);
+            CardLayout layout = (CardLayout)this.jPanel.getLayout();
+            layout.next(this.jPanel);   
+            
+            
+            
+            
+          String ACCOUNT_SID = "AC14e5000f99586319c09d4e67d9d34ac4";
+          String Auth_Token = "530c68c7e01398c374d88527c889f850";
+
+          Twilio.init(ACCOUNT_SID, Auth_Token);
+
+          Message message = Message.creator(new com.twilio.type.PhoneNumber(phoneTextField.getText()), 
+                  new com.twilio.type.PhoneNumber("+15642095234"), 
+                  "Your Order has been placed successfully of total price"+ String.valueOf(this.consumeracc.getBasket().getTotalPrice()) + "Thank you for Shopping with us").create();
+          message.getSid();
+        }
+        
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Message:  "+e);
+            return;
+        }
         
         
-        consumeracc.getBasket().clearBasket();
-        consumeracc.getWorkQueue().getWorkRequestDirectory().add(or);
-        outlet.getWorkQueue().getWorkRequestDirectory().add(or);
-        DB4OUtil.getInstance().storeSystem(system);
+       
         
-        this.jPanel.remove(this);
-        OrderConfirmationJPanel basketpanel = new OrderConfirmationJPanel(or);
-        this.jPanel.add(basketpanel);
-        CardLayout layout = (CardLayout)this.jPanel.getLayout();
-        layout.next(this.jPanel);
+       
         
         
     }//GEN-LAST:event_confirmOrderButtonActionPerformed
