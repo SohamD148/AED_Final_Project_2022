@@ -10,6 +10,7 @@ import Model.Enterprise.Outlet.OutletType;
 import Model.Network.Network;
 import Model.UserAccount.ConsumerAccount;
 import Model.UserAccount.UserAccount;
+import Model.Role.ConsumerRole;
 import UserInterface.SignInJFrame;
 import java.awt.CardLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -17,6 +18,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
 
 /**
  *
@@ -212,8 +214,8 @@ public class ConsumerMainJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkListValueChanged
 
     private void viewprofileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewprofileButtonActionPerformed
-        //CustomerProfileJPanel jPanel = new CustomerProfileJPanel(this.system, this.jPanel, this.consumerAccount, this.frame, new CustomerRole());
-        this.jPanel.add(jPanel);
+        ConsumerProfileJPanel Panel = new ConsumerProfileJPanel(this.system, this.jPanel, this.consumerAccount, this.frame, new ConsumerRole());
+        this.jPanel.add(Panel);
         CardLayout layout = (CardLayout) this.jPanel.getLayout();
         layout.next(this.jPanel);
     }//GEN-LAST:event_viewprofileButtonActionPerformed

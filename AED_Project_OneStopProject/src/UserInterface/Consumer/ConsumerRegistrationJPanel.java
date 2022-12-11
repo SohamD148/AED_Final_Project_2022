@@ -253,6 +253,8 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
             return;
         }
+        try {
+            
         
         if(Integer.parseInt(txtOTP.getText())==OTP)
         {
@@ -305,6 +307,11 @@ public class ConsumerRegistrationJPanel extends javax.swing.JPanel {
        {
            JOptionPane.showMessageDialog(null, "Incorrect OTP please enter again");
        }
+        }
+        
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Invalid OTP");
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void txtOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOTPActionPerformed
