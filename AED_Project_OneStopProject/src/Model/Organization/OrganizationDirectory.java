@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model.Organization;
 
 import Model.Organization.Organization.Type;
@@ -30,9 +27,23 @@ public class OrganizationDirectory {
                 }
             }
         }
-        if (type.equals(Type.Supervisor)) {
+        if (type.equals(Type.MartSupervisor)) {
             for (Organization or:this.organizationDirectory) {
-                if (or.getOrg_name().equalsIgnoreCase(Type.Supervisor.getValue())) {
+                if (or.getOrg_name().equalsIgnoreCase(Type.MartSupervisor.getValue())) {
+                    return or;
+                }
+            }
+        }
+//        if (type.equals(Type.RestaurantSupervisor)) {
+//            for (Organization or:this.organizationDirectory) {
+//                if (or.getOrg_name().equalsIgnoreCase(Type.RestaurantSupervisor.getValue())) {
+//                    return or;
+//                }
+//            }
+//        }
+        if (type.equals(Type.ShipmentSupervisor)) {
+            for (Organization or:this.organizationDirectory) {
+                if (or.getOrg_name().equalsIgnoreCase(Type.ShipmentSupervisor.getValue())) {
                     return or;
                 }
             }
