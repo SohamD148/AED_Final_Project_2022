@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author ranranhe
+ * @author rutu
  */
 public class InventoryItemEditJPanel extends javax.swing.JPanel {
 

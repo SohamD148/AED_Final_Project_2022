@@ -23,7 +23,7 @@ import Model.Validation.Validation;
 
 /**
  *
- * @author ranranhe
+ * @author rutu
  */
 public class ShipmentSupervisorRole extends Role {
 
