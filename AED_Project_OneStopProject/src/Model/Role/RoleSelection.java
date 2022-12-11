@@ -13,8 +13,17 @@ public class RoleSelection {
         if(type.equals(RoleType.Courier)) {
             return new DeliveryManRole();
         }
+//        if (type.equals(RoleType.MartSupervisor)) {
+//            return new MartSupervisorRole();
+//        }
+//        if (type.equals(RoleType.RestaurantSupervisor)) {
+//            return new RestaurantSupervisorRole();
+//        }
         if (type.equals(RoleType.Supervisor)) {
             return new SupervisorRole();
+        }
+        if (type.equals(RoleType.ShipmentSupervisor)) {
+            return new ShipmentSupervisorRole();
         }
         if(type.equals(RoleType.Boss)) {
             return new BossRole();

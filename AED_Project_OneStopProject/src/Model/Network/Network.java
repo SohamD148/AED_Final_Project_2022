@@ -7,6 +7,7 @@ package Model.Network;
 import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Enterprise;
 import Model.Enterprise.EnterpriseDirectory;
+import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Mart;
 import java.util.ArrayList;
@@ -64,6 +65,13 @@ public class Network {
         return res;
     }
     
+    public Inventory createInventory(String name, String address, String phone) {
+        Inventory inventory = new Inventory(name, address, phone);
+        inventory.createOrganizations();
+        this.enterpriseDirectory.getEnterpriseDirectory().add(inventory);        
+        return inventory;
+    }
+    
     public Mart createMart(String name, String address, String phone) {
         Mart store = new Mart(name, address, phone);
         store.createOrganizations();
@@ -98,6 +106,17 @@ public class Network {
         for (Enterprise en:this.enterpriseDirectory.getEnterpriseDirectory()) {
             if (en instanceof ShipmentCompany) {
                 ShipmentCompany del = (ShipmentCompany) en;
+                result.add(del);
+            }
+        }
+        return result;
+    }
+    
+    public ArrayList<Inventory> getInventoryList() {
+        ArrayList<Inventory> result = new ArrayList<>();
+        for (Enterprise en:this.enterpriseDirectory.getEnterpriseDirectory()) {
+            if (en instanceof Inventory) {
+                Inventory del = (Inventory) en;
                 result.add(del);
             }
         }

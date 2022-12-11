@@ -20,6 +20,9 @@ public abstract class Role {
     public enum RoleType{
         Boss("Boss"),
         Supervisor("Supervisor"),
+        //MartSupervisor("Mart Supervisor"),
+        //RestaurantSupervisor("Restaurant Supervisor"),
+        ShipmentSupervisor("Shipment Supervisor"),
         Consumer("Consumer"),
         Courier("Courier"),
         SystemAdmin("System Admin"),
