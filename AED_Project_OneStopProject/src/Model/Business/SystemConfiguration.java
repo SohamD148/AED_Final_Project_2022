@@ -10,16 +10,20 @@ import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Inventory.InventoryItem;
 import Model.Network.Network;
-import Model.Organization.SupervisorOrganization;
+import Model.Organization.RestaurantSupervisorOrganization;
 import Model.Organization.Organization;
 import Model.Enterprise.Restaurant.Menu;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
 import Model.Organization.CourierOrganization;
+import Model.Organization.MartSupervisorOrganization;
+import Model.Organization.ShipmentSupervisorOrganization;
 import Model.Role.BossRole;
 import Model.Role.DeliveryManRole;
-import Model.Role.SupervisorRole;
+import Model.Role.MartSupervisorRole;
+import Model.Role.RestaurantSupervisorRole;
+import Model.Role.ShipmentSupervisorRole;
 import Model.Role.SystemAdminRole;
 import Model.UserAccount.UserAccount;
 
@@ -61,18 +65,25 @@ public class SystemConfiguration {
         sc1.setPath("Images/DeliveryCompanyCut/default.png");
         Employee b1 = sc1.getEmployeeDirectory().createEmployee("Rishabh", "Singh", "773383812", "rsingh@gmail.com");
         UserAccount user4 = sc1.getUserAccountDirectory().createEmployeeAccount("risha", "12345", new BossRole(), b1);
+        
+        
+        
         // BOSTON Delivery Company Organization
-        SupervisorOrganization sup1 = (SupervisorOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
-        CourierOrganization cou1 = (CourierOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Courier);
-        Employee emp2 = sup1.getEmployeeDirectory().createEmployee("Manager", "Manager", "111", "manager@demo.com");
-        UserAccount user5 = sup1.getUserAccountDirectory().createEmployeeAccount("m", "m", new SupervisorRole(), emp2);
+        ShipmentSupervisorOrganization sup1 = (ShipmentSupervisorOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.ShipmentSupervisor);
+        
+        Employee emp2 = sup1.getEmployeeDirectory().createEmployee("Manager1", "Manager2", "1234567890", "manager1@demo.com");
+        UserAccount user5 = sup1.getUserAccountDirectory().createEmployeeAccount("m", "m", new ShipmentSupervisorRole(), emp2);
 
+        
+        CourierOrganization cou1 = (CourierOrganization) sc1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Courier);
         Employee emp3 = sup1.getEmployeeDirectory().createEmployee("Delivery", "Man", "1111", "deliveryman@demo.com");
         UserAccount user6 = sup1.getUserAccountDirectory().createEmployeeAccount("d", "d", new DeliveryManRole(), emp3);
 
         Employee emp4 = cou1.getEmployeeDirectory().createEmployee("Delivery", "Man", "1111", "deliveryman1@demo.com");
         UserAccount user7 = cou1.getUserAccountDirectory().createEmployeeAccount("dd", "dd", new DeliveryManRole(), emp4);
 
+        
+        
         // BOSTON Restaurant List
         Restaurant restaurant1 = network1.createRestaurant("Row 34", "383 Congress St, Boston, MA 02210", "(617) 553-5900");
         restaurant1.setType(Restaurant.RestaurantCategory.American);
@@ -90,9 +101,9 @@ public class SystemConfiguration {
         Employee emp5 = restaurant1.getEmployeeDirectory().createEmployee("Row34", "Boss", "12344", "boss@row34.com");
         UserAccount user8 = restaurant1.getUserAccountDirectory().createEmployeeAccount("row34", "row34", new BossRole(), emp5);
         
-        SupervisorOrganization sup2 = (SupervisorOrganization) restaurant1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
+        RestaurantSupervisorOrganization sup2 = (RestaurantSupervisorOrganization) restaurant1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.RestaurantSupervisor);
         Employee emp6 = sup2.getEmployeeDirectory().createEmployee("Manager", "Manager", "111", "manager@demo.com");
-        UserAccount user9 = sup2.getUserAccountDirectory().createEmployeeAccount("rm", "rm", new SupervisorRole(), emp6);
+        UserAccount user9 = sup2.getUserAccountDirectory().createEmployeeAccount("rm", "rm", new RestaurantSupervisorRole(), emp6);
 
         Restaurant restaurant2 = network1.createRestaurant("Legal Harborside", "270 Northern Ave, Boston, MA 02210", "(617) 477-2900");
         restaurant2.setType(Restaurant.RestaurantCategory.American);
@@ -109,9 +120,9 @@ public class SystemConfiguration {
         Employee emp7 = restaurant2.getEmployeeDirectory().createEmployee("Legal", "Boss", "222", "boss@demo.com");
         UserAccount user10 = restaurant2.getUserAccountDirectory().createEmployeeAccount("legal", "legal", new BossRole(), emp7);
         
-        SupervisorOrganization sup3 = (SupervisorOrganization) restaurant2.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
+        RestaurantSupervisorOrganization sup3 = (RestaurantSupervisorOrganization) restaurant2.getOrganizationDirectory().getTypicalOrganization(Organization.Type.RestaurantSupervisor);
         Employee emp8 = sup3.getEmployeeDirectory().createEmployee("Manager", "Manager", "222", "manager@demo.com");
-        UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("lm", "lm", new SupervisorRole(), emp8);
+        UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("lm", "lm", new RestaurantSupervisorRole(), emp8);
         
         
         
@@ -145,9 +156,9 @@ public class SystemConfiguration {
         Employee emp9 = mart1.getEmployeeDirectory().createEmployee("Hugo", "Lorris", "3889398398", "hugo@trader.com");
         UserAccount user12 = mart1.getUserAccountDirectory().createEmployeeAccount("hugo", "hugo123", new BossRole(), emp9);
         
-        SupervisorOrganization sup4 = (SupervisorOrganization) mart1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
+        MartSupervisorOrganization sup4 = (MartSupervisorOrganization) mart1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.MartSupervisor);
         Employee emp10 = sup4.getEmployeeDirectory().createEmployee("Lacy", "Myers", "7488442332", "lacy@trader.com");
-        UserAccount user13 = sup4.getUserAccountDirectory().createEmployeeAccount("lacy", "lacy123", new SupervisorRole(), emp10);
+        UserAccount user13 = sup4.getUserAccountDirectory().createEmployeeAccount("lacy", "lacy123", new MartSupervisorRole(), emp10);
         
         
         Inventory inv1 = network1.createInventory("Aditi", "856 Boylstyon Ave, Boston, MA 02210", "(617) 477-2984");
@@ -181,9 +192,9 @@ public class SystemConfiguration {
         Employee emp11 = restaurant3.getEmployeeDirectory().createEmployee("Sam", "Alfred", "8398983923", "sam@deadhorse.com");
         UserAccount user14 = restaurant3.getUserAccountDirectory().createEmployeeAccount("sam", "sam123", new BossRole(), emp11);
         
-        SupervisorOrganization sup5 = (SupervisorOrganization) restaurant3.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
+        RestaurantSupervisorOrganization sup5 = (RestaurantSupervisorOrganization) restaurant3.getOrganizationDirectory().getTypicalOrganization(Organization.Type.RestaurantSupervisor);
         Employee emp12 = sup5.getEmployeeDirectory().createEmployee("Rachel", "Green", "8988399333", "rachel@deadhorse.com");
-        UserAccount user15 = sup5.getUserAccountDirectory().createEmployeeAccount("rachel", "rachel123", new SupervisorRole(), emp12);
+        UserAccount user15 = sup5.getUserAccountDirectory().createEmployeeAccount("rachel", "rachel123", new RestaurantSupervisorRole(), emp12);
         return system;
     }
 

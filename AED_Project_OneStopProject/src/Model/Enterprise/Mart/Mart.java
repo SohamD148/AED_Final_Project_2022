@@ -6,7 +6,7 @@ package Model.Enterprise.Mart;
 
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Outlet;
-import Model.Organization.SupervisorOrganization;
+import Model.Organization.MartSupervisorOrganization;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.WorkRequest;
 import java.awt.Rectangle;
@@ -72,7 +72,7 @@ public class Mart extends Outlet {
 
     @Override
     public void createOrganizations() {
-        this.getOrganizationDirectory().getOrganizationDirectory().add(new SupervisorOrganization());
+        this.getOrganizationDirectory().getOrganizationDirectory().add(new MartSupervisorOrganization());
     }
 
     public int getPhotoId() {

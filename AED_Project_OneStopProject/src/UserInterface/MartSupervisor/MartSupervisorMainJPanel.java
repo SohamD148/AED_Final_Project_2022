@@ -91,7 +91,7 @@ public class MartSupervisorMainJPanel extends javax.swing.JPanel {
         populateMenuTable();
         populateEmployeeTable(store.getOrganizationDirectory().getOrganizationDirectory());
 
-        if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+        if (accessRole.getRoleType().equals(RoleType.MartSupervisor)) {
             editButton.setVisible(false);
             saveButton.setVisible(false);
             uploadButton.setVisible(false);

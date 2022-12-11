@@ -6,7 +6,7 @@ package Model.Enterprise.Delivery;
 
 import Model.Enterprise.Enterprise;
 import Model.Organization.CourierOrganization;
-import Model.Organization.SupervisorOrganization;
+import Model.Organization.ShipmentSupervisorOrganization;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -114,7 +114,7 @@ public class ShipmentCompany extends Enterprise  {
     @Override
     public void createOrganizations() {
         this.getOrganizationDirectory().getOrganizationDirectory().add(new CourierOrganization());
-        this.getOrganizationDirectory().getOrganizationDirectory().add(new SupervisorOrganization());
+        this.getOrganizationDirectory().getOrganizationDirectory().add(new ShipmentSupervisorOrganization());
     }
 
     @Override

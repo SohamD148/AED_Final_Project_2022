@@ -16,9 +16,11 @@ import Model.Organization.Organization;
 import Model.Role.BossRole;
 import Model.Role.ChefRole;
 import Model.Role.DeliveryManRole;
-import Model.Role.SupervisorRole;
+import Model.Role.MartSupervisorRole;
+import Model.Role.RestaurantSupervisorRole;
 import Model.Role.Role;
 import Model.Role.Role.RoleType;
+import Model.Role.ShipmentSupervisorRole;
 import Model.Validation.Validation;
 import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
@@ -57,31 +59,31 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
         if (en instanceof Restaurant) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
                 roleComboBox.addItem(Role.RoleType.Chef);
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
             }
         }
         
         if (en instanceof Mart) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.MartSupervisor);
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.MartSupervisor);
             }
         }
         
         if (en instanceof ShipmentCompany) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.ShipmentSupervisor);
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.ShipmentSupervisor);
             }
             roleComboBox.addItem(Role.RoleType.Courier);
         }
@@ -316,9 +318,19 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new DeliveryManRole(), em);
                             }
 
-                            // Create Supervisor
-                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.Supervisor)) {
-                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new SupervisorRole(), em);
+                            // Create Restaurant Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.RestaurantSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new RestaurantSupervisorRole(), em);
+                            }
+                            
+                            //create Mart Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.MartSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new MartSupervisorRole(), em);
+                            }
+                            
+                            //create Shipment Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.ShipmentSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new ShipmentSupervisorRole(), em);
                             }
                         }
 

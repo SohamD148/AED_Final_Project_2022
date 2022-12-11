@@ -83,7 +83,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
         populateOrderTable(getAllDeliveryRequest());
         populateEmployeeTable(company.getOrganizationDirectory().getOrganizationDirectory());
 
-        if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+        if (accessRole.getRoleType().equals(RoleType.ShipmentSupervisor)) {
             editButton.setVisible(false);
             saveButton.setVisible(false);
             uploadButton.setVisible(false);

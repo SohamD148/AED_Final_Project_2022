@@ -49,18 +49,7 @@ public class BossRole extends Role {
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
 
-        if (en instanceof Restaurant) {
-            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
-            container.add(cp);
-        }
-        if (en instanceof ShipmentCompany) {
-            ShipmentCompanySupervisorMainJPanel cp = new ShipmentCompanySupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
-            container.add(cp);
-        }
-        if (en instanceof Mart) {
-            MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
-            container.add(cp);
-        }
+        
 
     }
 

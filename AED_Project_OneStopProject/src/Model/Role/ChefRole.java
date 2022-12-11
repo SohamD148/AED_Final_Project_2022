@@ -33,8 +33,8 @@ public class ChefRole extends Role{
 
             ChefMainJPanel cp = new ChefMainJPanel(system, container, net, en, userAccount, frame, this);
             container.add(cp);
-     CardLayout layout = (CardLayout) container.getLayout();
-        layout.next(container);
+            CardLayout layout = (CardLayout) container.getLayout();
+            layout.next(container);
     }
 }
 
