@@ -7,6 +7,8 @@ package Model.Business;
 import Model.Consumer.Consumer;
 import Model.Employee.Employee;
 import Model.Enterprise.Delivery.ShipmentCompany;
+import Model.Enterprise.Inventory.Inventory;
+import Model.Enterprise.Inventory.InventoryItem;
 import Model.Network.Network;
 import Model.Organization.SupervisorOrganization;
 import Model.Organization.Organization;
@@ -110,7 +112,10 @@ public class SystemConfiguration {
         SupervisorOrganization sup3 = (SupervisorOrganization) restaurant2.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
         Employee emp8 = sup3.getEmployeeDirectory().createEmployee("Manager", "Manager", "222", "manager@demo.com");
         UserAccount user11 = sup3.getUserAccountDirectory().createEmployeeAccount("lm", "lm", new SupervisorRole(), emp8);
-
+        
+        
+        
+        
         // Boston Mart List
 
         Mart mart1 = network1.createMart("Trader Joe", "834 Boylston St, Boston, MA 02115", "(617) 375-1010");
@@ -143,6 +148,19 @@ public class SystemConfiguration {
         SupervisorOrganization sup4 = (SupervisorOrganization) mart1.getOrganizationDirectory().getTypicalOrganization(Organization.Type.Supervisor);
         Employee emp10 = sup4.getEmployeeDirectory().createEmployee("Lacy", "Myers", "7488442332", "lacy@trader.com");
         UserAccount user13 = sup4.getUserAccountDirectory().createEmployeeAccount("lacy", "lacy123", new SupervisorRole(), emp10);
+        
+        
+        Inventory inv1 = network1.createInventory("Aditi", "856 Boylstyon Ave, Boston, MA 02210", "(617) 477-2984");
+        inv1.setInventype(Inventory.InventoryType.Rawgoods);
+        inv1.setShipcom_id("Aditi");
+        inv1.setPath("Images/RestaurantCut/default.png");
+        inv1.setOut_description("Specializing in upmarket seafood, this contemporary chain also serves steaks & cocktails.");
+        InventoryItem i1 = new InventoryItem(inv1, "I1", 10);
+        InventoryItem i2 = new InventoryItem(inv1, "I1", 10);
+        InventoryItem i3 = new InventoryItem(inv1, "I1", 10);
+        inv1.addInventoryItem(i1);
+        inv1.addInventoryItem(i2);
+        inv1.addInventoryItem(i3);
         
         
         // Worchester Restaurant List
