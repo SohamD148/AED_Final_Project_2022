@@ -63,6 +63,7 @@ public class ChefMainJPanel extends javax.swing.JPanel {
      */
     public ChefMainJPanel(EcoSystem system, JPanel container, Network net, Enterprise en,
             UserAccount userAccount, JFrame frame, Role accessRole) {
+        
         initComponents();
         this.system = system;
         this.container = container;

@@ -8,7 +8,6 @@ package UserInterface.Consumer;
 import Model.Business.EcoSystem;
 import Model.Enterprise.Outlet.OutletType;
 import Model.Network.Network;
-import Model.Role.ConsumerRole;
 import Model.UserAccount.ConsumerAccount;
 import Model.UserAccount.UserAccount;
 import UserInterface.SignInJFrame;
