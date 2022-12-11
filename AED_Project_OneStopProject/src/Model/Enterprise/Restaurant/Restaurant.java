@@ -7,7 +7,7 @@ package Model.Enterprise.Restaurant;
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Outlet;
 import Model.Organization.ChefOrganization;
-import Model.Organization.SupervisorOrganization;
+import Model.Organization.RestaurantSupervisorOrganization;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.WorkRequest;
 import java.awt.Rectangle;
@@ -94,7 +94,7 @@ public class Restaurant extends Outlet {
 
     @Override
     public void createOrganizations() {
-        this.getOrganizationDirectory().getOrganizationDirectory().add(new SupervisorOrganization());
+        this.getOrganizationDirectory().getOrganizationDirectory().add(new RestaurantSupervisorOrganization());
         this.getOrganizationDirectory().getOrganizationDirectory().add(new ChefOrganization());
     }
 

@@ -28,11 +28,6 @@ public class ConsumerRole extends Role {
     @Override
     public void createWorkArea(EcoSystem system, JPanel container, UserAccount userAccount, Network net, Enterprise en, JFrame frame) {
 
-//        ConsumerMainJPanel cp = new ConsumerMainJPanel(system, container, userAccount, frame);
-//        container.add(cp);
-//        CardLayout layout = (CardLayout) container.getLayout();
-//        layout.next(container);
-
         ConsumerMainJPanel cp = new ConsumerMainJPanel(system, container, userAccount, frame);
         container.add(cp);
         CardLayout layout = (CardLayout) container.getLayout();

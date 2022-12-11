@@ -91,7 +91,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         populateRequestTable();
         populateEmployeeTable(inventory.getOrganizationDirectory().getOrganizationDirectory());
 
-        if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+        if (accessRole.getRoleType().equals(RoleType.InventoryManager)) {
             editButton.setVisible(false);
             saveButton.setVisible(false);
             uploadButton.setVisible(false);

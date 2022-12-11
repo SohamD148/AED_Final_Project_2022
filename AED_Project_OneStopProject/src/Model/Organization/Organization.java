@@ -23,7 +23,7 @@ public abstract class Organization {
     
     public enum Type {
 
-        Supervisor("Supervisor Organization"),
+        RestaurantSupervisor(" Restaurant Supervisor Organization"),
         ShipmentSupervisor("Shipment Supervisor Organization"),
         MartSupervisor("Mart Supervisor Organization"),
         Courier("Courier Organization"),

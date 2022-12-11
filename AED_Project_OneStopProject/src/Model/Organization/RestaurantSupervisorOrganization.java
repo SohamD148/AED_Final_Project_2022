@@ -4,7 +4,7 @@
  */
 package Model.Organization;
 
-import Model.Role.SupervisorRole;
+import Model.Role.RestaurantSupervisorRole;
 import Model.Role.Role;
 import java.util.ArrayList;
 
@@ -12,16 +12,16 @@ import java.util.ArrayList;
  *
  * @author risha
  */
-public class SupervisorOrganization extends Organization {
+public class RestaurantSupervisorOrganization extends Organization {
     
-    public SupervisorOrganization() {
-        super(Organization.Type.Supervisor.getValue());
+    public RestaurantSupervisorOrganization() {
+        super(Organization.Type.RestaurantSupervisor.getValue());
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList<>();
-        roles.add(new SupervisorRole());
+        roles.add(new RestaurantSupervisorRole());
         return roles;
     }
 }

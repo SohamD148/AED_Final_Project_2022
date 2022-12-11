@@ -88,7 +88,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         populateMenuTable();
         populateEmployeeTable(restaurant.getOrganizationDirectory().getOrganizationDirectory());
 
-        if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+        if (accessRole.getRoleType().equals(RoleType.RestaurantSupervisor)) {
             editButton.setVisible(false);
             saveButton.setVisible(false);
             uploadButton.setVisible(false);

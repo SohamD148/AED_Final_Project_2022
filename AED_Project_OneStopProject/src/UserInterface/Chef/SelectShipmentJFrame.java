@@ -149,8 +149,8 @@ public class SelectShipmentJFrame extends javax.swing.JFrame {
                 p.populateOrderTable();
                 p.populateDetailTable(request);
             }
-            if (panel instanceof MartSupervisorMainJPanel) {
-                MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
+            if (panel instanceof RestaurantSupervisorMainJPanel) {
+                RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
                 p.populateOrderTable();
                 p.populateDetailTable(request);
             }

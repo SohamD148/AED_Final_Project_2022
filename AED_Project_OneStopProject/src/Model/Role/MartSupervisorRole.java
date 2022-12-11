@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import  Model.Enterprise.Outlet.OutletType;
 import Model.Role.Role;
-import Model.Validation.Validation;
+
 
 /**
  *
@@ -39,14 +39,7 @@ public class MartSupervisorRole extends Role {
 
     @Override
     public void createWorkArea(EcoSystem system, JPanel container, UserAccount userAccount, Network net, Enterprise en, JFrame frame) {
-//        if (en instanceof Restaurant) {
-//            RestaurantSupervisorMainJPanel cp = new RestaurantSupervisorMainJPanel(system, container, net, en, userAccount, frame, this,validation);
-//            container.add(cp);
-//        }
-        if (en instanceof ShipmentCompany) {
-            ShipmentCompanySupervisorMainJPanel cp = new ShipmentCompanySupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
-            container.add(cp);
-        }
+
         if (en instanceof Mart) {
             MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, container, net, en, userAccount, frame, this);
             container.add(cp);

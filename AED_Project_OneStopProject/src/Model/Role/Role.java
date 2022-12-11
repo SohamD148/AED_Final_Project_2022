@@ -19,9 +19,9 @@ public abstract class Role {
     
     public enum RoleType{
         Boss("Boss"),
-        Supervisor("Supervisor"),
+        
         MartSupervisor("Mart Supervisor"),
-        //RestaurantSupervisor("Restaurant Supervisor"),
+        RestaurantSupervisor("Restaurant Supervisor"),
         ShipmentSupervisor("Shipment Supervisor"),
         Consumer("Consumer"),
         Courier("Courier"),
@@ -30,6 +30,7 @@ public abstract class Role {
         InventoryManager("Inventory Manager");
         
         private String value;
+        
         private RoleType(String value){
             this.value = value;
         }
@@ -39,8 +40,14 @@ public abstract class Role {
         }
         
         public Type getOrganizationType() {
-            if (this.value.equals(Supervisor.getValue())) {
-                return Type.Supervisor;
+            if (this.value.equals( ShipmentSupervisor.getValue())) {
+                return Type. ShipmentSupervisor;
+            }
+             if (this.value.equals(RestaurantSupervisor.getValue())) {
+                return Type.RestaurantSupervisor;
+            }
+              if (this.value.equals(MartSupervisor.getValue())) {
+                return Type.MartSupervisor;
             }
             if (this.value.equals(Courier.getValue())) {
                 return Type.Courier;
