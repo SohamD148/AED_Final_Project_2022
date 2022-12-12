@@ -18,12 +18,19 @@ import Model.Organization.Organization;
 import Model.Role.BossRole;
 import Model.Role.ChefRole;
 import Model.Role.DeliveryManRole;
+
 import Model.Role.InventorySupervisorRole;
+
 import Model.Role.MartSupervisorRole;
 import Model.Role.RestaurantSupervisorRole;
 import Model.Role.Role;
 import Model.Role.Role.RoleType;
 import Model.Role.ShipmentSupervisorRole;
+import Model.Validation.Validation;
+import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
+
 import UserInterface.Inventory.InventoryManagerMainJPanel;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
 import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
@@ -62,8 +69,13 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
         if (en instanceof Restaurant) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
+
+                roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
+                roleComboBox.addItem(Role.RoleType.Chef);
+
                 roleComboBox.addItem(Role.RoleType.Chef);
                 roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
+
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
                 roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
@@ -80,6 +92,7 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
             }
         }
         
+
          if (en instanceof Inventory) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
@@ -90,6 +103,7 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
             }
         }
         
+
         if (en instanceof ShipmentCompany) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
@@ -298,7 +312,16 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                 String new1 = String.valueOf(passwordCharArray1);
                 char[] passwordCharArray2 = passwordField2.getPassword();
                 String new2 = String.valueOf(passwordCharArray2);
-
+                
+                if(!Validation.isValidEmail(emailTextField.getText()))
+                {
+                JOptionPane.showMessageDialog(null, "Please enter valid email id");
+                return;
+                }
+                if(!Validation.isValidMobileNumber(phoneTextField.getText())){
+                JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
+                return;
+                }
                 if (!emailTextField.getText().equals("") && !firstNameTextField.getText().equals("") && !new1.equals("") && !new2.equals("")
                         && !lastNameTextField.getText().equals("") && !phoneTextField.getText().equals("")) {
                     if (new1.equals(new2)) {
@@ -308,6 +331,13 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                             em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
                                     phoneTextField.getText(), emailTextField.getText());
                             en.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new BossRole(), em);
+
+                        } else if (roleComboBox.getSelectedItem().equals(Role.RoleType.Chef)) {
+                            em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
+                                    phoneTextField.getText(), emailTextField.getText());
+                            en.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new ChefRole(), em);
+                        } else {
+
                         } else 
                         if (roleComboBox.getSelectedItem().equals(Role.RoleType.Chef)) {
                             em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
@@ -321,6 +351,7 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                         }
                         else
                         {
+
                             Organization dOrg = en.getOrganizationDirectory().
                                     getTypicalOrganization(((RoleType) roleComboBox.getSelectedItem()).getOrganizationType());
                             em = dOrg.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
@@ -330,22 +361,34 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new DeliveryManRole(), em);
                             }
 
+
+                            // Create Restaurant Supervisor
+
                             // Create RestaurantSupervisor
+
                             if (roleComboBox.getSelectedItem().equals(Role.RoleType.RestaurantSupervisor)) {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new RestaurantSupervisorRole(), em);
                             }
                             
+
+                            //create Mart Supervisor
+
                             // Create MartSupervisor
+
                             if (roleComboBox.getSelectedItem().equals(Role.RoleType.MartSupervisor)) {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new MartSupervisorRole(), em);
                             }
                             
+
+                            //create Shipment Supervisor
+
                             // Create InventorySupervisor
                             if (roleComboBox.getSelectedItem().equals(Role.RoleType.InventoryManager)) {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new InventorySupervisorRole(), em);
                             }
                             
                             // Create ShipmentSupervisor
+
                             if (roleComboBox.getSelectedItem().equals(Role.RoleType.ShipmentSupervisor)) {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new ShipmentSupervisorRole(), em);
                             }
@@ -370,10 +413,13 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                             MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
                             p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
                         }
+
+
                         if (en instanceof Inventory) {
                             InventoryManagerMainJPanel p = (InventoryManagerMainJPanel) panel;
                             p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Passwords don't match!");
                     }
