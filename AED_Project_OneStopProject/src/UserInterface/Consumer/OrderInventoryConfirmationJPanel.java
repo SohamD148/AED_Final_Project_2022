@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author risha
  */
 public class OrderInventoryConfirmationJPanel extends javax.swing.JPanel {
 

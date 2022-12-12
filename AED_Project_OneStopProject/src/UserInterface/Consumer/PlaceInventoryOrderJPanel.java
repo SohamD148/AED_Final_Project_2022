@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author risha
  */
 public class PlaceInventoryOrderJPanel extends javax.swing.JPanel {
 
