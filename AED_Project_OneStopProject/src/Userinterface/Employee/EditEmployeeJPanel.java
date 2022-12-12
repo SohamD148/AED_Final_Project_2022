@@ -10,8 +10,10 @@ import Model.DB4OUtil.DB4OUtil;
 import Model.Employee.Employee;
 import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Enterprise;
+import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Mart;
+import static Model.Enterprise.Outlet.OutletType.Inventory;
 import Model.Organization.Organization;
 import Model.Role.Role;
 import Model.Role.Role.RoleType;
@@ -69,17 +71,8 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
                 resetButton.setVisible(false);
                 fireButton.setVisible(false);
             }
-            if (accessRole.getRoleType().equals(RoleType.RestaurantSupervisor)) {
-                if (selectedAccount.getRole().getRoleType().equals(RoleType.RestaurantSupervisor)
-                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
-                    editButton.setEnabled(false);
-                    resetButton.setVisible(false);
-                    fireButton.setVisible(false);
-                }
-            }
-        }
-        
-        if (en instanceof Mart) {
+        }  
+            if (en instanceof Mart) {
             roleComboBox.addItem(RoleType.Boss);
             roleComboBox.addItem(RoleType.MartSupervisor);
             if (!accessRole.getRoleType().equals(RoleType.SystemAdmin) &&
@@ -88,16 +81,28 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
                 resetButton.setVisible(false);
                 fireButton.setVisible(false);
             }
-            if (accessRole.getRoleType().equals(RoleType.MartSupervisor)) {
-                if (selectedAccount.getRole().getRoleType().equals(RoleType.MartSupervisor)
-                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
-                    editButton.setEnabled(false);
-                    resetButton.setVisible(false);
-                    fireButton.setVisible(false);
-                }
             }
-        }
-
+//            if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+//                if (selectedAccount.getRole().getRoleType().equals(RoleType.Supervisor)
+//                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
+//                    editButton.setEnabled(false);
+//                    resetButton.setVisible(false);
+//                    fireButton.setVisible(false);
+//                }
+//            }
+        
+            if (en instanceof Inventory) {
+            roleComboBox.addItem(RoleType.Boss);
+            roleComboBox.addItem(RoleType.InventoryManager);
+            if (!accessRole.getRoleType().equals(RoleType.SystemAdmin) &&
+                    selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
+                editButton.setEnabled(false);
+                resetButton.setVisible(false);
+                fireButton.setVisible(false);
+            }
+            }
+            
+            
         if (en instanceof ShipmentCompany) {
             roleComboBox.addItem(RoleType.Boss);
             roleComboBox.addItem(RoleType.ShipmentSupervisor);
@@ -108,14 +113,14 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
                 resetButton.setVisible(false);
                 fireButton.setVisible(false);
             }
-            if (accessRole.getRoleType().equals(RoleType.ShipmentSupervisor)) {
-                if (selectedAccount.getRole().getRoleType().equals(RoleType.ShipmentSupervisor)
-                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
-                    editButton.setEnabled(false);
-                    resetButton.setVisible(false);
-                    fireButton.setVisible(false);
-                }
-            }
+//            if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
+//                if (selectedAccount.getRole().getRoleType().equals(RoleType.Supervisor)
+//                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
+//                    editButton.setEnabled(false);
+//                    resetButton.setVisible(false);
+//                    fireButton.setVisible(false);
+//                }
+//            }
         }
 
         setInfo();
@@ -131,7 +136,7 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
 //
 //        }
 //        if (en instanceof ShipmentCompany) {
-//            ShipmentCompanySupervisorMainJPanel p = (ShipmentCompanySupervisorMainJPanel) panel;
+//            ShipmentCompanySupervisorMainJPanel2 p = (ShipmentCompanySupervisorMainJPanel2) panel;
 //            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
 //        }
 //        if (en instanceof Mart) {

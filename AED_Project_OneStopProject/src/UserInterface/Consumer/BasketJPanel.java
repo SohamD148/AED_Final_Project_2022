@@ -10,6 +10,7 @@ import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
 import Model.Network.Network;
 import Model.UserAccount.ConsumerAccount;
+import Model.UserAccount.EmployeeAccount;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class BasketJPanel extends javax.swing.JPanel {
 
     private EcoSystem system;
     private ConsumerAccount consumeracc;
+    private EmployeeAccount empaccount;
     private Network network;
     private JPanel jPanel;
 
@@ -49,6 +51,27 @@ public class BasketJPanel extends javax.swing.JPanel {
         
         populateTable();
     }
+    
+        
+        public BasketJPanel(EcoSystem system, JPanel container, EmployeeAccount empaccount, Network net) {
+        initComponents();
+
+        this.system = system;
+        this.jPanel = container;
+        this.empaccount = empaccount;
+        this.network = net;
+
+        deleteButton.setEnabled(false);
+        modifyButton.setEnabled(false);
+
+        if (!empaccount.getBasket().getCommodityDirectory().isEmpty()) {
+            restaurantLabel.setText(empaccount.getBasket().getCommodityDirectory().get(0).getShopModel().getOrg_name());
+        } else {
+            checkoutButton.setEnabled(false);
+        }
+        
+        populateEmpTable();
+    }
 
     public void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) cartTable.getModel();
@@ -61,6 +84,20 @@ public class BasketJPanel extends javax.swing.JPanel {
             dtm.addRow(row);
         }
         BigDecimal bd = new BigDecimal(this.consumeracc.getBasket().getTotalPrice());
+        priceLabel.setText(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
+    }
+    
+    public void populateEmpTable() {
+        DefaultTableModel dtm = (DefaultTableModel) cartTable.getModel();
+        dtm.setRowCount(0);
+        for (CommodityOrder order : empaccount.getBasket().getCommodityDirectory()) {
+            Object row[] = new Object[3];
+            row[0] = order;
+            row[1] = order.getQuantity();
+            row[2] = order.getTotalPrice();
+            dtm.addRow(row);
+        }
+        BigDecimal bd = new BigDecimal(this.empaccount.getBasket().getTotalPrice());
         priceLabel.setText(bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
     }
 
@@ -220,11 +257,22 @@ public class BasketJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cartTableMouseClicked
 
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
-        OrderJPanel panel = new OrderJPanel(this.system, this.jPanel, this.consumeracc, 
+        if(consumeracc instanceof ConsumerAccount)
+        {
+            OrderJPanel panel = new OrderJPanel(this.system, this.jPanel, this.consumeracc, 
             consumeracc.getBasket().getCommodityDirectory().get(0).getShopModel(), network);
-        this.jPanel.add(panel);
-        CardLayout layout = (CardLayout) this.jPanel.getLayout();
-        layout.next(this.jPanel);
+            this.jPanel.add(panel);
+            CardLayout layout = (CardLayout) this.jPanel.getLayout();
+            layout.next(this.jPanel);
+        }
+        else
+        {
+            PlaceInventoryOrderJPanel panel = new PlaceInventoryOrderJPanel(this.system, this.jPanel, this.empaccount, 
+            empaccount.getBasket().getCommodityDirectory().get(0).getShopModel(), network);
+            this.jPanel.add(panel);
+            CardLayout layout = (CardLayout) this.jPanel.getLayout();
+            layout.next(this.jPanel);
+        }
     }//GEN-LAST:event_checkoutButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

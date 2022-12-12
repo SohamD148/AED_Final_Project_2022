@@ -11,6 +11,7 @@ import Model.Business.EcoSystem;
 import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Outlet;
 import Model.Network.Network;
+import Model.WorkQueue.InventoryDeliveryRequest;
 import Model.WorkQueue.ShipmentRequest;
 import Model.WorkQueue.InventoryItemRequest;
 import Model.WorkQueue.OrderRequest;
@@ -141,7 +142,7 @@ public class SelectInventoryDeliveryJFrame extends javax.swing.JFrame {
             ShipmentCompany de = (ShipmentCompany) ShipmentDeliveryList.getSelectedValue();
             request.setCompany(de);
             request.setStatus(WorkRequest.StatusEnum.Ready);
-            ShipmentRequest dr = new ShipmentRequest(outlet, null, request);
+            InventoryDeliveryRequest dr = new InventoryDeliveryRequest(outlet, null, request);
             dr.setStatus(WorkRequest.StatusEnum.Ready);
             de.getWorkQueue().getWorkRequestDirectory().add(dr);
             DB4OUtil.getInstance().storeSystem(system);

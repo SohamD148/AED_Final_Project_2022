@@ -12,8 +12,6 @@ import Model.UserAccount.UserAccount;
 import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
 import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
-
-import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
 import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
 

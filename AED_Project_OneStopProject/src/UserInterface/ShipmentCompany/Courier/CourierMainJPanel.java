@@ -9,10 +9,17 @@ import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
 import Model.Employee.Employee;
 import Model.Enterprise.Enterprise;
+import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Outlet;
+import Model.Enterprise.Outlet.OutletType;
+import static Model.Enterprise.Outlet.OutletType.Inventory;
+import Model.Network.Network;
+import Model.Organization.Organization;
 import Model.Role.Role;
 import Model.UserAccount.EmployeeAccount;
 import Model.UserAccount.UserAccount;
+import Model.WorkQueue.InventoryDeliveryRequest;
+import Model.WorkQueue.InventoryItemRequest;
 import Model.WorkQueue.ShipmentRequest;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.ReviewRequest;
@@ -39,9 +46,10 @@ public class CourierMainJPanel extends javax.swing.JPanel {
     private EmployeeAccount account;
     private JFrame frame;
     private Role role;
-
+    private Outlet res;
     private Employee employee;
     private ShipmentRequest selectedRequest = null;
+    private InventoryDeliveryRequest selectedRequest1 = null;
 
     /**
      * Creates new form DeliveryManMainJPanel
@@ -88,7 +96,20 @@ public class CourierMainJPanel extends javax.swing.JPanel {
     private void populateOrderTable(ArrayList<WorkRequest> list) {
         DefaultTableModel dtm = (DefaultTableModel) orderTable.getModel();
         dtm.setRowCount(0);
-        for (WorkRequest wr : list) {
+        for (WorkRequest wr : list) 
+        {
+            if(wr.getEnterprise() instanceof Inventory)
+            {
+               InventoryDeliveryRequest dr = (InventoryDeliveryRequest) wr;
+               Object row[] = new Object[4];
+               row[0] = dr.getInventoryOrder().getInventoryOrderId();
+               row[1] = dr;
+               row[2] = (Outlet) dr.getEnterprise();
+               row[3] = dr.getStatus();
+               dtm.addRow(row); 
+            }
+            else
+            {
             ShipmentRequest dr = (ShipmentRequest) wr;
             Object row[] = new Object[4];
             row[0] = dr.getOrder().getOrderrequest_id();
@@ -96,20 +117,21 @@ public class CourierMainJPanel extends javax.swing.JPanel {
             row[2] = (Outlet) dr.getEnterprise();
             row[3] = dr.getStatus();
             dtm.addRow(row);
+            }
         }
     }
 
-    private void populateDetails() {
-        Outlet res = (Outlet) selectedRequest.getEnterprise();
-        pickupAddressTextArea.setText(res.getOut_address());
-        pickupNameTextField2.setText(res.getOrg_name());
-        pickupPhoneTextField.setText(res.getOut_phone());
-        OrderRequest or = (OrderRequest) selectedRequest.getOrder();
-        deliveryAddressTextArea.setText(or.getDeliveryAddress());
-        deliveryNameTextField.setText(or.getDeliveryName());
-        deliveryPhoneTextField.setText(or.getDeliveryPhone());
-    }
-
+//    private void populateDetails() {
+//        Outlet res = (Outlet) selectedRequest.getEnterprise();
+//        pickupAddressTextArea.setText(res.getOut_address());
+//        pickupNameTextField2.setText(res.getOrg_name());
+//        pickupPhoneTextField.setText(res.getOut_phone());
+//        OrderRequest or = (OrderRequest) selectedRequest.getOrder();
+//        deliveryAddressTextArea.setText(or.getDeliveryAddress());
+//        deliveryNameTextField.setText(or.getDeliveryName());
+//        deliveryPhoneTextField.setText(or.getDeliveryPhone());
+//    }
+//
     private void setInfo() {
         roleTextField.setText(this.account.getRole().getRoleType().getValue());
         nameLabel.setText(employee.getFirstname());
@@ -625,6 +647,24 @@ public class CourierMainJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    UserAccount check_user (String username)
+    {      
+            for (Network net : system.getNetworkDirectory()) {
+                for (Enterprise en : net.getEnterpriseDirectory().getEnterpriseDirectory()) {
+                        for (Organization or : en.getOrganizationDirectory().getOrganizationDirectory()) 
+                        {
+                           for( UserAccount ua: or.getUserAccountDirectory().getUserAccountDirectory()){
+                               if(ua.getUsername().equalsIgnoreCase(username)){
+                                   return ua;
+                               }
+                           }
+            
+                            
+    }
+                }
+            }
+            return null;
+    }
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         SignInJFrame lf = new SignInJFrame();
         this.frame.dispose();
@@ -634,9 +674,48 @@ public class CourierMainJPanel extends javax.swing.JPanel {
 
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
         int index = orderTable.getSelectedRow();
-
-        if (index >= 0) {
+        res = (Outlet)(orderTable.getValueAt(index, 2));
+        if (index >= 0) 
+        {
+            if ((orderTable.getValueAt(index, 2)) instanceof Inventory)
+            {
+                selectedRequest1 = (InventoryDeliveryRequest) orderTable.getValueAt(index, 1);
+                pickupAddressTextArea.setText(res.getOut_address());
+                pickupNameTextField2.setText(res.getOrg_name());
+                pickupPhoneTextField.setText(res.getOut_phone()); 
+                
+                InventoryItemRequest ir = (InventoryItemRequest) selectedRequest1.getInventoryOrder();
+                deliveryAddressTextArea.setText(ir.getDeliveryAddress());
+                deliveryNameTextField.setText(ir.getDeliveryName());
+                deliveryPhoneTextField.setText(ir.getDeliveryPhone());
+            if (selectedRequest1.getStatus().equals(StatusEnum.Ready)) {
+                deliveryButton.setEnabled(true);
+                pickupButton.setEnabled(false);
+                deliveredButton.setEnabled(false);
+            }
+            if (selectedRequest1.getStatus().equals(StatusEnum.WaitForPickup)) {
+                deliveryButton.setEnabled(false);
+                pickupButton.setEnabled(true);
+                deliveredButton.setEnabled(false);
+            }
+            if (selectedRequest1.getStatus().equals(StatusEnum.OnTheWay)) {
+                deliveryButton.setEnabled(false);
+                pickupButton.setEnabled(false);
+                deliveredButton.setEnabled(true);
+            }
+            if (selectedRequest1.getStatus().equals(StatusEnum.Completed) ||
+                    selectedRequest1.getStatus().equals(StatusEnum.Cancelled)) {
+                deliveryButton.setEnabled(false);
+                pickupButton.setEnabled(false);
+                deliveredButton.setEnabled(false);
+            }
+            }
+            else
+            {    
             selectedRequest = (ShipmentRequest) orderTable.getValueAt(index, 1);
+            pickupAddressTextArea.setText(res.getOut_address());
+                pickupNameTextField2.setText(res.getOrg_name());
+                pickupPhoneTextField.setText(res.getOut_phone());
             if (selectedRequest.getStatus().equals(StatusEnum.Ready)) {
                 deliveryButton.setEnabled(true);
                 pickupButton.setEnabled(false);
@@ -658,13 +737,42 @@ public class CourierMainJPanel extends javax.swing.JPanel {
                 pickupButton.setEnabled(false);
                 deliveredButton.setEnabled(false);
             }
-            populateDetails();
-        } else {
-            deliveryButton.setEnabled(false);
+//            populateDetails();
+            }
         }
+         else 
+         {
+            deliveryButton.setEnabled(false);
+         }
     }//GEN-LAST:event_orderTableMouseClicked
 
     private void deliveryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliveryButtonActionPerformed
+        if (res instanceof Inventory)
+        {
+            selectedRequest1.setStatus(StatusEnum.WaitForPickup);
+            selectedRequest1.setAccount(this.account);
+            selectedRequest1.getInventoryOrder().setStatus(StatusEnum.WaitForPickup);
+            String request_username = selectedRequest1.getInventoryOrder().getAccount().getUsername();
+            UserAccount request_account = check_user(request_username);
+            InventoryItemRequest or = request_account.getWorkQueue().getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId());
+            or.setStatus(StatusEnum.WaitForPickup);
+            system.getEnterpriseById(selectedRequest1.getInventoryOrder().getEnterprise().getShipcom_id()).getWorkQueue().
+                getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId()).setStatus(StatusEnum.WaitForPickup);
+       
+            Outlet model = (Outlet)system.getEnterpriseById(selectedRequest1.getInventoryOrder().getEnterprise().getShipcom_id());
+        
+            model.getWorkQueue().getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId()).setStatus(StatusEnum.WaitForPickup);
+            en.getWorkQueue().getWorkRequestDirectory().remove(selectedRequest1);
+            this.account.getWorkQueue().getWorkRequestDirectory().add(selectedRequest1);
+            DB4OUtil.getInstance().storeSystem(system);
+            populateOrderTable(getAllDeliveryRequest());
+//            populateDetails();
+            deliveryButton.setEnabled(false);
+            pickupButton.setEnabled(true);
+            deliveredButton.setEnabled(false); 
+        }
+        else
+        {
         selectedRequest.setStatus(StatusEnum.WaitForPickup);
         selectedRequest.setAccount(this.account);
         selectedRequest.getOrder().setStatus(StatusEnum.WaitForPickup);
@@ -680,10 +788,11 @@ public class CourierMainJPanel extends javax.swing.JPanel {
         this.account.getWorkQueue().getWorkRequestDirectory().add(selectedRequest);
         DB4OUtil.getInstance().storeSystem(system);
         populateOrderTable(getAllDeliveryRequest());
-        populateDetails();
+//        populateDetails();
         deliveryButton.setEnabled(false);
         pickupButton.setEnabled(true);
         deliveredButton.setEnabled(false);
+        }
     }//GEN-LAST:event_deliveryButtonActionPerformed
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
@@ -770,6 +879,25 @@ public class CourierMainJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameTextFieldActionPerformed
 
     private void pickupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickupButtonActionPerformed
+        if (res instanceof Inventory)
+        {
+        selectedRequest1.setStatus(StatusEnum.OnTheWay);
+        selectedRequest1.getInventoryOrder().setStatus(StatusEnum.OnTheWay);
+        String request_username = selectedRequest1.getInventoryOrder().getAccount().getUsername();
+        UserAccount request_account = check_user(request_username);
+        InventoryItemRequest or = request_account.getWorkQueue().getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId());
+        or.setStatus(StatusEnum.OnTheWay);
+        system.getEnterpriseById(selectedRequest1.getInventoryOrder().getEnterprise().getShipcom_id()).getWorkQueue().
+                getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId()).setStatus(StatusEnum.OnTheWay);
+        DB4OUtil.getInstance().storeSystem(system);
+        populateOrderTable(getAllDeliveryRequest());
+//        populateDetails();
+        deliveryButton.setEnabled(false);
+        pickupButton.setEnabled(false);
+        deliveredButton.setEnabled(true);
+        }
+        else
+        {
         selectedRequest.setStatus(StatusEnum.OnTheWay);
         selectedRequest.getOrder().setStatus(StatusEnum.OnTheWay);
         system.getCustomerAccountByUsername(selectedRequest.getOrder().getAccount().getUsername()).
@@ -778,13 +906,38 @@ public class CourierMainJPanel extends javax.swing.JPanel {
                 getOderById(selectedRequest.getOrder().getOrderrequest_id()).setStatus(StatusEnum.OnTheWay);
         DB4OUtil.getInstance().storeSystem(system);
         populateOrderTable(getAllDeliveryRequest());
-        populateDetails();
+//        populateDetails();
         deliveryButton.setEnabled(false);
         pickupButton.setEnabled(false);
         deliveredButton.setEnabled(true);
+        }
     }//GEN-LAST:event_pickupButtonActionPerformed
 
     private void deliveredButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliveredButtonActionPerformed
+        if (res instanceof Inventory)
+        {
+        selectedRequest1.setStatus(StatusEnum.Completed);
+        selectedRequest1.getInventoryOrder().setStatus(StatusEnum.Completed);
+        String request_username = selectedRequest1.getInventoryOrder().getAccount().getUsername();
+        UserAccount request_account = check_user(request_username);
+        InventoryItemRequest or = request_account.getWorkQueue().getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId());
+        
+        ReviewRequest rr = new ReviewRequest(selectedRequest1.getEnterprise(), 
+                selectedRequest1.getInventoryOrder().getAccount());
+        or.setStatus(StatusEnum.Completed);
+        system.getEnterpriseById(selectedRequest1.getInventoryOrder().getEnterprise().getShipcom_id()).getWorkQueue().
+                getinventoryOderById(selectedRequest1.getInventoryOrder().getInventoryOrderId()).setStatus(StatusEnum.Completed);
+        or.setReview(rr);
+        selectedRequest1.getInventoryOrder().setReview(rr);
+        DB4OUtil.getInstance().storeSystem(system);
+        populateOrderTable(getAllDeliveryRequest());
+        //populateDetails();
+        deliveryButton.setEnabled(false);
+        pickupButton.setEnabled(false);
+        deliveredButton.setEnabled(false);
+        }
+        else
+        {
         selectedRequest.setStatus(StatusEnum.Completed);
         selectedRequest.getOrder().setStatus(StatusEnum.Completed);
         try
@@ -815,10 +968,11 @@ public class CourierMainJPanel extends javax.swing.JPanel {
         selectedRequest.getOrder().setReview(rr);
         DB4OUtil.getInstance().storeSystem(system);
         populateOrderTable(getAllDeliveryRequest());
-        populateDetails();
+//        populateDetails();
         deliveryButton.setEnabled(false);
         pickupButton.setEnabled(false);
         deliveredButton.setEnabled(false);
+        }
     }//GEN-LAST:event_deliveredButtonActionPerformed
 
 

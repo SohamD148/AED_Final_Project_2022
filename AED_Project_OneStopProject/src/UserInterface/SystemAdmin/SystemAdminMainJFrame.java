@@ -8,6 +8,7 @@ package UserInterface.SystemAdmin;
 import Model.Business.EcoSystem;
 import Model.Enterprise.Delivery.ShipmentCompany;
 import Model.Enterprise.Enterprise;
+import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Mart;
 import Model.Network.Network;
@@ -16,6 +17,7 @@ import Model.UserAccount.ConsumerAccount;
 import Model.UserAccount.EmployeeAccount;
 import Model.UserAccount.UserAccount;
 import UserInterface.Consumer.ConsumerProfileJPanel;
+import UserInterface.Inventory.InventoryManagerMainJPanel;
 import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
 import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
 import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
@@ -51,6 +53,11 @@ public class SystemAdminMainJFrame extends javax.swing.JFrame {
         }
         if (selectedEnterprise instanceof Mart) {
             MartSupervisorMainJPanel cp = new MartSupervisorMainJPanel(system, this.jPanel1,
+                    selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
+            this.jPanel1.add(cp);
+        }
+        if (selectedEnterprise instanceof Inventory) {
+            InventoryManagerMainJPanel cp = new InventoryManagerMainJPanel(system, this.jPanel1,
                     selectedNetwork, selectedEnterprise, employeeAccount, this, new SystemAdminRole());
             this.jPanel1.add(cp);
         }
