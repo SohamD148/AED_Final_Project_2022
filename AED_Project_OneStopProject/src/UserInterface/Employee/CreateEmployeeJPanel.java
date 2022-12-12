@@ -14,12 +14,17 @@ import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Mart;
 import Model.Organization.Organization;
 import Model.Role.BossRole;
+import Model.Role.ChefRole;
 import Model.Role.DeliveryManRole;
-import Model.Role.SupervisorRole;
+import Model.Role.MartSupervisorRole;
+import Model.Role.RestaurantSupervisorRole;
 import Model.Role.Role;
 import Model.Role.Role.RoleType;
-//import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
-//import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import Model.Role.ShipmentSupervisorRole;
+import Model.Validation.Validation;
+import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import UserInterface.RestaurantSupervisor.RestaurantSupervisorMainJPanel;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,22 +56,34 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
         this.en = en;
         this.role = role;
 
-        if (en instanceof Restaurant || en instanceof Mart) {
+        if (en instanceof Restaurant) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
+                roleComboBox.addItem(Role.RoleType.Chef);
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.RestaurantSupervisor);
             }
         }
+        
+        if (en instanceof Mart) {
+            if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
+                roleComboBox.addItem(Role.RoleType.Boss);
+                roleComboBox.addItem(Role.RoleType.MartSupervisor);
+            }
+            if (role.getRoleType().equals(Role.RoleType.Boss)) {
+                roleComboBox.addItem(Role.RoleType.MartSupervisor);
+            }
+        }
+        
         if (en instanceof ShipmentCompany) {
             if (role.getRoleType().equals(Role.RoleType.SystemAdmin)) {
                 roleComboBox.addItem(Role.RoleType.Boss);
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.ShipmentSupervisor);
             }
             if (role.getRoleType().equals(Role.RoleType.Boss)) {
-                roleComboBox.addItem(Role.RoleType.Supervisor);
+                roleComboBox.addItem(Role.RoleType.ShipmentSupervisor);
             }
             roleComboBox.addItem(Role.RoleType.Courier);
         }
@@ -268,23 +285,29 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                 String new1 = String.valueOf(passwordCharArray1);
                 char[] passwordCharArray2 = passwordField2.getPassword();
                 String new2 = String.valueOf(passwordCharArray2);
-
+                
+                if(!Validation.isValidEmail(emailTextField.getText()))
+                {
+                JOptionPane.showMessageDialog(null, "Please enter valid email id");
+                return;
+                }
+                if(!Validation.isValidMobileNumber(phoneTextField.getText())){
+                JOptionPane.showMessageDialog(null, "Please enter valid Mobile no");
+                return;
+                }
                 if (!emailTextField.getText().equals("") && !firstNameTextField.getText().equals("") && !new1.equals("") && !new2.equals("")
                         && !lastNameTextField.getText().equals("") && !phoneTextField.getText().equals("")) {
                     if (new1.equals(new2)) {
                         Employee em = null;
-//                        if (dOrg == null) {
-//                            em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
-//                                    phoneTextField.getText(), emailTextField.getText());
-//                        } else {
-//                            em = dOrg.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
-//                                    phoneTextField.getText(), emailTextField.getText());
-//                        }
                         // Create Boss
                         if (roleComboBox.getSelectedItem().equals(Role.RoleType.Boss)) {
                             em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
                                     phoneTextField.getText(), emailTextField.getText());
                             en.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new BossRole(), em);
+                        } else if (roleComboBox.getSelectedItem().equals(Role.RoleType.Chef)) {
+                            em = en.getEmployeeDirectory().createEmployee(firstNameTextField.getText(), lastNameTextField.getText(),
+                                    phoneTextField.getText(), emailTextField.getText());
+                            en.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new ChefRole(), em);
                         } else {
                             Organization dOrg = en.getOrganizationDirectory().
                                     getTypicalOrganization(((RoleType) roleComboBox.getSelectedItem()).getOrganizationType());
@@ -295,9 +318,19 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                                 dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new DeliveryManRole(), em);
                             }
 
-                            // Create Supervisor
-                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.Supervisor)) {
-                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new SupervisorRole(), em);
+                            // Create Restaurant Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.RestaurantSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new RestaurantSupervisorRole(), em);
+                            }
+                            
+                            //create Mart Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.MartSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new MartSupervisorRole(), em);
+                            }
+                            
+                            //create Shipment Supervisor
+                            if (roleComboBox.getSelectedItem().equals(Role.RoleType.ShipmentSupervisor)) {
+                                dOrg.getUserAccountDirectory().createEmployeeAccount(this.usernameTextField.getText(), new2, new ShipmentSupervisorRole(), em);
                             }
                         }
 
@@ -308,18 +341,18 @@ public class CreateEmployeeJPanel extends javax.swing.JPanel {
                         CardLayout layout = (CardLayout) this.workPanel.getLayout();
                         layout.previous(this.workPanel);
 
-//                        if (en instanceof Restaurant) {
-//                            RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
-//                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-//                        }
-//                        if (en instanceof ShipmentCompany) {
-//                            ShipmentCompanySupervisorMainJPanel p = (ShipmentCompanySupervisorMainJPanel) panel;
-//                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-//                        }
-//                        if (en instanceof Mart) {
-//                            MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
-//                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
-//                        }
+                        if (en instanceof Restaurant) {
+                            RestaurantSupervisorMainJPanel p = (RestaurantSupervisorMainJPanel) panel;
+                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+                        }
+                        if (en instanceof ShipmentCompany) {
+                            ShipmentCompanySupervisorMainJPanel p = (ShipmentCompanySupervisorMainJPanel) panel;
+                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+                        }
+                        if (en instanceof Mart) {
+                            MartSupervisorMainJPanel p = (MartSupervisorMainJPanel) panel;
+                            p.populateEmployeeTable(this.en.getOrganizationDirectory().getOrganizationDirectory());
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "Passwords don't match!");
                     }

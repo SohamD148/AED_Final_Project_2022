@@ -180,6 +180,20 @@ public class SignUpJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerJButtonActionPerformed
+        if (userNameJTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Username can't be empty!");
+            return;
+        }
+        if (passwordField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Password can't be empty!");
+            return;
+        }
+        if (passwordField1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fill the pasword field again!");
+            return;
+        }
+        
+        
         String username = userNameJTextField.getText();
         // Get Password
         char[] passwordCharArray1 = passwordField.getPassword();

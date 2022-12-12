@@ -17,8 +17,8 @@ import Model.Role.Role;
 import Model.Role.Role.RoleType;
 import Model.Role.RoleSelection;
 import Model.UserAccount.EmployeeAccount;
-//import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
-//import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
+import UserInterface.ShipmentCompany.Supervisor.ShipmentCompanySupervisorMainJPanel;
+import UserInterface.MartSupervisor.MartSupervisorMainJPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -59,17 +59,37 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
         this.accessRole = accessRole;
 
         this.employee = selectedAccount.getEmployee();
-        if (en instanceof Restaurant || en instanceof Mart) {
+        if (en instanceof Restaurant) {
             roleComboBox.addItem(RoleType.Boss);
-            roleComboBox.addItem(RoleType.Supervisor);
+            roleComboBox.addItem(RoleType.RestaurantSupervisor);
+            roleComboBox.addItem(RoleType.Chef);
             if (!accessRole.getRoleType().equals(RoleType.SystemAdmin) &&
                     selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
                 editButton.setEnabled(false);
                 resetButton.setVisible(false);
                 fireButton.setVisible(false);
             }
-            if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
-                if (selectedAccount.getRole().getRoleType().equals(RoleType.Supervisor)
+            if (accessRole.getRoleType().equals(RoleType.RestaurantSupervisor)) {
+                if (selectedAccount.getRole().getRoleType().equals(RoleType.RestaurantSupervisor)
+                        || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
+                    editButton.setEnabled(false);
+                    resetButton.setVisible(false);
+                    fireButton.setVisible(false);
+                }
+            }
+        }
+        
+        if (en instanceof Mart) {
+            roleComboBox.addItem(RoleType.Boss);
+            roleComboBox.addItem(RoleType.MartSupervisor);
+            if (!accessRole.getRoleType().equals(RoleType.SystemAdmin) &&
+                    selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
+                editButton.setEnabled(false);
+                resetButton.setVisible(false);
+                fireButton.setVisible(false);
+            }
+            if (accessRole.getRoleType().equals(RoleType.MartSupervisor)) {
+                if (selectedAccount.getRole().getRoleType().equals(RoleType.MartSupervisor)
                         || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
                     editButton.setEnabled(false);
                     resetButton.setVisible(false);
@@ -80,7 +100,7 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
 
         if (en instanceof ShipmentCompany) {
             roleComboBox.addItem(RoleType.Boss);
-            roleComboBox.addItem(RoleType.Supervisor);
+            roleComboBox.addItem(RoleType.ShipmentSupervisor);
             roleComboBox.addItem(RoleType.Courier);
             if (!accessRole.getRoleType().equals(RoleType.SystemAdmin) && 
                     selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
@@ -88,8 +108,8 @@ public class EditEmployeeJPanel extends javax.swing.JPanel {
                 resetButton.setVisible(false);
                 fireButton.setVisible(false);
             }
-            if (accessRole.getRoleType().equals(RoleType.Supervisor)) {
-                if (selectedAccount.getRole().getRoleType().equals(RoleType.Supervisor)
+            if (accessRole.getRoleType().equals(RoleType.ShipmentSupervisor)) {
+                if (selectedAccount.getRole().getRoleType().equals(RoleType.ShipmentSupervisor)
                         || selectedAccount.getRole().getRoleType().equals(RoleType.Boss)) {
                     editButton.setEnabled(false);
                     resetButton.setVisible(false);
