@@ -11,6 +11,10 @@ import Model.Business.EcoSystem;
 import Model.Employee.Employee;
 import Model.Enterprise.Enterprise;
 import Model.Enterprise.Commodity;
+import Model.Enterprise.Inventory.Inventory;
+import Model.Enterprise.Outlet;
+import Model.Enterprise.Outlet.OutletType;
+import static Model.Enterprise.Outlet.OutletType.Inventory;
 import Model.Enterprise.Restaurant.Menu;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Restaurant.Restaurant.RestaurantCategory;
@@ -24,6 +28,8 @@ import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.ReviewRequest;
 import Model.WorkQueue.WorkRequest;
 import Model.WorkQueue.WorkRequest.StatusEnum;
+import UserInterface.Consumer.BasketJFrame;
+import UserInterface.Consumer.OutletDetailsJPanel;
 import UserInterface.Employee.CreateEmployeeJPanel;
 import UserInterface.Employee.EditEmployeeJPanel;
 import UserInterface.SignInJFrame;
@@ -37,6 +43,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -56,7 +63,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private String originPath;
     private OrderRequest selectedOrder = null;
     private Employee employee;
-
+    private Outlet.OutletType type = Inventory;
     /**
      * Creates new form RestaurantMainJPanel
      */
@@ -86,6 +93,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
 
         populateOrderTable();
         populateMenuTable();
+        populateInventorytable();
         populateEmployeeTable(restaurant.getOrganizationDirectory().getOrganizationDirectory());
 
         if (accessRole.getRoleType().equals(RoleType.RestaurantSupervisor)) {
@@ -223,6 +231,22 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         }
     }
 
+    
+    public void populateInventorytable() 
+    {
+        DefaultTableModel dtm = (DefaultTableModel) inventoryTable.getModel();
+        dtm.setRowCount(0);
+        if (type.equals(OutletType.Inventory)) {
+            for (Inventory inv : net.getInventoryList()) {
+                Object row[] = new Object[2];
+                row[0] = inv;
+                row[1] = inv.getInventype();
+                dtm.addRow(row);
+            }
+        }
+    }
+    
+    
     private void setProfileFieldsEditable(boolean b) {
         emailTextField.setEnabled(b);
         firstNameTextField.setEnabled(b);
@@ -319,6 +343,11 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         commentTextArea = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
         compayTextField = new javax.swing.JTextField();
+        inventoryPanel = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        inventoryTable = new javax.swing.JTable();
+        detailPanel1 = new javax.swing.JPanel();
+        inventoryNameLabel = new javax.swing.JLabel();
         reviewPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         reviewTable = new javax.swing.JTable();
@@ -360,6 +389,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
+        cartButton = new javax.swing.JButton();
 
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -464,7 +494,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         overviewPanelLayout.setVerticalGroup(
             overviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +524,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(overviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
@@ -554,7 +584,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,7 +610,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(createPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Menu", menuPanel);
@@ -634,7 +664,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         employeePanelLayout.setVerticalGroup(
             employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -646,7 +676,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(createButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Employee", employeePanel);
@@ -737,7 +767,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
             ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ordersPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanelLayout.createSequentialGroup()
@@ -757,7 +787,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         ordersPanelLayout.setVerticalGroup(
             ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ordersPanelLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(ordersPanelLayout.createSequentialGroup()
                         .addComponent(jLabel18)
@@ -778,10 +808,74 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                                     .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(41, 41, 41))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Orders", ordersPanel);
+
+        jScrollPane12.setPreferredSize(new java.awt.Dimension(200, 404));
+
+        inventoryTable.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        inventoryTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Category"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        inventoryTable.setPreferredSize(new java.awt.Dimension(200, 100));
+        inventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inventoryTableMouseClicked(evt);
+            }
+        });
+        jScrollPane12.setViewportView(inventoryTable);
+
+        detailPanel1.setLayout(new java.awt.CardLayout());
+
+        inventoryNameLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        inventoryNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout inventoryPanelLayout = new javax.swing.GroupLayout(inventoryPanel);
+        inventoryPanel.setLayout(inventoryPanelLayout);
+        inventoryPanelLayout.setHorizontalGroup(
+            inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inventoryPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addComponent(detailPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addComponent(inventoryNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        inventoryPanelLayout.setVerticalGroup(
+            inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inventoryPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(40, 40, 40))
+            .addGroup(inventoryPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inventoryNameLabel)
+                .addGap(18, 18, 18)
+                .addComponent(detailPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Order Inventory", inventoryPanel);
 
         reviewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -879,7 +973,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                                         .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(customerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(rateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addContainerGap(29, Short.MAX_VALUE))
+                        .addContainerGap(41, Short.MAX_VALUE))
                     .addGroup(reviewPanelLayout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jLabel22)
@@ -894,7 +988,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                         .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
                             .addComponent(currentRateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addComponent(jLabel22)
                         .addGap(54, 54, 54)
                         .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -975,7 +1069,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addContainerGap(299, Short.MAX_VALUE)
+                .addContainerGap(309, Short.MAX_VALUE)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1042,7 +1136,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                     .addComponent(editButton1)
                     .addComponent(saveButton1)
                     .addComponent(cancelButton2))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("My Profile", profilePanel);
@@ -1097,7 +1191,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(294, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
         passwordPanelLayout.setVerticalGroup(
             passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1118,7 +1212,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton1))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Change Password", passwordPanel);
@@ -1137,19 +1231,32 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
             }
         });
 
+        cartButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        cartButton.setText("Shopping Cart");
+        cartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cartButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameLabel)
+                        .addGap(27, 27, 27)
+                        .addComponent(cartButton)
+                        .addGap(22, 22, 22)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameLabel)
-                .addGap(23, 23, 23)
                 .addComponent(logoutButton)
-                .addContainerGap())
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1158,10 +1265,11 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(logoutButton)
+                    .addComponent(cartButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1432,6 +1540,32 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
+        int index = inventoryTable.getSelectedRow();
+        TableModel model = inventoryTable.getModel();
+
+        if (index >= 0) {
+            if (type.equals(OutletType.Inventory)) {
+                Inventory inventory = (Inventory) model.getValueAt(index, 0);
+                inventoryNameLabel.setText(inventory.getOrg_name());
+                OutletDetailsJPanel panel = new OutletDetailsJPanel(this.system, inventory, this.employeeAccount, net, type);
+                detailPanel1.remove(this);
+                detailPanel1.add(panel);
+            }
+
+            CardLayout layout = (CardLayout) this.detailPanel1.getLayout();
+            layout.next(detailPanel1);
+        }
+    }//GEN-LAST:event_inventoryTableMouseClicked
+
+    private void cartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartButtonActionPerformed
+        // TODO add your handling code here:
+        BasketJFrame frame = new BasketJFrame(this.system, this.employeeAccount, net);
+        frame.setSize(500, 620);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_cartButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea addressTextArea;
@@ -1439,6 +1573,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelOrderButton;
+    private javax.swing.JButton cartButton;
     private javax.swing.JComboBox<RestaurantCategory> categoryComboBox;
     private javax.swing.JTextArea commentTextArea;
     private javax.swing.JTextField compayTextField;
@@ -1449,6 +1584,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JButton deliveryButton;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JPanel detailPanel;
+    private javax.swing.JPanel detailPanel1;
     private javax.swing.JButton editButton;
     private javax.swing.JButton editButton1;
     private javax.swing.JTextField emailTextField;
@@ -1456,6 +1592,9 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JTable employeeTable;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel inventoryNameLabel;
+    private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JTable inventoryTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1481,6 +1620,7 @@ public class RestaurantSupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

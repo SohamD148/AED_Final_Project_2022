@@ -167,6 +167,11 @@ public class SystemAdminMainJPanel extends javax.swing.JPanel {
                     enterpriseModel.addElement(en);
                 }
             }
+            if (selectedCategory.equalsIgnoreCase("Inventory")) {
+                for (Enterprise en : selectedNetwork.getInventoryList()) {
+                    enterpriseModel.addElement(en);
+                }
+            }
             enterpriseList.setModel(enterpriseModel);
         }
 
@@ -191,6 +196,7 @@ public class SystemAdminMainJPanel extends javax.swing.JPanel {
             categoryModel.addElement("Delivery Company");
             categoryModel.addElement("Store");
             categoryModel.addElement("Restaurant");
+            categoryModel.addElement("Inventory");
             typeList.setModel(categoryModel);
 
             createEnterpriseButton.setEnabled(false);

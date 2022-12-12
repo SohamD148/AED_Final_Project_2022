@@ -83,13 +83,13 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
             jLabel5.setVisible(false);
             passwordField2.setVisible(false);
             jLabel13.setVisible(false);
-            jTabbedPane1.removeTabAt(5);
-            jTabbedPane1.removeTabAt(5);
+            inventoryTabbed.removeTabAt(4);
         }
 
         populateInventoryItemTable();
         populateRequestTable();
         populateEmployeeTable(inventory.getOrganizationDirectory().getOrganizationDirectory());
+        
 
         if (accessRole.getRoleType().equals(RoleType.InventoryManager)) {
             editButton.setVisible(false);
@@ -125,32 +125,12 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         cancelOrderButton.setEnabled(false);
 
         // Review Panel
-        populateReviewTable();
-        if (inventory.getRate() == -1) {
-            currentRateTextField.setText("N/A");
-        } else {
-            currentRateTextField.setText(inventory.getRate() + "");
-        }
+        
     }
+    
 
-    public void populateReviewTable() {
-        DefaultTableModel dtm = (DefaultTableModel) reviewTable.getModel();
-        dtm.setRowCount(0);
-        for (WorkRequest wr : inventory.getWorkQueue().getWorkRequestDirectory()) {
-            InventoryItemRequest ir = (InventoryItemRequest) wr;
-            if (ir.isReviewed()) {
-                Object row[] = new Object[4];
-                row[0] = ir.getReview();
-                row[1] = ir.getAccount().getUsername();
-                row[2] = ir.getReview().getRating();
-                row[3] = ir.getReview().getMessage();
-                dtm.addRow(row);
-            }
-
-        }
-    }
-
-    public void populateInventoryItemTable() {
+    public void populateInventoryItemTable() 
+    {
         DefaultTableModel dtm = (DefaultTableModel) inventoryItemTable.getModel();
         dtm.setRowCount(0);
         for (InventoryItem inventoryitem : inventory.getInventoryItem()) {
@@ -163,26 +143,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
     }
 
-    public void populateEmployeeTable(ArrayList<Organization> list) {
-        ArrayList<EmployeeAccount> result = new ArrayList<>();
-
-        result.addAll(this.enterprise.getUserAccountDirectory().toEmployeeAccounts());
-
-        for (Organization org : list) {
-            result.addAll(org.getUserAccountDirectory().toEmployeeAccounts());
-        }
-
-        DefaultTableModel dtm = (DefaultTableModel) employeeTable.getModel();
-        dtm.setRowCount(0);
-        for (EmployeeAccount e : result) {
-            Object row[] = new Object[4];
-            row[0] = e;
-            row[1] = e.getRole();
-            row[2] = e.getEmployee().getFullname();
-            row[3] = e.getEmployee().getEmail_id();
-            dtm.addRow(row);
-        }
-    }
 
     public void populateRequestTable() {
         DefaultTableModel dtm = (DefaultTableModel) requestTable.getModel();
@@ -278,7 +238,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        inventoryTabbed = new javax.swing.JTabbedPane();
         overviewPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -304,11 +264,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         createPanel = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        employeePanel = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        employeeTable = new javax.swing.JTable();
-        workPanel = new javax.swing.JPanel();
-        createButton1 = new javax.swing.JButton();
         ordersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         requestTable = new javax.swing.JTable();
@@ -322,19 +277,11 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         commentTextArea = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
         compayTextField = new javax.swing.JTextField();
-        reviewPanel = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        reviewTable = new javax.swing.JTable();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        reviewTextArea = new javax.swing.JTextArea();
-        rateTextField = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        customerTextField = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        currentRateTextField = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
+        employeePanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        employeeTable = new javax.swing.JTable();
+        workPanel = new javax.swing.JPanel();
+        createButton1 = new javax.swing.JButton();
         profilePanel = new javax.swing.JPanel();
         roleTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -364,9 +311,9 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         nameLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
 
-        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+        inventoryTabbed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPane1StateChanged(evt);
+                inventoryTabbedStateChanged(evt);
             }
         });
 
@@ -506,7 +453,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 .addGap(36, 36, 36))
         );
 
-        jTabbedPane1.addTab("Overview", overviewPanel);
+        inventoryTabbed.addTab("Overview", overviewPanel);
 
         inventoryItemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -586,73 +533,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Manage Menu", menuPanel);
-
-        employeeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Username", "Role", "Name", "Email"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        employeeTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        employeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                employeeTableMouseClicked(evt);
-            }
-        });
-        jScrollPane7.setViewportView(employeeTable);
-
-        workPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        workPanel.setLayout(new java.awt.CardLayout());
-
-        createButton1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        createButton1.setText("Create Employee");
-        createButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout employeePanelLayout = new javax.swing.GroupLayout(employeePanel);
-        employeePanel.setLayout(employeePanelLayout);
-        employeePanelLayout.setHorizontalGroup(
-            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(employeePanelLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(createButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-        employeePanelLayout.setVerticalGroup(
-            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(employeePanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(employeePanelLayout.createSequentialGroup()
-                        .addComponent(createButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Manage Employee", employeePanel);
+        inventoryTabbed.addTab("Manage Inventory", menuPanel);
 
         requestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -784,9 +665,9 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Manage Request", ordersPanel);
+        inventoryTabbed.addTab("Manage Request", ordersPanel);
 
-        reviewTable.setModel(new javax.swing.table.DefaultTableModel(
+        employeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -794,7 +675,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Date", "Customer", "Rate", "Comment"
+                "Username", "Role", "Name", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -805,119 +686,52 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        reviewTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        employeeTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        employeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reviewTableMouseClicked(evt);
+                employeeTableMouseClicked(evt);
             }
         });
-        jScrollPane8.setViewportView(reviewTable);
+        jScrollPane7.setViewportView(employeeTable);
 
-        reviewTextArea.setEditable(false);
-        reviewTextArea.setColumns(20);
-        reviewTextArea.setLineWrap(true);
-        reviewTextArea.setRows(5);
-        jScrollPane9.setViewportView(reviewTextArea);
+        workPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        workPanel.setLayout(new java.awt.CardLayout());
 
-        rateTextField.setEditable(false);
-        rateTextField.addActionListener(new java.awt.event.ActionListener() {
+        createButton1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        createButton1.setText("Create Employee");
+        createButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rateTextFieldActionPerformed(evt);
+                createButton1ActionPerformed(evt);
             }
         });
 
-        jLabel19.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel19.setText("Rate:");
-
-        jLabel20.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel20.setText("Comment:");
-
-        customerTextField.setEditable(false);
-        customerTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel21.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel21.setText("Customer:");
-
-        jLabel22.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel22.setText("Review Details");
-
-        currentRateTextField.setEditable(false);
-        currentRateTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                currentRateTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel23.setText("Current Rate:");
-
-        javax.swing.GroupLayout reviewPanelLayout = new javax.swing.GroupLayout(reviewPanel);
-        reviewPanel.setLayout(reviewPanelLayout);
-        reviewPanelLayout.setHorizontalGroup(
-            reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(reviewPanelLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(reviewPanelLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel23)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(currentRateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel19)
-                                            .addComponent(jLabel21))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(customerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(rateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addContainerGap(29, Short.MAX_VALUE))
-                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(jLabel22)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+        javax.swing.GroupLayout employeePanelLayout = new javax.swing.GroupLayout(employeePanel);
+        employeePanel.setLayout(employeePanelLayout);
+        employeePanelLayout.setHorizontalGroup(
+            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(employeePanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        reviewPanelLayout.setVerticalGroup(
-            reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(reviewPanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
-                            .addComponent(currentRateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(jLabel22)
-                        .addGap(54, 54, 54)
-                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel21)
-                            .addComponent(customerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        employeePanelLayout.setVerticalGroup(
+            employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(employeePanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(employeePanelLayout.createSequentialGroup()
+                        .addComponent(createButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(reviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19)
-                            .addComponent(rateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(145, 145, 145))
-                    .addGroup(reviewPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Reviews", reviewPanel);
+        inventoryTabbed.addTab("Manage Employee", employeePanel);
 
         roleTextField.setEnabled(false);
 
@@ -1048,7 +862,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(200, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("My Profile", profilePanel);
+        inventoryTabbed.addTab("My Profile", profilePanel);
 
         cancelButton1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         cancelButton1.setText("Cancel");
@@ -1124,7 +938,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(275, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Change Password", passwordPanel);
+        inventoryTabbed.addTab("Change Password", passwordPanel);
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel5.setText("Welcome, ");
@@ -1144,7 +958,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(inventoryTabbed)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel5)
@@ -1163,7 +977,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(logoutButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inventoryTabbed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -1226,6 +1040,27 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         DB4OUtil.getInstance().storeSystem(system);
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    
+    public void populateEmployeeTable(ArrayList<Organization> list) {
+        ArrayList<EmployeeAccount> result = new ArrayList<>();
+
+        result.addAll(this.enterprise.getUserAccountDirectory().toEmployeeAccounts());
+
+        for (Organization org : list) {
+            result.addAll(org.getUserAccountDirectory().toEmployeeAccounts());
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) employeeTable.getModel();
+        dtm.setRowCount(0);
+        for (EmployeeAccount e : result) {
+            Object row[] = new Object[4];
+            row[0] = e;
+            row[1] = e.getRole();
+            row[2] = e.getEmployee().getFullname();
+            row[3] = e.getEmployee().getEmail_id();
+            dtm.addRow(row);
+        }
+    }
     private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1241,8 +1076,8 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         imageLabel.setIcon(image);
     }//GEN-LAST:event_uploadButtonActionPerformed
 
-    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        int index = jTabbedPane1.getSelectedIndex();
+    private void inventoryTabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inventoryTabbedStateChanged
+        int index = inventoryTabbed.getSelectedIndex();
         if (index != 0 && index != -1) {
             setOverviewInfo();
             setProfileInfo();
@@ -1255,7 +1090,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         saveButton.setEnabled(false);
         cancelButton.setEnabled(false);
         editButton.setEnabled(true);
-    }//GEN-LAST:event_jTabbedPane1StateChanged
+    }//GEN-LAST:event_inventoryTabbedStateChanged
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
         resetPasswordField();
@@ -1309,7 +1144,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         int index = requestTable.getSelectedRow();
 
         if (index >= 0) {
-            itemRequest = (InventoryItemRequest) inventoryItemTable.getValueAt(index, 0);
+            itemRequest = (InventoryItemRequest) requestTable.getValueAt(index, 0);
             populateDetailTable(itemRequest);
         }
     }//GEN-LAST:event_requestTableMouseClicked
@@ -1326,28 +1161,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }//GEN-LAST:event_deliveryButtonActionPerformed
-
-    private void employeeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeTableMouseClicked
-        int index = employeeTable.getSelectedRow();
-
-        if (index >= 0) {
-            EmployeeAccount selectedAccount = (EmployeeAccount) employeeTable.getValueAt(index, 0);
-
-            EditEmployeeJPanel ep = new EditEmployeeJPanel(this.system, this, this.workPanel, this.enterprise, selectedAccount, this.employeeAccount, accessRole);
-            this.workPanel.removeAll();
-            this.workPanel.add(ep);
-            CardLayout layout = (CardLayout) this.workPanel.getLayout();
-            layout.next(this.workPanel);
-        }
-    }//GEN-LAST:event_employeeTableMouseClicked
-
-    private void createButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButton1ActionPerformed
-        this.workPanel.removeAll();
-        CreateEmployeeJPanel ep = new CreateEmployeeJPanel(this.system, this, this.workPanel, this.enterprise, this.accessRole);
-        this.workPanel.add(ep);
-        CardLayout layout = (CardLayout) this.workPanel.getLayout();
-        layout.next(this.workPanel);
-    }//GEN-LAST:event_createButton1ActionPerformed
 
     private void cancelButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton2ActionPerformed
         setProfileFieldsEditable(false);
@@ -1396,29 +1209,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         layout.next(createPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void rateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rateTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rateTextFieldActionPerformed
-
-    private void customerTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customerTextFieldActionPerformed
-
-    private void reviewTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewTableMouseClicked
-        int index = reviewTable.getSelectedRow();
-
-        if (index >= 0) {
-            ReviewRequest rr = (ReviewRequest) reviewTable.getValueAt(index, 0);
-            customerTextField.setText(rr.getAccount().getUsername());
-            rateTextField.setText(rr.getRating() + "");
-            reviewTextArea.setText(rr.getMessage());
-        }
-    }//GEN-LAST:event_reviewTableMouseClicked
-
-    private void currentRateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentRateTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_currentRateTextFieldActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int index = inventoryItemTable.getSelectedRow();
 
@@ -1436,6 +1226,28 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void employeeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeTableMouseClicked
+        int index = employeeTable.getSelectedRow();
+
+        if (index >= 0) {
+            EmployeeAccount selectedAccount = (EmployeeAccount) employeeTable.getValueAt(index, 0);
+
+            EditEmployeeJPanel ep = new EditEmployeeJPanel(this.system, this, this.workPanel, this.enterprise, selectedAccount, this.employeeAccount, accessRole);
+            this.workPanel.removeAll();
+            this.workPanel.add(ep);
+            CardLayout layout = (CardLayout) this.workPanel.getLayout();
+            layout.next(this.workPanel);
+        }
+    }//GEN-LAST:event_employeeTableMouseClicked
+
+    private void createButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButton1ActionPerformed
+        this.workPanel.removeAll();
+        CreateEmployeeJPanel ep = new CreateEmployeeJPanel(this.system, this, this.workPanel, this.enterprise, this.accessRole);
+        this.workPanel.add(ep);
+        CardLayout layout = (CardLayout) this.workPanel.getLayout();
+        layout.next(this.workPanel);
+    }//GEN-LAST:event_createButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea addressTextArea;
@@ -1448,8 +1260,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField compayTextField;
     private javax.swing.JButton createButton1;
     private javax.swing.JPanel createPanel;
-    private javax.swing.JTextField currentRateTextField;
-    private javax.swing.JTextField customerTextField;
     private javax.swing.JButton deliveryButton;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JPanel detailPanel;
@@ -1461,6 +1271,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JTable inventoryItemTable;
+    private javax.swing.JTabbedPane inventoryTabbed;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1472,12 +1283,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1492,9 +1298,6 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField lastNameTextField;
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel menuPanel;
@@ -1510,11 +1313,7 @@ public class InventoryManagerMainJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JTextField phoneTextField1;
     private javax.swing.JPanel profilePanel;
-    private javax.swing.JTextField rateTextField;
     private javax.swing.JTable requestTable;
-    private javax.swing.JPanel reviewPanel;
-    private javax.swing.JTable reviewTable;
-    private javax.swing.JTextArea reviewTextArea;
     private javax.swing.JTextField roleTextField;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton saveButton1;

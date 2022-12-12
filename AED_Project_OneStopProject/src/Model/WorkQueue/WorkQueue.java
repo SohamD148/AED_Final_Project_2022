@@ -31,4 +31,13 @@ public class WorkQueue {
         }
         return null;
     }
+    public InventoryItemRequest getinventoryOderById(String id) {
+        for (WorkRequest wr:this.workRequestDirectory) {
+            InventoryItemRequest or = (InventoryItemRequest)wr;
+            if(or.getInventoryOrderId().equals(id)) {
+                return or;
+            }
+        }
+        return null;
+    }
 }

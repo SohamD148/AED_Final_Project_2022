@@ -8,7 +8,7 @@ import Model.Enterprise.Commodity;
 import Model.Enterprise.Commodity;
 import Model.Enterprise.Outlet;
 import java.io.File;
-import Model.Organization.InventoryManagerOrganization;
+import Model.Organization.InventorySupervisorOrganization;
 import java.util.ArrayList;
 import Model.WorkQueue.InventoryItemRequest;
 import Model.WorkQueue.WorkRequest;
@@ -67,16 +67,16 @@ public class Inventory extends Outlet
         this.id = "Inventory" + counter;
         counter++;
         
-        String path = "Images/RestaurantCut/default.png";
+        String path = "Images/InventoryCut/default.JPEG";
         String fileName = "default.png";
         
-        File f = new File("Images/RestaurantCut");
+        File f = new File("Images/InventoryCut");
         if (f.isDirectory()) {
             File[] F1 = f.listFiles();
             for (File f2 : F1) {
-                if (f2.getName().equalsIgnoreCase(this.photoId + ".png")) {
-                    fileName = this.photoId + ".png";
-                    path = "Images/RestaurantCut/" + fileName;
+                if (f2.getName().equalsIgnoreCase(this.photoId + ".JPEG")) {
+                    fileName = this.photoId + ".JPEG";
+                    path = "Images/InventoryCut/" + fileName;
                 }
             }
         }
@@ -98,7 +98,7 @@ public class Inventory extends Outlet
 
     @Override
     public void createOrganizations() {
-        this.getOrganizationDirectory().getOrganizationDirectory().add(new InventoryManagerOrganization());
+        this.getOrganizationDirectory().getOrganizationDirectory().add(new InventorySupervisorOrganization());
                 
     }
 

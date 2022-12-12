@@ -5,8 +5,7 @@
  */
 package UserInterface.ShipmentCompany.Supervisor;
 
-import UserInterface.Employee.EditEmployeeJPanel;
-import UserInterface.Employee.CreateEmployeeJPanel;
+import UserInterface.RestaurantSupervisor.*;
 import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
 import Model.Employee.Employee;
@@ -23,6 +22,8 @@ import Model.WorkQueue.ShipmentRequest;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.WorkRequest;
 import Model.WorkQueue.WorkRequest.StatusEnum;
+import UserInterface.Employee.CreateEmployeeJPanel;
+import UserInterface.Employee.EditEmployeeJPanel;
 import UserInterface.SignInJFrame;
 import java.awt.CardLayout;
 import java.awt.Image;
@@ -36,7 +37,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rutu
+ * @author ranranhe
  */
 public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
 
@@ -146,6 +147,20 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
 
     public void populateOrderTable(ArrayList<WorkRequest> list) {
         DefaultTableModel dtm = (DefaultTableModel) orderTable.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest wr : list) {
+            ShipmentRequest or = (ShipmentRequest) wr;
+            Object row[] = new Object[4];
+            row[0] = or.getOrder().getOrderrequest_id();
+            row[1] = or;
+            row[2] = (Outlet) or.getOrder().getEnterprise();
+            row[3] = or.getStatus();
+            dtm.addRow(row);
+        }
+    }
+    
+    public void populateRequestTable(ArrayList<WorkRequest> list) {
+        DefaultTableModel dtm = (DefaultTableModel) requestTable.getModel();
         dtm.setRowCount(0);
         for (WorkRequest wr : list) {
             ShipmentRequest or = (ShipmentRequest) wr;
@@ -284,6 +299,25 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        ordersPanel1 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        pickupAddressTextArea1 = new javax.swing.JTextArea();
+        deliveryPhoneTextField1 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        requestTable = new javax.swing.JTable();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        deliveryAddressTextArea1 = new javax.swing.JTextArea();
+        pickupPhoneTextField1 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        deliveryNameTextField1 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        pickupNameTextField3 = new javax.swing.JTextField();
+        cancelOrderButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
@@ -383,7 +417,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         overviewPanelLayout.setVerticalGroup(
             overviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,7 +444,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(overviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
@@ -470,7 +504,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                 .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         employeePanelLayout.setVerticalGroup(
             employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,7 +516,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(createButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(workPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Employee", employeePanel);
@@ -575,7 +609,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                             .addGroup(ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel21)
                                 .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)))
-                        .addContainerGap(20, Short.MAX_VALUE))
+                        .addContainerGap(8, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(ordersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -636,7 +670,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel22))
                         .addGap(32, 32, 32)
                         .addComponent(cancelOrderButton)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Delivery", ordersPanel);
@@ -700,7 +734,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addContainerGap(300, Short.MAX_VALUE)
+                .addContainerGap(288, Short.MAX_VALUE)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -767,7 +801,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                     .addComponent(editButton1)
                     .addComponent(saveButton1)
                     .addComponent(cancelButton2))
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("My Profile", profilePanel);
@@ -822,7 +856,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                         .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(291, Short.MAX_VALUE))
         );
         passwordPanelLayout.setVerticalGroup(
             passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -843,10 +877,166 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                 .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton1))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(308, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Change Password", passwordPanel);
+
+        pickupAddressTextArea1.setEditable(false);
+        pickupAddressTextArea1.setColumns(20);
+        jScrollPane6.setViewportView(pickupAddressTextArea1);
+
+        deliveryPhoneTextField1.setEditable(false);
+
+        jLabel24.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel24.setText("Name:");
+
+        jLabel25.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel25.setText("Phone:");
+
+        jLabel18.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setText("Name:");
+
+        requestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Date", "Restaurant", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        requestTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        requestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                requestTableMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(requestTable);
+
+        deliveryAddressTextArea1.setEditable(false);
+        deliveryAddressTextArea1.setColumns(20);
+        jScrollPane10.setViewportView(deliveryAddressTextArea1);
+
+        pickupPhoneTextField1.setEditable(false);
+
+        jLabel26.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel26.setText("Pickup Inventory Address:");
+
+        usernameTextField.setEnabled(false);
+        deliveryNameTextField1.setEditable(false);
+
+        jLabel27.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel27.setText("Phone:");
+
+        jLabel28.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel28.setText("Delivery Address:");
+
+        usernameTextField.setEnabled(false);
+        pickupNameTextField3.setEditable(false);
+
+        cancelOrderButton1.setText("Cancel Order");
+        cancelOrderButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelOrderButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ordersPanel1Layout = new javax.swing.GroupLayout(ordersPanel1);
+        ordersPanel1.setLayout(ordersPanel1Layout);
+        ordersPanel1Layout.setHorizontalGroup(
+            ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ordersPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel28)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanel1Layout.createSequentialGroup()
+                                .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel27)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(pickupPhoneTextField1))
+                                    .addGroup(ordersPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(pickupNameTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(60, 60, 60))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ordersPanel1Layout.createSequentialGroup()
+                                .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(ordersPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(deliveryNameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(ordersPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel25)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cancelOrderButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(deliveryPhoneTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(57, 57, 57))))))
+        );
+        ordersPanel1Layout.setVerticalGroup(
+            ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ordersPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(ordersPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(pickupNameTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pickupPhoneTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(deliveryNameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(ordersPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deliveryPhoneTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel25))
+                        .addGap(32, 32, 32)
+                        .addComponent(cancelOrderButton1)))
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Manage Delivery", ordersPanel1);
+
+        jTabbedPane1.addTab("Manage Inventory Delivery", jTabbedPane2);
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel5.setText("Welcome, ");
@@ -866,15 +1056,18 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 1062, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameLabel)
                 .addGap(23, 23, 23)
                 .addComponent(logoutButton)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+                .addGap(382, 382, 382))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -884,7 +1077,7 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(logoutButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1092,6 +1285,14 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cancelOrderButtonActionPerformed
 
+    private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_requestTableMouseClicked
+
+    private void cancelOrderButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelOrderButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelOrderButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea addressTextArea;
@@ -1099,10 +1300,14 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelOrderButton;
+    private javax.swing.JButton cancelOrderButton1;
     private javax.swing.JButton createButton1;
     private javax.swing.JTextArea deliveryAddressTextArea;
+    private javax.swing.JTextArea deliveryAddressTextArea1;
     private javax.swing.JTextField deliveryNameTextField;
+    private javax.swing.JTextField deliveryNameTextField1;
     private javax.swing.JTextField deliveryPhoneTextField;
+    private javax.swing.JTextField deliveryPhoneTextField1;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JButton editButton;
     private javax.swing.JButton editButton1;
@@ -1120,30 +1325,41 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField lastNameTextField;
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JTable orderTable;
     private javax.swing.JPanel ordersPanel;
+    private javax.swing.JPanel ordersPanel1;
     private javax.swing.JPanel overviewPanel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JPasswordField passwordField1;
@@ -1152,9 +1368,13 @@ public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JTextField phoneTextField1;
     private javax.swing.JTextArea pickupAddressTextArea;
+    private javax.swing.JTextArea pickupAddressTextArea1;
     private javax.swing.JTextField pickupNameTextField2;
+    private javax.swing.JTextField pickupNameTextField3;
     private javax.swing.JTextField pickupPhoneTextField;
+    private javax.swing.JTextField pickupPhoneTextField1;
     private javax.swing.JPanel profilePanel;
+    private javax.swing.JTable requestTable;
     private javax.swing.JTextField roleTextField;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton saveButton1;
