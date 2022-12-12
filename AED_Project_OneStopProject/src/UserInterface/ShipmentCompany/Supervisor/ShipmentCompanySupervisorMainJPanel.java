@@ -37,7 +37,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ranranhe
+ * @author risha
  */
 public class ShipmentCompanySupervisorMainJPanel extends javax.swing.JPanel {
 
