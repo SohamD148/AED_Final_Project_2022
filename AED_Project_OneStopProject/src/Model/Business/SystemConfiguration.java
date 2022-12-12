@@ -17,10 +17,12 @@ import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
 import Model.Organization.CourierOrganization;
+import Model.Organization.InventorySupervisorOrganization;
 import Model.Organization.MartSupervisorOrganization;
 import Model.Organization.ShipmentSupervisorOrganization;
 import Model.Role.BossRole;
 import Model.Role.DeliveryManRole;
+import Model.Role.InventorySupervisorRole;
 import Model.Role.MartSupervisorRole;
 import Model.Role.RestaurantSupervisorRole;
 import Model.Role.ShipmentSupervisorRole;
@@ -172,7 +174,7 @@ public class SystemConfiguration {
         inv1.addInventoryItem(i1);
         inv1.addInventoryItem(i2);
         inv1.addInventoryItem(i3);
-        
+       
         
         // Worchester Restaurant List
         Restaurant restaurant3 = network2.createRestaurant("Deadhorse hill", "281 Main St, Worchester, MA 01608", "7744207107");

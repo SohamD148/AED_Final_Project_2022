@@ -10,7 +10,10 @@ import Model.Consumer.CommodityOrder;
 import Model.Consumer.ProductOrder;
 import Model.DB4OUtil.DB4OUtil;
 import Model.Business.EcoSystem;
+import Model.Consumer.InventoryOrder;
 import Model.Enterprise.Commodity;
+import Model.Enterprise.Inventory.Inventory;
+import Model.Enterprise.Inventory.InventoryItem;
 import Model.Enterprise.Restaurant.Menu;
 import Model.Enterprise.Restaurant.Restaurant;
 import Model.Enterprise.Outlet;
@@ -19,6 +22,7 @@ import Model.Enterprise.Mart.Product;
 import Model.Enterprise.Mart.Mart;
 import Model.Network.Network;
 import Model.UserAccount.ConsumerAccount;
+import Model.UserAccount.EmployeeAccount;
 import Model.WorkQueue.OrderRequest;
 import Model.WorkQueue.ReviewRequest;
 import Model.WorkQueue.WorkRequest;
@@ -36,6 +40,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
     private EcoSystem system;
     private Outlet outlet;
     private ConsumerAccount consumeracc;
+    private EmployeeAccount empaccount;
     private Network network;
     private OutletType outletype;
 
@@ -47,6 +52,36 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
         this.system = system;
         this.outlet = outlet;
         this.consumeracc = account;
+        this.network = net;
+        this.outletype = type;
+
+        if (!type.equals(OutletType.Restaurant)) {
+            this.outletDetailTab.setTitleAt(1, "Product");
+        }
+
+        showImage();
+        populateTable();
+
+        if (outlet.getRate() == -1) {
+            rateLabel.setText("N/A");
+        } else {
+            rateLabel.setText(outlet.getRate() + "");
+        }
+        addressTextArea.setText(outlet.getOut_address());
+        addressTextArea.setEnabled(false);
+        descriptionTextArea.setText(outlet.getOut_description());
+        descriptionTextArea.setEnabled(false);
+        phoneLabel.setText(outlet.getOut_phone());
+
+        // Review tab
+        populateReviewTable();
+    }
+    
+    public OutletDetailsJPanel(EcoSystem system, Outlet outlet, EmployeeAccount empaccount, Network net, OutletType type) {
+        initComponents();
+        this.system = system;
+        this.outlet = outlet;
+        this.empaccount = empaccount;
         this.network = net;
         this.outletype = type;
 
@@ -117,6 +152,18 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
                 dtm.addRow(row);
             }
         }
+        if (outletype.equals(OutletType.Inventory)) {
+            Inventory inv = (Inventory) outlet;
+            if (inv.getCategoryString() != null) {
+                categoryLabel.setText(inv.getCategoryString());
+            }
+            for (InventoryItem p : inv.getInventoryItem()) {
+                Object row[] = new Object[2];
+                row[0] = p;
+                row[1] = p.getCom_price();
+                dtm.addRow(row);
+            }
+        }
     }
 
     private void showImage() {
@@ -128,6 +175,10 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
         if (outletype.equals(OutletType.Mart)) {
             Mart store = (Mart) outlet;
             image = new ImageIcon(store.getPath());
+        }
+        if (outletype.equals(OutletType.Inventory)) {
+            Inventory inv = (Inventory) outlet;
+            image = new ImageIcon(inv.getPath());
         }
         image.setImage(image.getImage().getScaledInstance(250, 180, Image.SCALE_DEFAULT));
         imageLabel.setIcon(image);
@@ -397,7 +448,8 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
 
     private void addcartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addcartButtonActionPerformed
         int selectedRow = menuTable.getSelectedRow();
-
+        if(consumeracc instanceof ConsumerAccount)
+        {
         if (selectedRow >= 0) {
             Commodity item = (Commodity) menuTable.getValueAt(selectedRow, 0);
             int quantity = (int) quantitySpinner.getValue();
@@ -409,7 +461,7 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
             if (this.outletype.equals(OutletType.Mart)) {
                 line = new ProductOrder(this.outlet, item, quantity);
             }
-            if (!this.consumeracc.getBasket().isBasketEmpty()) {
+            if (!this.empaccount.getBasket().isBasketEmpty()) {
                 for (CommodityOrder or : this.consumeracc.getBasket().getCommodityDirectory()) {
                     if (!or.getShopModel().equals(this.outlet)) {
                         int choice = JOptionPane.showConfirmDialog(null, "You alreay have dashes from other restaurant in shopping cart. \n"
@@ -435,6 +487,45 @@ public class OutletDetailsJPanel extends javax.swing.JPanel {
             DB4OUtil.getInstance().storeSystem(system);
         } else {
             JOptionPane.showMessageDialog(null, "Please select a dash.");
+        }
+        }
+        else
+        {
+            if (selectedRow >= 0) {
+            Commodity item = (Commodity) menuTable.getValueAt(selectedRow, 0);
+            int quantity = (int) quantitySpinner.getValue();
+
+            InventoryOrder line = null;
+            if (this.outletype.equals(OutletType.Inventory)) {
+                line = new InventoryOrder(this.outlet, item, quantity);
+            }
+            if (!this.empaccount.getBasket().isBasketEmpty()) {
+                for (CommodityOrder or : this.empaccount.getBasket().getCommodityDirectory()) {
+                    if (!or.getShopModel().equals(this.outlet)) {
+                        int choice = JOptionPane.showConfirmDialog(null, "You alreay have dashes from other restaurant in shopping cart. \n"
+                                + "Adding this dash will remove all previous dashes in shopping cart.\n" + "Do you want to continue?",
+                                "Restaurant Conflicts", JOptionPane.YES_NO_OPTION);
+                        if (choice == JOptionPane.YES_OPTION) {
+                            this.empaccount.getBasket().clearBasket();
+                            break;
+                        } else {
+                            return;
+                        }
+                    }
+                    if (or.getShopModel().equals(this.outlet) && or.getItem().equals(item)) {
+                        line.setQuantity(or.getQuantity() + quantity);
+                        this.empaccount.getBasket().getCommodityDirectory().remove(or);
+                        break;
+                    }
+                }
+            }
+            this.empaccount.getBasket().addToBasket(line);
+
+            JOptionPane.showMessageDialog(null, "Dash has been successfully added to Shopping Cart");
+            DB4OUtil.getInstance().storeSystem(system);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a dash.");
+        }
         }
     }//GEN-LAST:event_addcartButtonActionPerformed
 

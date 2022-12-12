@@ -5,6 +5,7 @@
 package Model.Consumer;
 
 import Model.Enterprise.Commodity;
+import Model.Enterprise.Inventory.Inventory;
 import Model.Enterprise.Outlet;
 import java.math.BigDecimal;
 
@@ -12,52 +13,25 @@ import java.math.BigDecimal;
  *
  * @author risha
  */
-public abstract class InventoryOrder 
+public class InventoryOrder extends CommodityOrder
 {
-    private Commodity commodity;
-    private int itemquantity;
-    private double totalPrice;
-    private Outlet outlet;
-
-    public InventoryOrder(Commodity item, int quantity, Outlet outlet) 
+  
+    private Inventory inventory;
+    
+    public InventoryOrder( Outlet outlet, Commodity commodity, int quantity) 
     {
-        this.commodity = item;
-        this.itemquantity = quantity;
-        this.outlet = outlet;
-    }
-
-    public Commodity getCommodity() {
-        return commodity;
-    }
-    
-    public void setInvemtoryItem(Commodity commodity) {
-        this.commodity = commodity;
-    }
-    
-    public abstract Outlet getShopModel();
-    
-    public void setInventory(Outlet outlet) {
-        this.outlet = outlet;
-    }
-    
-    public int getItemQuantity() {
-        return this.itemquantity;
-    }
-    
-    public void setItemquantity(int q) {
-        this.itemquantity = q;
-        BigDecimal bd = new BigDecimal(commodity.getCom_price() * q);
-        this.totalPrice = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
-    
-     public double getTotalPrice() {
-        BigDecimal bd = new BigDecimal(commodity.getCom_price() * itemquantity);
-        this.totalPrice = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        return this.totalPrice;
+        super(outlet,commodity,quantity);
+        this.inventory = (Inventory) outlet;
     }
      
-     @Override
-    public String toString() {
-        return this.commodity.getCom_name();
+    public Inventory getInventory()
+    {
+        return (Inventory) this.getShopModel();
     }
+
+    @Override
+    public Outlet getShopModel() {
+        return this.inventory;
+    }
+    
 }

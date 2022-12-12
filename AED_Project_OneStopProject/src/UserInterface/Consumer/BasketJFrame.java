@@ -9,6 +9,7 @@ import Model.Business.EcoSystem;
 import Model.Enterprise.Enterprise;
 import Model.Network.Network;
 import Model.UserAccount.ConsumerAccount;
+import Model.UserAccount.EmployeeAccount;
 import java.awt.CardLayout;
 
 /**
@@ -19,6 +20,7 @@ public class BasketJFrame extends javax.swing.JFrame {
 
     private EcoSystem system;
     private ConsumerAccount consumeracc;
+    private EmployeeAccount employeeAccount;
     private Network network;
 
     /**
@@ -38,6 +40,19 @@ public class BasketJFrame extends javax.swing.JFrame {
         layout.next(container);
     }
 
+    public BasketJFrame(EcoSystem system, EmployeeAccount empaccount, Network net) {
+        initComponents();
+        this.system = system;
+        this.employeeAccount = empaccount;
+        this.network = net;
+        
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        BasketJPanel panel = new BasketJPanel(this.system, this.container, this.employeeAccount, net);
+        this.container.add(panel);
+        CardLayout layout = (CardLayout) this.container.getLayout();
+        layout.next(container);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
